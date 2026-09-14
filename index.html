@@ -18,7 +18,7 @@
     --text-main: #ffffff;
     --text-muted: #94a3b8;
     
-    /* Highly Vibrant Accents */
+    /* Vibrant Accents */
     --accent-1: #ff007f; /* Neon Pink */
     --accent-2: #7000ff; /* Deep Violet */
     --accent-3: #00f0ff; /* Cyan */
@@ -43,7 +43,7 @@
     cursor: none; 
   }
 
-  /* Vibrant Animated Background Mesh */
+  /* Vibrant Background Mesh */
   .bg-grid {
     position: fixed;
     top: 0; left: 0; width: 100vw; height: 100vh;
@@ -224,9 +224,9 @@
     flex: 1;
   }
 
-  .project-title { font-size: 1.25rem; font-weight: 600; margin-bottom: 8px; color: var(--text-main); }
-  .project-desc { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 20px; flex: 1; }
-  .project-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+  .project-title { font-size: 1.2rem; font-weight: 600; margin-bottom: 8px; color: var(--text-main); }
+  .project-desc { font-size: 0.88rem; color: var(--text-muted); margin-bottom: 16px; flex: 1; }
+  .project-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
   .tag { 
     font-size: 0.72rem; padding: 4px 10px; border-radius: 100px;
     background: rgba(255, 0, 127, 0.1); color: var(--accent-1);
@@ -234,10 +234,10 @@
   }
   .tag.blue { background: rgba(0, 240, 255, 0.1); color: var(--accent-3); border-color: rgba(0, 240, 255, 0.3); }
   
-  .project-links { display: flex; flex-wrap: wrap; gap: 12px; }
+  .project-links { display: flex; flex-wrap: wrap; gap: 8px; }
   .project-links a { 
-    font-size: 0.8rem; display: flex; align-items: center; gap: 6px; font-weight: 500; 
-    padding: 6px 12px; background: rgba(255,255,255,0.05); border-radius: 6px;
+    font-size: 0.78rem; display: flex; align-items: center; gap: 6px; font-weight: 500; 
+    padding: 6px 10px; background: rgba(255,255,255,0.05); border-radius: 6px;
     border: 1px solid var(--border); transition: all 0.2s ease;
   }
   .project-links a:hover { background: rgba(255,255,255,0.1); border-color: var(--accent-3); color: var(--accent-3); }
@@ -308,7 +308,7 @@
       <header class="profile-header">
         <h1>Ayu Nadia Irawan</h1>
         <h2 class="gradient-accent">Data Analyst</h2>
-        <p>Turning complex datasets into practical strategies and visualizations to facilitate sustainable business growth.</p>
+        <p>I am a marketing and data enthusiast with a diverse background bridging business operations and data visualization[cite: 2].</p>
       </header>
 
       <nav>
@@ -338,53 +338,51 @@
     <section id="about" class="reveal">
       <div style="font-size: 1.05rem; color: var(--text-muted); max-width: 600px;">
         <p style="margin-bottom: 16px;">
-          I am a marketing and data enthusiast with a diverse background bridging business operations and data visualization. My core focus is transforming raw data into highly interactive dashboards and predictive models that drive strategic decisions.
+          I am a marketing and data enthusiast with a diverse background bridging business operations and data visualization. My core focus is transforming raw data into automated dashboards and models that drive decisions[cite: 2].
         </p>
       </div>
     </section>
 
-    <!-- Vibrant Projects Section with Images -->
+    <!-- Projects Section with Embedded Photos & Links -->
     <section id="projects" class="reveal">
       <h3>Projects</h3>
       <div class="projects-grid">
         
-        <!-- Project 1: Customer Shopping Behavior -->
+        <!-- 1. Customer Shopping Behavior -->
         <div class="spotlight-card">
           <div class="project-img-wrapper">
-            <!-- Unsplash high quality shopping placeholder -->
-            <img src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?auto=format&fit=crop&w=600&q=80" alt="Customer Shopping Behavior">
+            <img src="image_5e3e4e.png" alt="Customer Shopping Behavior Dashboard">
           </div>
           <div class="spotlight-card-content">
             <h4 class="project-title">Customer Shopping Behavior</h4>
-            <p class="project-desc">Interactive dashboard uncovering purchase patterns, spending segments, and channel preference.</p>
+            <p class="project-desc">Interactive Power BI dashboard uncovering customer purchase patterns and segments.</p>
             <div class="project-tags">
               <span class="tag">Power BI (.pbix)</span>
               <span class="tag blue">Data Viz</span>
             </div>
             <div class="project-links">
               <a href="https://www.kaggle.com/datasets/mohanprasanth21/customer-shopping-behavior-cleaned-dataset" target="_blank">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14 21 3"/></svg> Kaggle Dataset
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14 21 3"/></svg> Dataset
               </a>
             </div>
           </div>
         </div>
 
-        <!-- Project 2: Global Ads Performance -->
+        <!-- 2. Global Ads Performance -->
         <div class="spotlight-card">
           <div class="project-img-wrapper">
-            <!-- Unsplash high quality dashboard placeholder -->
-            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600&q=80" alt="Global Ads Performance">
+            <img src="image_5e41d7.png" alt="Global Ads Performance Dashboard">
           </div>
           <div class="spotlight-card-content">
             <h4 class="project-title">Global Ads Performance</h4>
-            <p class="project-desc">Looker Studio report tracking and comparing ad returns across Google, Meta, and TikTok.</p>
+            <p class="project-desc">Looker Studio tracking ad returns and performance across Google, Meta, and TikTok.</p>
             <div class="project-tags">
               <span class="tag">Looker Studio</span>
               <span class="tag blue">Marketing Analytics</span>
             </div>
             <div class="project-links">
               <a href="https://datastudio.google.com/reporting/17780a3d-c6f7-4bff-8da3-9d91cc1bf2a3" target="_blank">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14 21 3"/></svg> Live Dashboard
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14 21 3"/></svg> Live Report
               </a>
               <a href="https://www.kaggle.com/datasets/nudratabbas/global-ads-performance-google-meta-tiktok" target="_blank">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14 21 3"/></svg> Dataset
@@ -393,15 +391,14 @@
           </div>
         </div>
 
-        <!-- Project 3: Shopee Review Sentiment -->
+        <!-- 3. Sentiment Analysis of Shopee User Reviews -->
         <div class="spotlight-card">
           <div class="project-img-wrapper">
-            <!-- Unsplash code/app placeholder -->
-            <img src="https://images.unsplash.com/photo-1512314889357-e157c22f938d?auto=format&fit=crop&w=600&q=80" alt="Shopee Review Sentiment">
+            <img src="image_5e4955.png" alt="Shopee Review Sentiment Chatbot">
           </div>
           <div class="spotlight-card-content">
-            <h4 class="project-title">Shopee Sentiment Analysis</h4>
-            <p class="project-desc">NLP sentiment classification model trained on user reviews from Google Play, deployed as a chatbot.</p>
+            <h4 class="project-title">Shopee Review Sentiment Analysis</h4>
+            <p class="project-desc">NLP sentiment classification model analyzing Google Play Store user reviews, deployed as a chatbot.</p>
             <div class="project-tags">
               <span class="tag">NLP</span>
               <span class="tag">Python</span>
@@ -418,15 +415,14 @@
           </div>
         </div>
 
-        <!-- Project 4: Leaf Disease Classification -->
+        <!-- 4. Leaf Disease Classification -->
         <div class="spotlight-card">
           <div class="project-img-wrapper">
-            <!-- Unsplash nature/plant placeholder -->
-            <img src="https://images.unsplash.com/photo-1530836369250-ef71a3fc5ec4?auto=format&fit=crop&w=600&q=80" alt="Leaf Disease Classification">
+            <img src="image_5e33e9.jpg" alt="Leaf Disease Classification Dashboard">
           </div>
           <div class="spotlight-card-content">
-            <h4 class="project-title">Leaf Disease Classification</h4>
-            <p class="project-desc">A deep learning approach to computer vision utilizing a ResNet50 model to classify plant diseases.</p>
+            <h4 class="project-title">Leaf Disease Classification (ResNet50)</h4>
+            <p class="project-desc">A deep learning approach to computer vision classifying plant leaf conditions with model deployment.</p>
             <div class="project-tags">
               <span class="tag">Computer Vision</span>
               <span class="tag">ResNet50</span>
@@ -449,8 +445,7 @@
       </div>
     </section>
 
-
-    <!-- Certifications & Skills Section -->
+    <!-- Certifications & Languages Section -->
     <section id="certifications" class="reveal">
       <h3>Certifications & Language</h3>
       
