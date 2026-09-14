@@ -91,11 +91,80 @@
     }
 
     const PROJECTS = [
-      { id: "transjakarta", tag: "powerbi", title: "TransJakarta Voice of Customer Dashboard", org: "PPKD Jakarta Selatan", year: "2026", image: null, summary: "An internal Power BI dashboard built to analyze commuter feedback and guide service improvements. Confidential dataset.", tools: ["Power BI"], metric: null, badgeText: "Confidential", links: [] },
-      { id: "shopping-behavior", tag: "powerbi", title: "Customer Shopping Behavior Dashboard", org: "PPKD Jakarta Selatan", year: "2026", image: IMG_POWERBI, summary: "Retail analytics dashboard covering 3,900 customers — purchase value, demographics, seasonal trends.", tools: ["Power BI"], metric: { value: 3900, decimals: 0, prefix: "", suffix: "", label: "customers profiled" }, links: [{ label: "Open .pbix file", href: "#" }] },
-      { id: "global-ads", tag: "looker", title: "Global Ads Performance Report", org: "PPKD Jakarta Selatan", year: "2026", image: IMG_LOOKER, summary: "Cross-platform ad performance report comparing Google, TikTok, and Meta — ROAS broken down by platform and country.", tools: ["Looker Studio"], metric: { value: 54, decimals: 0, prefix: "$", suffix: "M+", label: "revenue tracked" }, links: [{ label: "Open Looker Studio", href: "#" }] },
-      { id: "nlp-shopee", tag: "nlp", title: "Shopee Review Sentiment & Support Bot", org: "PPKD Jakarta Selatan", year: "2026", image: IMG_CHATBOT, summary: "Sentiment analysis on app-store reviews, extended into a working customer-support chatbot prototype.", tools: ["Google Colab", "NLP", "SVM"], metric: { value: 81.44, decimals: 2, prefix: "", suffix: "%", label: "SVM Accuracy" }, badgeText: "Live prototype", links: [{ label: "Chatbot repo", href: "#" }] },
-      { id: "leaf-disease", tag: "cv", title: "Leaf Disease Classification with Deep Learning", org: "PPKD Jakarta Selatan", year: "2026", image: IMG_LEAF, summary: "A ResNet50 image classifier detecting five leaf diseases, deployed as a real-time Gradio demo.", tools: ["Gradio", "ResNet50"], metric: { value: 91.38, decimals: 2, prefix: "", suffix: "%", label: "model accuracy" }, links: [{ label: "Gradio demo", href: "#" }] },
+      { 
+        id: "transjakarta", 
+        tag: "powerbi", 
+        title: "TransJakarta Voice of Customer Dashboard", 
+        org: "PPKD Jakarta Selatan", 
+        year: "2026", 
+        image: null, 
+        summary: "An internal Power BI dashboard built to analyze commuter feedback and guide service improvements. Confidential dataset.", 
+        tools: ["Power BI"], 
+        metric: null, 
+        badgeText: "Confidential", 
+        links: [
+          { label: "View on Power BI", href: "https://app.powerbi.com/" }
+        ] 
+      },
+      { 
+        id: "shopping-behavior", 
+        tag: "powerbi", 
+        title: "Customer Shopping Behavior Dashboard", 
+        org: "PPKD Jakarta Selatan", 
+        year: "2026", 
+        image: IMG_POWERBI, 
+        summary: "Retail analytics dashboard covering 3,900 customers — purchase value, demographics, seasonal trends.", 
+        tools: ["Power BI"], 
+        metric: { value: 3900, decimals: 0, prefix: "", suffix: "", label: "customers profiled" }, 
+        links: [
+          { label: "Open Power BI Report", href: "https://app.powerbi.com/" }
+        ] 
+      },
+      { 
+        id: "global-ads", 
+        tag: "looker", 
+        title: "Global Ads Performance Report", 
+        org: "PPKD Jakarta Selatan", 
+        year: "2026", 
+        image: IMG_LOOKER, 
+        summary: "Cross-platform ad performance report comparing Google, TikTok, and Meta — ROAS broken down by platform and country.", 
+        tools: ["Looker Studio"], 
+        metric: { value: 54, decimals: 0, prefix: "$", suffix: "M+", label: "revenue tracked" }, 
+        links: [
+          { label: "Open Looker Studio", href: "https://lookerstudio.google.com/" }
+        ] 
+      },
+      { 
+        id: "nlp-shopee", 
+        tag: "nlp", 
+        title: "Shopee Review Sentiment & Support Bot", 
+        org: "PPKD Jakarta Selatan", 
+        year: "2026", 
+        image: IMG_CHATBOT, 
+        summary: "Sentiment analysis on app-store reviews, extended into a working customer-support chatbot prototype.", 
+        tools: ["Google Colab", "NLP", "SVM"], 
+        metric: { value: 81.44, decimals: 2, prefix: "", suffix: "%", label: "SVM Accuracy" }, 
+        badgeText: "Live prototype", 
+        links: [
+          { label: "Google Colab", href: "https://colab.research.google.com/" },
+          { label: "Chatbot Repo", href: "https://github.com/" }
+        ] 
+      },
+      { 
+        id: "leaf-disease", 
+        tag: "cv", 
+        title: "Leaf Disease Classification with Deep Learning", 
+        org: "PPKD Jakarta Selatan", 
+        year: "2026", 
+        image: IMG_LEAF, 
+        summary: "A ResNet50 image classifier detecting five leaf diseases, deployed as a real-time Gradio demo.", 
+        tools: ["Gradio", "ResNet50"], 
+        metric: { value: 91.38, decimals: 2, prefix: "", suffix: "%", label: "model accuracy" }, 
+        links: [
+          { label: "Gradio Demo", href: "https://huggingface.co/spaces" },
+          { label: "Google Colab", href: "https://colab.research.google.com/" }
+        ] 
+      },
     ];
 
     const FILTERS = [
@@ -309,7 +378,7 @@
     /* =========================================================================
        PROJECT CARD
     ========================================================================= */
-    function ProjectCard({ project, index }) {
+    function ProjectCard({ project, index, onImageClick }) {
       const cardRef = useRef(null);
       const [visible, setVisible] = useState(false);
       const reduced = usePrefersReducedMotion();
@@ -363,7 +432,7 @@
         <div ref={cardRef} onMouseMove={handleMove} onMouseLeave={handleLeave} className="project-card liquid-glass-clear" style={{ ...baseStyle, "--cat": cat.color }}>
           <div className="card-spotlight" />
           <div className="frame-wrap" style={{ "--cat": cat.color }}>
-            <div className="frame-inner">
+            <div className="frame-inner" onClick={() => project.image && onImageClick(project)} style={{ cursor: project.image ? 'pointer' : 'default' }}>
               {project.image ? (
                 <>
                   <div className="frame-bar">
@@ -400,9 +469,19 @@
             
             {project.metric && <p style={{ margin: "-6px 0 0", fontSize: 11.5, color: "#64748B", fontWeight: 600 }}>{project.metric.label}</p>}
             
-            <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginTop: "auto" }}>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginTop: "4px" }}>
               {project.tools.map((t) => <span key={t} className="tool-chip">{t}</span>)}
             </div>
+
+            {project.links && project.links.length > 0 && (
+              <div className="project-links-row" style={{ display: "flex", flexWrap: "wrap", gap: "8px", marginTop: "12px", paddingTop: "12px", borderTop: "1px solid rgba(0,0,0,0.05)" }}>
+                {project.links.map((lnk, li) => (
+                  <a key={li} href={lnk.href} target="_blank" rel="noopener noreferrer" className="project-ext-link">
+                    {lnk.label} <ExternalLink size={12} />
+                  </a>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       );
@@ -467,7 +546,7 @@
                   <span className="glass-badge">Business Intelligence</span>
                 </div>
                 <h1 className="hero-title"><KineticHeading text="Ayu Nadia Irawan" /></h1>
-                <p className="hero-sub">I turn campaign data, customer behavior, and operational metrics into beautiful dashboards and models that drive decisions.</p>
+                <p className="hero-sub">I am an Applied Marketing graduate with a strong focus on data analytics. I bridge the gap between business operations and technical tools, using dashboards and automated models to turn complex data into simple, decision-ready insights.</p>
                 <div className="hero-cta">
                   <a className="btn-primary" href="#projects" onClick={(e) => { e.preventDefault(); scrollTo("projects"); }}>
                     View Projects &rarr;
@@ -505,9 +584,7 @@
               </Reveal>
               <div className="project-grid">
                 {filteredProjects.map((p, i) => (
-                  <div key={p.id} onClick={() => p.image && setLightbox(p)}>
-                    <ProjectCard project={p} index={i} />
-                  </div>
+                  <ProjectCard key={p.id} project={p} index={i} onImageClick={(proj) => setLightbox(proj)} />
                 ))}
               </div>
             </div>
@@ -571,8 +648,8 @@
                   <h2 className="section-title" style={{margin: '0 0 20px'}}>Let's connect.</h2>
                   <div className="contact-row">
                     <a className="btn-ghost" href="mailto:halloo.ayu@gmail.com"><Mail size={16} /> halloo.ayu@gmail.com</a>
-                    <a className="btn-ghost" href="#"><Linkedin size={16} /> LinkedIn</a>
-                    <a className="btn-ghost" href="#"><Github size={16} /> GitHub</a>
+                    <a className="btn-ghost" href="https://linkedin.com" target="_blank" rel="noopener noreferrer"><Linkedin size={16} /> LinkedIn</a>
+                    <a className="btn-ghost" href="https://github.com" target="_blank" rel="noopener noreferrer"><Github size={16} /> GitHub</a>
                   </div>
                 </div>
               </Reveal>
@@ -625,16 +702,14 @@
           @keyframes float2 { 0% { transform: translate(0,0) scale(1); } 100% { transform: translate(-150px, 100px) scale(1.15); } }
           @keyframes float3 { 0% { transform: translate(0,0) scale(1); } 100% { transform: translate(100px, -150px) scale(1.2); } }
 
-          /* 
-           * THE REQUESTED LIQUID GLASS CLASS (Customized to be Light) 
-           */
+          /* Liquid Glass Class */
           .liquid-glass-clear {
-            background: rgba(255, 255, 255, 0.35); /* Brightened for light theme */
+            background: rgba(255, 255, 255, 0.35);
             backdrop-filter: blur(12px) saturate(180%);
             -webkit-backdrop-filter: blur(12px) saturate(180%);
-            border: 1px solid rgba(255, 255, 255, 0.7); /* Brighter border */
+            border: 1px solid rgba(255, 255, 255, 0.7);
             border-radius: 24px;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.04); /* Softer shadow */
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.04);
           }
 
           .scroll-progress { position: fixed; top: 0; left: 0; height: 4px; background: linear-gradient(90deg, #8B5CF6, #3B82F6); z-index: 60; transition: width .1s linear; }
@@ -663,7 +738,6 @@
           .hero-copy.is-in { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
           .hero-badges { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 28px; }
           
-          /* Updated Badges to match the liquid glass aesthetic */
           .glass-badge { 
             font-weight: 600; font-size: 13px; color: #8B5CF6; 
             background: rgba(255, 255, 255, 0.35); 
@@ -677,7 +751,6 @@
           .hero-title { font-family: 'Unbounded'; font-weight: 800; font-size: clamp(40px, 6.4vw, 72px); line-height: 1.1; margin: 0 0 24px; color: #0F172A; letter-spacing: -1px; }
           @keyframes wordUp { from { transform: translateY(112%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
           .hero-sub { font-size: 18px; line-height: 1.7; color: #475569; max-width: 58ch; margin: 0 0 40px; font-weight: 500; }
-          
           .hero-cta { display: flex; gap: 16px; margin-bottom: 20px; }
 
           /* Sections & Layout */
@@ -692,7 +765,7 @@
           .marquee-item { display: inline-flex; align-items: center; font-family: 'Unbounded'; font-weight: 600; font-size: 15px; color: #64748B; padding: 0 24px; white-space: nowrap; }
           .marquee-dot { width: 6px; height: 6px; border-radius: 50%; background: #3B82F6; margin-left: 24px; }
 
-          /* Aesthetic Filter Segmented Control */
+          /* Filter Segmented Control */
           .filter-container { display: inline-flex; flex-wrap: wrap; gap: 4px; padding: 6px; border-radius: 999px; margin-bottom: 45px; }
           .filter-segment { display: flex; align-items: center; gap: 8px; appearance: none; outline: none; font-family: 'Plus Jakarta Sans'; font-weight: 600; font-size: 14.5px; padding: 10px 24px; border-radius: 999px; background: transparent; border: none; color: #64748B; cursor: pointer; transition: all 0.3s ease; }
           .filter-segment:hover { color: #1E293B; background: rgba(255,255,255,0.5); }
@@ -702,7 +775,7 @@
 
           /* Projects */
           .project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 35px; }
-          .project-card { border-radius: 28px; overflow: hidden; display: flex; flex-direction: column; cursor: pointer; position: relative; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+          .project-card { border-radius: 28px; overflow: hidden; display: flex; flex-direction: column; position: relative; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
           .project-card:hover { box-shadow: 0 20px 40px rgba(0,0,0,0.08); transform: translateY(-5px); border-color: rgba(255,255,255,1); }
           .frame-wrap { padding: 18px 18px 0; }
           .frame-inner { border-radius: 18px; overflow: hidden; background: #fff; border: 1px solid rgba(0,0,0,0.05); }
@@ -718,10 +791,12 @@
           .project-summary { margin: 0; font-size: 14.5px; line-height: 1.65; color: #475569; }
           .tool-chip { font-size: 12.5px; font-weight: 600; padding: 8px 16px; border-radius: 999px; background: rgba(255,255,255,0.6); border: 1px solid rgba(255,255,255,0.9); color: #334155; transition: all 0.2s; box-shadow: 0 2px 6px rgba(0,0,0,0.02); }
           .tool-chip:hover { background: #fff; transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+          .project-ext-link { display: inline-flex; align-items: center; gap: 5px; font-size: 12.5px; font-weight: 600; color: #8B5CF6; background: rgba(139, 92, 246, 0.08); padding: 6px 12px; border-radius: 999px; text-decoration: none; border: 1px solid rgba(139, 92, 246, 0.2); transition: all 0.2s; }
+          .project-ext-link:hover { background: #8B5CF6; color: #fff; transform: translateY(-1px); }
           .locked-panel { padding: 60px 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; background: repeating-linear-gradient(135deg, rgba(0,0,0,.02) 0 10px, transparent 10px 20px); text-align: center; }
           .locked-panel span { font-family: 'Unbounded'; font-weight: 600; font-size: 14px; color: #475569; }
 
-          /* Cute Alternating Timeline */
+          /* Timeline */
           .timeline-center { position: relative; max-width: 900px; margin: 0 auto; padding: 40px 0; }
           .timeline-center::after { content: ''; position: absolute; width: 4px; background: rgba(255,255,255,0.8); top: 0; bottom: 0; left: 50%; margin-left: -2px; border-radius: 2px; box-shadow: 0 0 10px rgba(255,255,255,0.5); }
           .timeline-item { padding: 10px 40px; position: relative; width: 50%; }
@@ -743,7 +818,6 @@
           .timeline-item.right li::before { content: '•'; position: absolute; left: 0; color: #3B82F6; font-weight: bold; }
           .timeline-item.left li::before { content: '•'; position: absolute; right: 0; color: #3B82F6; font-weight: bold; }
           
-          /* Timeline Mobile Responsive */
           @media screen and (max-width: 768px) {
             .timeline-center::after { left: 31px; }
             .timeline-item { width: 100%; padding-left: 70px; padding-right: 15px; }
@@ -794,7 +868,6 @@
       );
     }
 
-    // Render the React app
     const root = ReactDOM.createRoot(document.getElementById('root'));
     root.render(<Portfolio />);
   </script>
