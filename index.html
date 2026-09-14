@@ -198,21 +198,26 @@
   }
   .spotlight-card:hover::before { opacity: 1; }
   
-  /* Project Image Styling */
+  /* Project Image Styling - Contain & No Distortion */
   .project-img-wrapper {
     width: 100%;
-    height: 180px;
+    height: 220px;
+    background-color: #000000;
     overflow: hidden;
     position: relative;
     border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   .project-img-wrapper img {
-    width: 100%; height: 100%;
-    object-fit: cover;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
     transition: transform 0.5s ease;
   }
   .spotlight-card:hover .project-img-wrapper img {
-    transform: scale(1.05);
+    transform: scale(1.03);
   }
 
   .spotlight-card-content {
@@ -308,7 +313,7 @@
       <header class="profile-header">
         <h1>Ayu Nadia Irawan</h1>
         <h2 class="gradient-accent">Data Analyst</h2>
-        <p>I am a marketing and data enthusiast with a diverse background bridging business operations and data visualization[cite: 2].</p>
+        <p>I am a marketing and data enthusiast with a diverse background bridging business operations and data visualization.</p>
       </header>
 
       <nav>
@@ -338,7 +343,7 @@
     <section id="about" class="reveal">
       <div style="font-size: 1.05rem; color: var(--text-muted); max-width: 600px;">
         <p style="margin-bottom: 16px;">
-          I am a marketing and data enthusiast with a diverse background bridging business operations and data visualization. My core focus is transforming raw data into automated dashboards and models that drive decisions[cite: 2].
+          I am a marketing and data enthusiast with a diverse background bridging business operations and data visualization. My core focus is transforming raw data into automated dashboards and models that drive decisions.
         </p>
       </div>
     </section>
@@ -361,6 +366,9 @@
               <span class="tag blue">Data Viz</span>
             </div>
             <div class="project-links">
+              <a href="https://github.com/hallooayu/portfolioppkd/blob/main/Customer%20Shopping%20Behavior%20AYU.pbix" target="_blank">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14 21 3"/></svg> Live Report (.pbix)
+              </a>
               <a href="https://www.kaggle.com/datasets/mohanprasanth21/customer-shopping-behavior-cleaned-dataset" target="_blank">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14 21 3"/></svg> Dataset
               </a>
@@ -533,7 +541,7 @@
           
         </div>
 
-      </div>
+              </div>
     </section>
 
     <!-- Footer -->
