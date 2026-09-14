@@ -1,664 +1,281 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ayu Nadia Irawan - Portfolio & CV</title>
-    <!-- Google Fonts & FontAwesome -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+    <title>Ayu Nadia Irawan - Data Analyst Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #818cf8;
-            --primary-glow: rgba(129, 140, 248, 0.4);
-            --text-main: #f3f4f6;
-            --text-muted: #9ca3af;
-            --glass-bg: rgba(255, 255, 255, 0.03);
-            --glass-border: rgba(255, 255, 255, 0.08);
-            --glass-card: rgba(17, 24, 39, 0.6);
-            --blur: blur(16px);
+            --primary: #2563eb;
+            --bg-dark: #0f172a;
+            --text-light: #f8fafc;
+            --card-bg: #1e293b;
+            --accent: #38bdf8;
         }
-
+        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-family: 'Inter', sans-serif;
         }
 
         body {
-            background-color: #0b0f19;
-            color: var(--text-main);
+            background-color: var(--bg-dark);
+            color: var(--text-light);
             line-height: 1.6;
             overflow-x: hidden;
-            position: relative;
         }
 
-        /* Liquid Background Glow Orbs */
-        .bg-glow {
-            position: fixed;
-            width: 450px;
-            height: 450px;
-            background: linear-gradient(135deg, #4f46e5 0%, #ec4899 100%);
-            filter: blur(120px);
-            border-radius: 50%;
-            z-index: -1;
-            opacity: 0.35;
-            animation: floatOrb 12s infinite alternate ease-in-out;
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-        .orb-1 { top: -100px; left: -100px; }
-        .orb-2 { bottom: -100px; right: -100px; animation-delay: -6s; }
-
-        @keyframes floatOrb {
-            0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(50px, 80px) scale(1.15); }
+        .animate-up {
+            animation: fadeInUp 1s ease-out forwards;
+            opacity: 0;
         }
 
-        /* Header Navbar */
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+
+        /* Layout */
         header {
-            background: rgba(11, 15, 25, 0.75);
-            backdrop-filter: var(--blur);
-            -webkit-backdrop-filter: var(--blur);
-            border-bottom: 1px solid var(--glass-border);
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 100;
-        }
-
-        .nav-container {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-weight: 700;
-            font-size: 1.25rem;
-            background: linear-gradient(135deg, #a5b4fc, #f472b6);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-decoration: none;
-        }
-
-        .nav-links {
-            list-style: none;
-            display: flex;
-            gap: 1.5rem;
-            align-items: center;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--text-muted);
-            font-weight: 500;
-            font-size: 0.95rem;
-            transition: color 0.2s;
-        }
-
-        .nav-links a:hover {
-            color: var(--primary);
-        }
-
-        .btn-contact {
-            background: rgba(99, 102, 241, 0.2);
-            border: 1px solid rgba(129, 140, 248, 0.4);
-            color: white !important;
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-            backdrop-filter: blur(4px);
-        }
-
-        .btn-contact:hover {
-            background: rgba(99, 102, 241, 0.4);
-        }
-
-        /* Hero Section */
-        .hero {
-            padding: 9rem 2rem 5rem 2rem;
-            text-align: center;
-        }
-
-        .hero-content {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .badge {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--glass-border);
-            color: #c7d2fe;
-            padding: 0.4rem 1rem;
-            border-radius: 30px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            display: inline-block;
-            margin-bottom: 1.2rem;
-            backdrop-filter: var(--blur);
-        }
-
-        .hero h1 {
-            font-size: 3rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            letter-spacing: -0.5px;
-        }
-
-        .subtitle {
-            font-size: 1.1rem;
-            color: var(--text-muted);
-            margin-bottom: 2rem;
-            line-height: 1.7;
-        }
-
-        .hero-buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-        }
-
-        .btn {
-            text-decoration: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 10px;
-            font-weight: 600;
-            font-size: 0.95rem;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            transition: all 0.3s ease;
-        }
-
-        .btn.primary {
-            background: linear-gradient(135deg, #6366f1, #a855f7);
-            color: white;
-            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
-        }
-
-        .btn.secondary {
-            background: var(--glass-card);
-            color: var(--text-main);
-            border: 1px solid var(--glass-border);
-            backdrop-filter: var(--blur);
-        }
-
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 25px rgba(99, 102, 241, 0.6);
-        }
-
-        /* Container & Glass Cards */
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-
-        .section {
-            margin-bottom: 4rem;
-        }
-
-        .section h2 {
-            font-size: 1.75rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            background: linear-gradient(135deg, #fff, #9ca3af);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            border-bottom: 1px solid var(--glass-border);
-            padding-bottom: 0.75rem;
-        }
-
-        .glass-box {
-            background: var(--glass-card);
-            border: 1px solid var(--glass-border);
-            backdrop-filter: var(--blur);
-            -webkit-backdrop-filter: var(--blur);
-            border-radius: 16px;
-            padding: 2rem;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
-        }
-
-        .summary-text {
-            font-size: 1.05rem;
-            color: var(--text-muted);
-            line-height: 1.8;
-        }
-
-        /* Timeline Glass */
-        .timeline {
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
-            gap: 2rem;
-            border-left: 2px solid rgba(129, 140, 248, 0.3);
-            padding-left: 1.5rem;
-            margin-left: 0.5rem;
-        }
-
-        .timeline-item {
-            position: relative;
-            background: var(--glass-card);
-            border: 1px solid var(--glass-border);
-            backdrop-filter: var(--blur);
-            padding: 1.5rem;
-            border-radius: 14px;
-            transition: transform 0.2s, border-color 0.2s;
-        }
-
-        .timeline-item:hover {
-            transform: translateX(4px);
-            border-color: rgba(129, 140, 248, 0.5);
-        }
-
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -2.07rem;
-            top: 1.5rem;
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: var(--primary);
-            box-shadow: 0 0 10px var(--primary);
-            border: 2px solid #0b0f19;
-        }
-
-        .timeline-item h3 {
-            font-size: 1.15rem;
-            font-weight: 600;
-            color: #fff;
-        }
-
-        .timeline-item .role {
-            font-weight: 500;
-            color: #a5b4fc;
-            font-size: 0.95rem;
-            margin-bottom: 0.2rem;
-        }
-
-        .timeline-item .date {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            display: block;
-            margin-bottom: 0.75rem;
-        }
-
-        .timeline-item ul {
-            padding-left: 1.2rem;
-            color: var(--text-muted);
-        }
-
-        .timeline-item li {
-            margin-bottom: 0.4rem;
-            font-size: 0.92rem;
-        }
-
-        /* Projects Grid Glass */
-        .grid-projects {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .project-card {
-            background: var(--glass-card);
-            border: 1px solid var(--glass-border);
-            backdrop-filter: var(--blur);
-            padding: 1.5rem;
-            border-radius: 16px;
-            transition: transform 0.3s, border-color 0.3s;
-        }
-
-        .project-card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(129, 140, 248, 0.5);
-        }
-
-        .project-card h3 {
-            font-size: 1.1rem;
-            color: #fff;
-            margin-bottom: 0.2rem;
-        }
-
-        .project-card .date {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            display: block;
-            margin-bottom: 0.75rem;
-        }
-
-        .project-card p {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-        }
-
-        /* Skills Glass */
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .skill-category {
-            background: var(--glass-card);
-            border: 1px solid var(--glass-border);
-            backdrop-filter: var(--blur);
-            padding: 1.5rem;
-            border-radius: 16px;
-        }
-
-        .skill-category h3 {
-            font-size: 1.1rem;
-            margin-bottom: 1rem;
-            color: #fff;
-        }
-
-        .tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-        }
-
-        .tags span {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--glass-border);
-            padding: 0.35rem 0.8rem;
-            border-radius: 8px;
-            font-size: 0.85rem;
-            color: #d1d5db;
-        }
-
-        /* Contact Section */
-        .contact-section {
-            text-align: center;
-            background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(236, 72, 153, 0.15));
-            border: 1px solid rgba(129, 140, 248, 0.3);
-            backdrop-filter: var(--blur);
-            padding: 3rem;
-            border-radius: 20px;
-        }
-
-        .contact-section h2 {
-            border: none;
-            margin-bottom: 0.5rem;
-        }
-
-        .contact-section p {
-            color: var(--text-muted);
-            margin-bottom: 1.5rem;
-        }
-
-        .contact-links {
-            display: flex;
             justify-content: center;
-            gap: 1rem;
-            flex-wrap: wrap;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(135deg, rgba(15,23,42,1) 0%, rgba(30,41,59,1) 100%);
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid var(--primary);
+            display: inline-block;
+            padding-bottom: 0.5rem;
         }
 
         .contact-links a {
+            color: var(--text-light);
             text-decoration: none;
-            background: var(--glass-card);
-            color: var(--text-main);
-            border: 1px solid var(--glass-border);
-            padding: 0.75rem 1.25rem;
-            border-radius: 10px;
-            font-weight: 500;
-            font-size: 0.95rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            backdrop-filter: var(--blur);
-            transition: all 0.2s;
+            margin: 0 10px;
+            padding: 10px 20px;
+            border: 1px solid var(--primary);
+            border-radius: 5px;
+            transition: all 0.3s;
         }
 
         .contact-links a:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: var(--primary);
+            background-color: var(--primary);
+            transform: translateY(-3px);
         }
 
-        /* Footer */
-        footer {
-            text-align: center;
+        section {
+            padding: 5rem 10%;
+        }
+
+        /* Grid Layouts */
+        .skills-grid, .projects-grid, .experience-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .card {
+            background-color: var(--card-bg);
             padding: 2rem;
-            background: rgba(11, 15, 25, 0.8);
-            border-top: 1px solid var(--glass-border);
-            color: var(--text-muted);
-            font-size: 0.85rem;
-            backdrop-filter: var(--blur);
+            border-radius: 10px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-left: 4px solid var(--primary);
         }
 
-        @media (max-width: 768px) {
-            .nav-links { display: none; }
-            .hero h1 { font-size: 2.2rem; }
-            .timeline { border-left: none; padding-left: 0; }
-            .timeline-item::before { display: none; }
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+            border-left-color: var(--accent);
+        }
+
+        .tag {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin-right: 5px;
+            margin-bottom: 5px;
         }
     </style>
 </head>
 <body>
 
-    <!-- Liquid Background Orbs -->
-    <div class="bg-glow orb-1"></div>
-    <div class="bg-glow orb-2"></div>
-
-    <!-- Header Navbar -->
+    <!-- Hero Section -->
     <header>
-        <div class="nav-container">
-            <a href="#" class="logo">Ayu Nadia.</a>
-            <nav>
-                <ul class="nav-links">
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#experience">Experience</a></li>
-                    <li><a href="#projects">Projects</a></li>
-                    <li><a href="#skills">Skills</a></li>
-                    <li><a href="#contact" class="btn-contact">Contact</a></li>
-                </ul>
-            </nav>
+        <div class="animate-up">
+            <h1>Ayu Nadia Irawan[cite: 1]</h1>
+            <p style="font-size: 1.5rem; margin-bottom: 1rem;">Data Analyst & Marketing Enthusiast[cite: 1]</p>
+            <p style="max-width: 600px; margin: 0 auto 2rem; color: #cbd5e1;">
+                Motivated by a commitment to research and team education, I focus on taking complex datasets and turning them into practical strategies that facilitate sustainable business growth.[cite: 1]
+            </p>
+            <div class="contact-links">
+                <a href="mailto:halloo.ayu@gmail.com">Email[cite: 1]</a>
+                <a href="https://www.linkedin.com/in/ayunada/" target="_blank">LinkedIn[cite: 1]</a>
+                <a href="https://github.com/hallooayu" target="_blank">GitHub[cite: 1]</a>
+            </div>
         </div>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-content">
-            <span class="badge">International Marketing Management</span>
-            <h1>Ayu Nadia Irawan</h1>
-            <p class="subtitle">Dynamic undergraduate with expertise across B2B/B2G sales, KOL campaign management, and HR outsourcing operations.</p>
-            <div class="hero-buttons">
-                <a href="https://www.linkedin.com/in/ayunada/" target="_blank" class="btn primary"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
-                <a href="https://bit.ly/ayunadya" target="_blank" class="btn secondary"><i class="fa-solid fa-briefcase"></i> Portfolio Link</a>
+    <!-- Skills Section -->
+    <section id="skills">
+        <h2 class="animate-up delay-1">Technical Skills[cite: 1]</h2>
+        <div class="skills-grid animate-up delay-1">
+            <div class="card">
+                <h3>Data Analysis & Coding</h3>
+                <br>
+                <span class="tag">Python[cite: 1]</span>
+                <span class="tag">SQL[cite: 1]</span>
+                <span class="tag">DAX[cite: 1]</span>
+                <span class="tag">SPSS[cite: 1]</span>
+            </div>
+            <div class="card">
+                <h3>Visualization & BI</h3>
+                <br>
+                <span class="tag">Power BI[cite: 1]</span>
+                <span class="tag">Google Data Studio (Looker)[cite: 1]</span>
+                <span class="tag">Microsoft Excel[cite: 1]</span>
+            </div>
+            <div class="card">
+                <h3>Digital & Marketing</h3>
+                <br>
+                <span class="tag">Meta Business Suite[cite: 1]</span>
+                <span class="tag">Social Media Analytics[cite: 1]</span>
+                <span class="tag">Google Workspace[cite: 1]</span>
             </div>
         </div>
     </section>
 
-    <!-- Main Container -->
-    <div class="container">
-
-        <!-- About Section -->
-        <section id="about" class="section">
-            <h2>Summary</h2>
-            <div class="glass-box">
-                <p class="summary-text">
-                    Dynamic International Marketing Management undergraduate with diverse expertise across B2B/B2G sales, KOL campaign management, and HR outsourcing operations. Track record of driving brand engagement for global accounts and executing high-volume HR/Legal administration for unicorns. Passionate about applying strong cross-functional communication and strategic research skills to optimize workflows and drive sustainable business growth.[cite: 1]
-                </p>
+    <!-- Projects Section -->
+    <section id="projects" style="background-color: #0f172a;">
+        <h2 class="animate-up delay-2">Data Projects[cite: 1]</h2>
+        <div class="projects-grid animate-up delay-2">
+            <div class="card">
+                <h3>Voice of Customer TransJakarta[cite: 1]</h3>
+                <p>Data Visualization Project.[cite: 1]</p>
+                <br>
+                <span class="tag">PowerBI[cite: 1]</span>
             </div>
-        </section>
-
-        <!-- Education Section -->
-        <section id="education" class="section">
-            <h2>Education</h2>
-            <div class="timeline">
-                <div class="timeline-item">
-                    <h3>Politeknik Tempo</h3>
-                    <p class="role">International Marketing Management | Part of IMMSA</p>
-                    <span class="date">2021 - 2025</span>
-                    <p style="color: var(--text-muted); font-size: 0.92rem;">GPA: 3.73/4.00 (Full Scholarship)</p>
-                </div>
-                <div class="timeline-item">
-                    <h3>SMA N 87 Jakarta</h3>
-                    <p class="role">Mathematics and Natural Sciences</p>
-                    <span class="date">2018 - 2021</span>
-                </div>
+            <div class="card">
+                <h3>Sentiment Analysis of Shopee User Reviews[cite: 1]</h3>
+                <p>Natural Language Processing project analyzing reviews on Google Play Store.[cite: 1]</p>
+                <br>
+                <span class="tag">Colab[cite: 1]</span>
+                <span class="tag">Chatbot[cite: 1]</span>
             </div>
-        </section>
-
-        <!-- Work Experience Section -->
-        <section id="experience" class="section">
-            <h2>Work Experiences</h2>
-            <div class="timeline">
-                <div class="timeline-item">
-                    <h3>HR Administration - Internship</h3>
-                    <p class="role">Radikari</p>
-                    <span class="date">Jan 2026 - Apr 2026</span>
-                    <ul>
-                        <li>Successfully drafted and processed over 5,000 critical HR documents—including employment contracts, NDAs, and internal transfers[cite: 1].</li>
-                        <li>Handled fast-paced demands by processing up to 200+ letters in a single day while ensuring strict legal compliance and accuracy[cite: 1].</li>
-                        <li>Managed confidential employee relations and offboarding documentation for enterprise clients including Gojek, DANA, Kredivo, and Halodoc[cite: 1].</li>
-                    </ul>
-                </div>
-                <div class="timeline-item">
-                    <h3>Business Development - Internship</h3>
-                    <p class="role">Radikari</p>
-                    <span class="date">Oct 2025 - Jan 2026</span>
-                    <ul>
-                        <li>Sourced 250+ new prospect clients across targeted, high-value industries including manufacturing and logistics[cite: 1].</li>
-                        <li>Crafted industry-specific email outreach templates for warming up cold leads for the sales funnel[cite: 1].</li>
-                        <li>Conducted deep-dive market research and competitor analysis for BPO and MPO services[cite: 1].</li>
-                    </ul>
-                </div>
-                <div class="timeline-item">
-                    <h3>KOL Specialist - Internship</h3>
-                    <p class="role">Gushcloud Indonesia</p>
-                    <span class="date">Aug 2025 - Oct 2025</span>
-                    <ul>
-                        <li>Built and maintained a dynamic influencer database by evaluating 40+ KOLs daily[cite: 1].</li>
-                        <li>Managed end-to-end brand ambassador partnerships with 20 KOLs for major brands (Schneider, Hyundai, Philips)[cite: 1].</li>
-                        <li>Provided hands-on supervision for the Kojie-San brand at Jakarta x Beauty Convention Center[cite: 1].</li>
-                    </ul>
-                </div>
-                <div class="timeline-item">
-                    <h3>KOL Specialist - Internship</h3>
-                    <p class="role">PT AFG Ventura Teknologi (GoVisa)</p>
-                    <span class="date">Jul 2025 - Aug 2025</span>
-                    <ul>
-                        <li>Connected with over 400 potential KOLs in travel, diaspora, and student abroad communities[cite: 1].</li>
-                        <li>Secured high-impact partnerships with 5 KOLs, achieving a standout Cost Per View (CPV) of under Rp. 50[cite: 1].</li>
-                    </ul>
-                </div>
-                <div class="timeline-item">
-                    <h3>KOL Specialist - Internship</h3>
-                    <p class="role">PT HIIP Inovasi Indonesia</p>
-                    <span class="date">Sep 2024 - Mar 2025</span>
-                    <ul>
-                        <li>Compiled a rate card database of 500+ nano, micro, macro, and mega influencers across TikTok, Instagram, and YouTube[cite: 1].</li>
-                        <li>Collaborated with clients such as Permata Bank, Soklin, Blibli, and Erajaya[cite: 1].</li>
-                    </ul>
-                </div>
-                <div class="timeline-item">
-                    <h3>Marketing - Internship</h3>
-                    <p class="role">Tempo Inti Media Group</p>
-                    <span class="date">Oct 2023 - Feb 2024</span>
-                    <ul>
-                        <li>Authored partnership documents and executive reports to engage corporate clients and university partners[cite: 1].</li>
-                        <li>Researched and compiled a targeted database of national ministries to pitch 12-month annual Majalah TEMPO subscriptions[cite: 1].</li>
-                    </ul>
-                </div>
+            <div class="card">
+                <h3>Leaf Disease Classification[cite: 1]</h3>
+                <p>Computer Vision Deep Learning approach using ResNet50 model.[cite: 1]</p>
+                <br>
+                <span class="tag">ResNet50[cite: 1]</span>
+                <span class="tag">Colab[cite: 1]</span>
+                <span class="tag">Gradio[cite: 1]</span>
             </div>
-        </section>
-
-        <!-- Projects Section -->
-        <section id="projects" class="section">
-            <h2>Project Experiences</h2>
-            <div class="grid-projects">
-                <div class="project-card">
-                    <h3>HaiBunda Event</h3>
-                    <span class="date">Dec 2024</span>
-                    <p>Photobooth crew, managed visitor registration, guest flow, and goodie bag logistics[cite: 1].</p>
-                </div>
-                <div class="project-card">
-                    <h3>Temptation 2023</h3>
-                    <span class="date">Dec 2023 - Jan 2024</span>
-                    <p>Optimized consumption planning for 50+ attendees and managed custom trophy procurement[cite: 1].</p>
-                </div>
-                <div class="project-card">
-                    <h3>Kafe Ngemil</h3>
-                    <span class="date">Website Project</span>
-                    <p>Launched a custom Google Site, created Linktree page, and directed visual assets & food photography[cite: 1].</p>
-                </div>
-                <div class="project-card">
-                    <h3>Politeknik Tempo & IMMSA</h3>
-                    <span class="date">2022 - 2023</span>
-                    <p>Operated bulk messaging campaigns (WhatsApp Blast) for 700+ students and served as video editor/videographer[cite: 1].</p>
-                </div>
+            <div class="card">
+                <h3>Customer Shopping Behavior & Global Ads[cite: 1]</h3>
+                <p>Data Visualization tracking customer behaviors and global ad performance metrics.[cite: 1]</p>
+                <br>
+                <span class="tag">PowerBI[cite: 1]</span>
+                <span class="tag">Looker[cite: 1]</span>
+                <span class="tag">Kaggle[cite: 1]</span>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- Skills & Certifications -->
-        <section id="skills" class="section">
-            <h2>Skills & Additional Info</h2>
-            <div class="skills-grid">
-                <div class="skill-category">
-                    <h3>Skills</h3>
-                    <div class="tags">
-                        <span>Google Workspace</span>
-                        <span>Google Sites</span>
-                        <span>Google Business</span>
-                        <span>MS Word & Excel (VBA, XLOOKUP)</span>
-                        <span>SPSS</span>
-                        <span>Canva</span>
-                        <span>WhatsApp Blast</span>
-                    </div>
-                </div>
-                <div class="skill-category">
-                    <h3>Certifications</h3>
-                    <div class="tags">
-                        <span>Social Media Analytics</span>
-                        <span>Meta Business Suite</span>
-                        <span>Digital Marketing, BNSP 2024</span>
-                        <span>Maganghub Skill</span>
-                    </div>
-                </div>
-                <div class="skill-category">
-                    <h3>Languages</h3>
-                    <div class="tags">
-                        <span>Indonesian (Native)</span>
-                        <span>English (TOEIC 690 & EF SET 56/100 B2)</span>
-                    </div>
-                </div>
+    <!-- Experience Section -->
+    <section id="experience">
+        <h2 class="animate-up delay-3">Professional Experience[cite: 1]</h2>
+        <div class="experience-grid animate-up delay-3">
+            <div class="card">
+                <h3>HR Administration & Business Development Intern[cite: 1]</h3>
+                <p style="color: var(--accent);">Radikari | Oct 2025 - Apr 2026[cite: 1]</p>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li>Sourced 250+ new prospect clients across targeted, high-value industries.[cite: 1]</li>
+                    <li>Successfully drafted and processed over 5,000 critical HR documents, ensuring strict legal compliance.[cite: 1]</li>
+                    <li>Conducted deep-dive market research and competitor analysis for BPO and MPO services.[cite: 1]</li>
+                </ul>
             </div>
-        </section>
-
-        <!-- Contact Section -->
-        <section id="contact" class="section contact-section">
-            <h2>Get In Touch</h2>
-            <p>Let's connect for professional opportunities or collaborations!</p>
-            <div class="contact-links">
-                <a href="mailto:halloo.ayu@gmail.com"><i class="fa-solid fa-envelope"></i> halloo.ayu@gmail.com</a>
-                <a href="tel:+6289501279807"><i class="fa-solid fa-phone"></i> +6289501279807</a>
-                <a href="https://www.linkedin.com/in/ayunada/" target="_blank"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
+            <div class="card">
+                <h3>KOL Specialist Intern[cite: 1]</h3>
+                <p style="color: var(--accent);">Gushcloud, PT AFG (GoVisa), & PT HIIP | Sep 2024 - Oct 2025[cite: 1]</p>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li>Built dynamic influencer databases and managed end-to-end brand ambassador partnerships.[cite: 1]</li>
+                    <li>Secured high-impact partnerships with 5 KOLs, achieving a standout Cost Per View (CPV) of under Rp. 50.[cite: 1]</li>
+                    <li>Compiled a ratecard database of 500+ influencers across TikTok, Instagram, and YouTube.[cite: 1]</li>
+                </ul>
             </div>
-        </section>
+            <div class="card">
+                <h3>Event & UMKM On-Ground Crew</h3>
+                <p style="color: var(--accent);">UMKM Bogor & HaiBunda | Late 2023 - 2024[cite: 1]</p>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li>Provided practical information and advice to attendees on capturing content for social media promotion.[cite: 1]</li>
+                    <li>Managed end-to-end photobooth sessions and visitor registration workflows, maintaining optimal crowd flow.[cite: 1]</li>
+                </ul>
+            </div>
+        </div>
+    </section>
 
-    </div>
+    <!-- Education & Certifications -->
+    <section id="education" style="background-color: #0f172a; padding-bottom: 5rem;">
+        <h2 class="animate-up delay-3">Education & Certifications[cite: 1]</h2>
+        <div class="card animate-up delay-3" style="max-width: 800px; margin-top: 2rem;">
+            <h3>Politeknik Tempo[cite: 1]</h3>
+            <p>International Marketing Management (2021 - 2025)[cite: 1]</p>
+            <p>GPA: 3.73/4.00 (Full Scholarship)[cite: 1]</p>
+            <br>
+            <h4>Certifications:[cite: 1]</h4>
+            <ul style="margin-left: 20px; margin-top: 10px;">
+                <li>Data Analyst, PPKD Jakarta Selatan[cite: 1]</li>
+                <li>Digital Marketing, BNSP 2024[cite: 1]</li>
+                <li>EF SET 56/100 CEFR B2 & ETS TOEIC 690[cite: 1]</li>
+            </ul>
+        </div>
+    </section>
 
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2026 Ayu Nadia Irawan. Built with Liquid Glass Style.</p>
-    </footer>
-
+    <!-- Simple Scroll Script -->
     <script>
-        // Smooth scrolling for navigation anchors
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
+        // Intersection Observer for scroll animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = "1";
+                    entry.target.style.animation = "fadeInUp 1s ease-out forwards";
+                }
             });
+        });
+
+        document.querySelectorAll('.animate-up').forEach((el) => {
+            el.style.opacity = "0"; // Reset before observing
+            observer.observe(el);
         });
     </script>
 </body>
