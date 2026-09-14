@@ -1,1190 +1,674 @@
-import React, { useState, useEffect, useRef, useMemo, useCallback } from "react";
-import {
-  BarChart3,
-  PieChart,
-  Bot,
-  Leaf,
-  Lock,
-  ExternalLink,
-  ArrowUpRight,
-  Github,
-  Linkedin,
-  Mail,
-  Phone,
-  MapPin,
-  ChevronDown,
-  Copy,
-  Check,
-  Menu,
-  X,
-  GraduationCap,
-  Award,
-  Sparkles,
-} from "lucide-react";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ayu Nadia - Portfolio</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Unbounded:wght@500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- React & Babel for in-browser compiling -->
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  
+  <!-- Vanilla Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
 
-/* =========================================================================
-   IMAGE ASSETS (Ayu's own dashboard screenshots / project artifacts)
-========================================================================= */
-const IMG_POWERBI = "data:image/jpeg;base64,__POWERBI_B64__";
-const IMG_LOOKER = "data:image/jpeg;base64,__LOOKER_B64__";
-const IMG_CHATBOT = "data:image/jpeg;base64,__CHATBOT_B64__";
-const IMG_LEAF = "data:image/jpeg;base64,__LEAF_B64__";
+  <style>
+    body { margin: 0; padding: 0; background: #0B0A17; }
+    /* Hide cursor for custom cursor effect */
+    @media (pointer: fine) { body { cursor: none; } }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
 
-/* =========================================================================
-   DESIGN TOKENS
-========================================================================= */
-const CATEGORY = {
-  powerbi: { label: "Power BI", color: "#FBBF24", icon: BarChart3 },
-  looker: { label: "Looker Studio", color: "#4DA3FF", icon: PieChart },
-  nlp: { label: "NLP", color: "#F472B6", icon: Bot },
-  cv: { label: "Computer Vision", color: "#84CC16", icon: Leaf },
-};
+  <script type="text/babel">
+    const { useState, useEffect, useRef, useMemo, useCallback } = React;
 
-const GRAD_A = "#8B5CF6";
-const GRAD_B = "#22D3EE";
-
-function hexToRgba(hex, a) {
-  const h = hex.replace("#", "");
-  const r = parseInt(h.substring(0, 2), 16);
-  const g = parseInt(h.substring(2, 4), 16);
-  const b = parseInt(h.substring(4, 6), 16);
-  return `rgba(${r},${g},${b},${a})`;
-}
-
-/* =========================================================================
-   CONTENT — sourced from Ayu's CV
-========================================================================= */
-const PROJECTS = [
-  {
-    id: "transjakarta",
-    tag: "powerbi",
-    title: "TransJakarta Voice of Customer Dashboard",
-    org: "PPKD Jakarta Selatan",
-    year: "2026",
-    image: null,
-    summary:
-      "An internal Power BI dashboard built to analyze TransJakarta commuter feedback and guide service improvements. Dataset and dashboard are confidential to the client.",
-    tools: ["Power BI"],
-    metric: null,
-    badgeText: "Confidential",
-    links: [],
-  },
-  {
-    id: "shopping-behavior",
-    tag: "powerbi",
-    title: "Customer Shopping Behavior Dashboard",
-    org: "PPKD Jakarta Selatan",
-    year: "2026",
-    image: IMG_POWERBI,
-    summary:
-      "A retail analytics dashboard covering 3,900 customers — purchase value, review ratings, shopper demographics, seasonal trends, and payment preferences, filterable by category, discount, and subscription status.",
-    tools: ["Power BI"],
-    metric: { value: 3900, decimals: 0, prefix: "", suffix: "", label: "customers profiled" },
-    links: [
-      { label: "Open .pbix file", href: "https://github.com/hallooayu/portfolioppkd/blob/main/Customer%20Shopping%20Behavior%20AYU.pbix" },
-      { label: "Dataset on Kaggle", href: "https://www.kaggle.com/datasets/mohanprasanth21/customer-shopping-behavior-cleaned-dataset" },
-    ],
-  },
-  {
-    id: "global-ads",
-    tag: "looker",
-    title: "Global Ads Performance Report",
-    org: "PPKD Jakarta Selatan",
-    year: "2026",
-    image: IMG_LOOKER,
-    summary:
-      "A cross-platform ad performance report comparing Google, TikTok, and Meta — ROAS broken down by platform, campaign type, industry, and country against $11M+ in ad spend.",
-    tools: ["Looker Studio"],
-    metric: { value: 54, decimals: 0, prefix: "$", suffix: "M+", label: "revenue tracked" },
-    links: [
-      { label: "Open Looker Studio report", href: "https://datastudio.google.com/reporting/17780a3d-c6f7-4bff-8da3-9d91cc1bf2a3" },
-      { label: "Dataset on Kaggle", href: "https://www.kaggle.com/datasets/nudratabbas/global-ads-performance-google-meta-tiktok" },
-    ],
-  },
-  {
-    id: "nlp-shopee",
-    tag: "nlp",
-    title: "Shopee Review Sentiment & Support Bot",
-    org: "PPKD Jakarta Selatan",
-    year: "2026",
-    image: IMG_CHATBOT,
-    summary:
-      "Sentiment analysis on Shopee app-store reviews, extended into a working customer-support chatbot prototype that recognizes common complaints and drafts responses.",
-    tools: ["Google Colab", "NLP"],
-    metric: null,
-    badgeText: "Live prototype",
-    links: [
-      { label: "Sentiment notebook", href: "https://github.com/hallooayu/nlp_shopee.git" },
-      { label: "Chatbot repository", href: "https://github.com/hallooayu/shopee_sentiment.git" },
-    ],
-  },
-  {
-    id: "leaf-disease",
-    tag: "cv",
-    title: "Leaf Disease Classification with Deep Learning",
-    org: "Project-based learning, PPKD Jakarta Selatan",
-    year: "2026",
-    image: IMG_LEAF,
-    summary:
-      "A ResNet50 image classifier detecting five leaf diseases, benchmarked against MobileNetV2, VGG16, and a CNN baseline, then deployed as a real-time Gradio demo.",
-    tools: ["Google Colab", "Gradio", "ResNet50"],
-    metric: { value: 91.38, decimals: 2, prefix: "", suffix: "%", label: "model accuracy" },
-    links: [
-      { label: "Training notebook", href: "https://colab.research.google.com/drive/1dR_RWM7T4YQPY9eiKUmpbGPzu6aXBQAQ?usp=drive_link" },
-      { label: "Gradio demo notebook", href: "https://colab.research.google.com/drive/1LWlFkf8g7T3btbWfoRRNYM_Ii3h4_LDJ?usp=drive_link" },
-      { label: "Dataset on Roboflow", href: "https://universe.roboflow.com/st-aloysius-college-1bndf/leaf-disease-detection-mpdfi/dataset/3" },
-    ],
-  },
-];
-
-const FILTERS = [
-  { id: "all", label: "All" },
-  { id: "powerbi", label: "Power BI" },
-  { id: "looker", label: "Looker Studio" },
-  { id: "nlp", label: "NLP" },
-  { id: "cv", label: "Computer Vision" },
-];
-
-const EXPERIENCE = [
-  {
-    role: "HR Administration (Internship)",
-    org: "Radikari",
-    period: "Jan 2026 – Apr 2026",
-    bullets: [
-      "Drafted and processed 5,000+ HR documents, including employment contracts, NDAs, and internal transfers.",
-      "Processed up to 200+ letters a day while maintaining strict legal compliance across onboarding and OJT files.",
-      "Managed confidential employee relations and offboarding documentation for enterprise clients including Gojek, DANA, Kredivo, and Halodoc.",
-    ],
-  },
-  {
-    role: "Business Development (Internship)",
-    org: "Radikari",
-    period: "Oct 2025 – Jan 2026",
-    bullets: [
-      "Sourced 250+ new prospect clients across manufacturing and logistics.",
-      "Built industry-specific outreach templates to warm up leads for BPO and MPO services.",
-      "Ran market and competitor research, and coordinated complete tender submissions for client pitches.",
-    ],
-  },
-  {
-    role: "KOL Specialist (Internship)",
-    org: "Gushcloud Indonesia",
-    period: "Aug 2025 – Oct 2025",
-    bullets: [
-      "Shortlisted and evaluated 40+ KOLs daily to keep a continuous campaign pipeline.",
-      "Managed brand ambassador partnerships with 20 KOLs for Schneider, Hyundai, and Philips.",
-      "Coordinated onboarding and campaign execution with General Affair, Finance, Legal, and AE teams.",
-    ],
-  },
-  {
-    role: "KOL Specialist (Internship)",
-    org: "PT AFG Ventura Teknologi (GoVisa)",
-    period: "Jul 2025 – Aug 2025",
-    bullets: [
-      "Connected with 400+ potential KOLs across travel, diaspora, and student-abroad communities.",
-      "Scaled sourcing from 30 to 50 KOLs a day within the first two weeks, closing 2 deals on day one.",
-      "Secured partnerships with a Cost Per View under Rp50 — well below industry average.",
-    ],
-  },
-  {
-    role: "KOL Specialist (Internship)",
-    org: "PT HIIP Inovasi Indonesia",
-    period: "Sep 2024 – Mar 2025",
-    bullets: [
-      "Built a ratecard database of 500+ influencers across TikTok, Instagram, and YouTube.",
-      "Managed content contracts and invoices for clients including Permata Bank, Soklin, Blibli, and Erajaya.",
-    ],
-  },
-  {
-    role: "Marketing (Internship)",
-    org: "Tempo Inti Media Group",
-    period: "Oct 2023 – Feb 2024",
-    bullets: [
-      "Authored partnership documents and executive reports for corporate and university clients.",
-      "Designed CSR-focused presentation decks and proposals for corporate partners.",
-      "Built a database of government ministries for 12-month Majalah TEMPO subscription pitches.",
-    ],
-  },
-];
-
-const ORG_EXPERIENCE = [
-  { title: "HaiBunda — Event Crew", period: "Dec 2024", desc: "Ran photobooth sessions, visitor registration, and multi-floor event logistics." },
-  { title: "Temptation 2023", period: "Dec 2023 – Jan 2024", desc: "Planned catering for 50+ attendees and designed trophies for 10+ awardees." },
-  { title: "UMKM Project — Bogor & Kafe Ngemil", period: "Oct 2023 – Dec 2023", desc: "Built a Google Site and Linktree for a client business, and ran content workshops for local vendors." },
-  { title: "Politeknik Tempo & IMMSA", period: "Mar 2022 – Dec 2023", desc: "Video editor and competition coordinator for campus events and social channels." },
-];
-
-const SKILL_GROUPS = [
-  { name: "Data & Analytics", items: ["Power BI", "Looker Studio", "Python", "SQL", "DAX", "SPSS", "Microsoft Excel"] },
-  { name: "Marketing & Productivity", items: ["Google Workspace", "Meta Business Suite", "Canva", "Project Management Tools", "Microsoft PowerPoint", "Google Sites"] },
-];
-
-const CERTIFICATIONS = [
-  { title: "Data Analyst", org: "PPKD Jakarta Selatan", href: "https://drive.google.com/drive/folders/1tL7_JyCseBs68uDnpAMnQ3MKGKHVilAX?usp=drive_link" },
-  { title: "Digital Marketing", org: "BNSP, 2024", href: "https://drive.google.com/drive/folders/1j7H6viNx6f5zbccPQPTJ5WbUAzT5Q4EF?usp=drive_link" },
-  { title: "Maganghub Skill", org: "Maganghub", href: "https://drive.google.com/drive/folders/19UOb6qng_fl8HSw9Lm3TuE1bCBiRYbTL?usp=drive_link" },
-  { title: "DQLab Certificate", org: "DQLab", href: "https://drive.google.com/drive/folders/1Li7mcqZEVwDCRTGoGY5wIAnwORjCQ2gS?usp=drive_link" },
-  { title: "Jobstreet Certificate", org: "Jobstreet", href: "https://drive.google.com/drive/folders/1NsBanM7Nws5JO_Fx34jg4LoUAkc5BdH8?usp=drive_link" },
-  { title: "TOEIC 690 & EF SET B2", org: "ETS / EF", href: "https://drive.google.com/drive/folders/1DwSxcG1qCxSrQ7g7zI4oDXHSgDGOByDm?usp=drive_link" },
-];
-
-const MARQUEE_ITEMS = ["DATA ANALYST", "POWER BI", "LOOKER STUDIO", "PYTHON", "SQL", "DAX", "MARKETING STRATEGY", "MACHINE LEARNING"];
-
-const NAV_LINKS = [
-  { id: "about", label: "About" },
-  { id: "projects", label: "Projects" },
-  { id: "experience", label: "Experience" },
-  { id: "skills", label: "Skills" },
-  { id: "certifications", label: "Certifications" },
-  { id: "contact", label: "Contact" },
-];
-
-/* =========================================================================
-   HOOKS
-========================================================================= */
-function usePrefersReducedMotion() {
-  const [reduced, setReduced] = useState(false);
-  useEffect(() => {
-    if (typeof window === "undefined" || !window.matchMedia) return;
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    setReduced(mq.matches);
-    const handler = () => setReduced(mq.matches);
-    mq.addEventListener ? mq.addEventListener("change", handler) : mq.addListener(handler);
-    return () => {
-      mq.removeEventListener ? mq.removeEventListener("change", handler) : mq.removeListener(handler);
-    };
-  }, []);
-  return reduced;
-}
-
-function useInView(threshold = 0.15) {
-  const ref = useRef(null);
-  const [visible, setVisible] = useState(false);
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const obs = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true);
-          obs.unobserve(el);
+    /* =========================================================================
+       ICON WRAPPER (Safely uses Lucide in standalone React)
+    ========================================================================= */
+    function Icon({ name, size = 24, color = 'currentColor', className = '', style = {} }) {
+      const iconRef = useRef(null);
+      useEffect(() => {
+        if (iconRef.current && window.lucide) {
+          iconRef.current.innerHTML = `<i data-lucide="${name}"></i>`;
+          window.lucide.createIcons({
+            root: iconRef.current,
+            attrs: { width: size, height: size, color: color, class: className, "stroke-width": 2 }
+          });
         }
-      },
-      { threshold }
-    );
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, [threshold]);
-  return [ref, visible];
-}
+      }, [name, size, color, className]);
+      return <span ref={iconRef} style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', ...style }} />;
+    }
 
-function useCountUp(target, active, duration = 1300) {
-  const [value, setValue] = useState(0);
-  useEffect(() => {
-    if (!active) return;
-    let raf;
-    const start = performance.now();
-    const tick = (now) => {
-      const p = Math.min((now - start) / duration, 1);
-      const eased = 1 - Math.pow(1 - p, 3);
-      setValue(target * eased);
-      if (p < 1) raf = requestAnimationFrame(tick);
+    // Mapping icons used in the project
+    const BarChart3 = (p) => <Icon name="bar-chart-3" {...p} />;
+    const PieChart = (p) => <Icon name="pie-chart" {...p} />;
+    const Bot = (p) => <Icon name="bot" {...p} />;
+    const Leaf = (p) => <Icon name="leaf" {...p} />;
+    const Lock = (p) => <Icon name="lock" {...p} />;
+    const ExternalLink = (p) => <Icon name="external-link" {...p} />;
+    const ArrowUpRight = (p) => <Icon name="arrow-up-right" {...p} />;
+    const Github = (p) => <Icon name="github" {...p} />;
+    const Linkedin = (p) => <Icon name="linkedin" {...p} />;
+    const Mail = (p) => <Icon name="mail" {...p} />;
+    const Phone = (p) => <Icon name="phone" {...p} />;
+    const MapPin = (p) => <Icon name="map-pin" {...p} />;
+    const ChevronDown = (p) => <Icon name="chevron-down" {...p} />;
+    const Copy = (p) => <Icon name="copy" {...p} />;
+    const Check = (p) => <Icon name="check" {...p} />;
+    const Menu = (p) => <Icon name="menu" {...p} />;
+    const X = (p) => <Icon name="x" {...p} />;
+    const GraduationCap = (p) => <Icon name="graduation-cap" {...p} />;
+    const Award = (p) => <Icon name="award" {...p} />;
+    const Sparkles = (p) => <Icon name="sparkles" {...p} />;
+
+    /* =========================================================================
+       IMAGE ASSETS
+    ========================================================================= */
+    const IMG_POWERBI = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='450'%3E%3Crect width='100%25' height='100%25' fill='%23FBBF24' opacity='0.2'/%3E%3Ctext x='50%25' y='50%25' fill='%23FBBF24' font-family='sans-serif' font-size='24' text-anchor='middle' dominant-baseline='middle'%3EPower BI Placeholder%3C/text%3E%3C/svg%3E";
+    const IMG_LOOKER = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='450'%3E%3Crect width='100%25' height='100%25' fill='%234DA3FF' opacity='0.2'/%3E%3Ctext x='50%25' y='50%25' fill='%234DA3FF' font-family='sans-serif' font-size='24' text-anchor='middle' dominant-baseline='middle'%3ELooker Studio Placeholder%3C/text%3E%3C/svg%3E";
+    const IMG_CHATBOT = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='450'%3E%3Crect width='100%25' height='100%25' fill='%23F472B6' opacity='0.2'/%3E%3Ctext x='50%25' y='50%25' fill='%23F472B6' font-family='sans-serif' font-size='24' text-anchor='middle' dominant-baseline='middle'%3EChatbot Placeholder%3C/text%3E%3C/svg%3E";
+    const IMG_LEAF = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='450'%3E%3Crect width='100%25' height='100%25' fill='%2384CC16' opacity='0.2'/%3E%3Ctext x='50%25' y='50%25' fill='%2384CC16' font-family='sans-serif' font-size='24' text-anchor='middle' dominant-baseline='middle'%3ECV Leaf Placeholder%3C/text%3E%3C/svg%3E";
+
+    /* =========================================================================
+       DESIGN TOKENS & DATA
+    ========================================================================= */
+    const CATEGORY = {
+      powerbi: { label: "Power BI", color: "#FBBF24", icon: BarChart3 },
+      looker: { label: "Looker Studio", color: "#4DA3FF", icon: PieChart },
+      nlp: { label: "NLP", color: "#F472B6", icon: Bot },
+      cv: { label: "Computer Vision", color: "#84CC16", icon: Leaf },
     };
-    raf = requestAnimationFrame(tick);
-    return () => raf && cancelAnimationFrame(raf);
-  }, [active, target, duration]);
-  return value;
-}
 
-function useScrollProgress() {
-  const [progress, setProgress] = useState(0);
-  const [scrolled, setScrolled] = useState(false);
-  useEffect(() => {
-    let ticking = false;
-    const onScroll = () => {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(() => {
-        const doc = document.documentElement;
-        const top = doc.scrollTop || document.body.scrollTop;
-        const height = doc.scrollHeight - doc.clientHeight;
-        setProgress(height > 0 ? (top / height) * 100 : 0);
-        setScrolled(top > 8);
-        ticking = false;
-      });
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-  return { progress, scrolled };
-}
+    const GRAD_A = "#8B5CF6";
+    const GRAD_B = "#22D3EE";
 
-function useActiveSection(ids) {
-  const [active, setActive] = useState(ids[0]);
-  useEffect(() => {
-    const observers = [];
-    ids.forEach((id) => {
-      const el = document.getElementById(id);
-      if (!el) return;
-      const obs = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) setActive(id);
-        },
-        { rootMargin: "-45% 0px -50% 0px", threshold: 0 }
+    function hexToRgba(hex, a) {
+      const h = hex.replace("#", "");
+      const r = parseInt(h.substring(0, 2), 16);
+      const g = parseInt(h.substring(2, 4), 16);
+      const b = parseInt(h.substring(4, 6), 16);
+      return `rgba(${r},${g},${b},${a})`;
+    }
+
+    const PROJECTS = [
+      { id: "transjakarta", tag: "powerbi", title: "TransJakarta Voice of Customer Dashboard", org: "PPKD Jakarta Selatan", year: "2026", image: null, summary: "An internal Power BI dashboard built to analyze commuter feedback and guide service improvements. Confidential dataset.", tools: ["Power BI"], metric: null, badgeText: "Confidential", links: [] },
+      { id: "shopping-behavior", tag: "powerbi", title: "Customer Shopping Behavior Dashboard", org: "PPKD Jakarta Selatan", year: "2026", image: IMG_POWERBI, summary: "Retail analytics dashboard covering 3,900 customers — purchase value, demographics, seasonal trends.", tools: ["Power BI"], metric: { value: 3900, decimals: 0, prefix: "", suffix: "", label: "customers profiled" }, links: [{ label: "Open .pbix file", href: "#" }] },
+      { id: "global-ads", tag: "looker", title: "Global Ads Performance Report", org: "PPKD Jakarta Selatan", year: "2026", image: IMG_LOOKER, summary: "Cross-platform ad performance report comparing Google, TikTok, and Meta — ROAS broken down by platform and country.", tools: ["Looker Studio"], metric: { value: 54, decimals: 0, prefix: "$", suffix: "M+", label: "revenue tracked" }, links: [{ label: "Open Looker Studio", href: "#" }] },
+      { id: "nlp-shopee", tag: "nlp", title: "Shopee Review Sentiment & Support Bot", org: "PPKD Jakarta Selatan", year: "2026", image: IMG_CHATBOT, summary: "Sentiment analysis on app-store reviews, extended into a working customer-support chatbot prototype.", tools: ["Google Colab", "NLP"], metric: null, badgeText: "Live prototype", links: [{ label: "Chatbot repo", href: "#" }] },
+      { id: "leaf-disease", tag: "cv", title: "Leaf Disease Classification with Deep Learning", org: "PPKD Jakarta Selatan", year: "2026", image: IMG_LEAF, summary: "A ResNet50 image classifier detecting five leaf diseases, deployed as a real-time Gradio demo.", tools: ["Gradio", "ResNet50"], metric: { value: 91.38, decimals: 2, prefix: "", suffix: "%", label: "model accuracy" }, links: [{ label: "Gradio demo", href: "#" }] },
+    ];
+
+    const FILTERS = [
+      { id: "all", label: "All" }, { id: "powerbi", label: "Power BI" }, { id: "looker", label: "Looker Studio" }, { id: "nlp", label: "NLP" }, { id: "cv", label: "Computer Vision" },
+    ];
+
+    const EXPERIENCE = [
+      { role: "HR Administration (Internship)", org: "Radikari", period: "Jan 2026 – Apr 2026", bullets: ["Drafted 5,000+ HR documents.", "Processed 200+ letters a day."] },
+      { role: "Business Development (Internship)", org: "Radikari", period: "Oct 2025 – Jan 2026", bullets: ["Sourced 250+ prospect clients."] },
+    ];
+
+    const SKILL_GROUPS = [
+      { name: "Data & Analytics", items: ["Power BI", "Looker Studio", "Python", "SQL", "DAX", "Microsoft Excel"] },
+      { name: "Marketing & Productivity", items: ["Google Workspace", "Meta Business Suite", "Canva", "Microsoft PowerPoint"] },
+    ];
+
+    const MARQUEE_ITEMS = ["DATA ANALYST", "POWER BI", "LOOKER STUDIO", "PYTHON", "SQL", "DAX", "MARKETING STRATEGY"];
+
+    const NAV_LINKS = [
+      { id: "about", label: "About" }, { id: "projects", label: "Projects" }, { id: "experience", label: "Experience" }, { id: "skills", label: "Skills" }, { id: "contact", label: "Contact" },
+    ];
+
+    /* =========================================================================
+       HOOKS
+    ========================================================================= */
+    function usePrefersReducedMotion() {
+      const [reduced, setReduced] = useState(false);
+      useEffect(() => {
+        const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+        setReduced(mq.matches);
+        const handler = () => setReduced(mq.matches);
+        mq.addEventListener ? mq.addEventListener("change", handler) : mq.addListener(handler);
+        return () => mq.removeEventListener ? mq.removeEventListener("change", handler) : mq.removeListener(handler);
+      }, []);
+      return reduced;
+    }
+
+    function useInView(threshold = 0.15) {
+      const ref = useRef(null);
+      const [visible, setVisible] = useState(false);
+      useEffect(() => {
+        const el = ref.current;
+        if (!el) return;
+        const obs = new IntersectionObserver(([entry]) => {
+          if (entry.isIntersecting) { setVisible(true); obs.unobserve(el); }
+        }, { threshold });
+        obs.observe(el);
+        return () => obs.disconnect();
+      }, [threshold]);
+      return [ref, visible];
+    }
+
+    function useCountUp(target, active, duration = 1300) {
+      const [value, setValue] = useState(0);
+      useEffect(() => {
+        if (!active) return;
+        let raf;
+        const start = performance.now();
+        const tick = (now) => {
+          const p = Math.min((now - start) / duration, 1);
+          const eased = 1 - Math.pow(1 - p, 3);
+          setValue(target * eased);
+          if (p < 1) raf = requestAnimationFrame(tick);
+        };
+        raf = requestAnimationFrame(tick);
+        return () => raf && cancelAnimationFrame(raf);
+      }, [active, target, duration]);
+      return value;
+    }
+
+    function useScrollProgress() {
+      const [progress, setProgress] = useState(0);
+      const [scrolled, setScrolled] = useState(false);
+      useEffect(() => {
+        let ticking = false;
+        const onScroll = () => {
+          if (ticking) return;
+          ticking = true;
+          requestAnimationFrame(() => {
+            const doc = document.documentElement;
+            const top = doc.scrollTop || document.body.scrollTop;
+            const height = doc.scrollHeight - doc.clientHeight;
+            setProgress(height > 0 ? (top / height) * 100 : 0);
+            setScrolled(top > 8);
+            ticking = false;
+          });
+        };
+        window.addEventListener("scroll", onScroll, { passive: true });
+        onScroll();
+        return () => window.removeEventListener("scroll", onScroll);
+      }, []);
+      return { progress, scrolled };
+    }
+
+    /* =========================================================================
+       NEW ANIMATION PRIMITIVES
+    ========================================================================= */
+    // Custom Magnetic Cursor Component
+    function CustomCursor() {
+      const cursorRef = useRef(null);
+      const ringRef = useRef(null);
+      
+      useEffect(() => {
+        const onMouseMove = (e) => {
+          if (cursorRef.current && ringRef.current) {
+            cursorRef.current.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`;
+            ringRef.current.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`;
+          }
+        };
+        const onMouseDown = () => ringRef.current?.classList.add('clicking');
+        const onMouseUp = () => ringRef.current?.classList.remove('clicking');
+        
+        window.addEventListener('mousemove', onMouseMove);
+        window.addEventListener('mousedown', onMouseDown);
+        window.addEventListener('mouseup', onMouseUp);
+        
+        return () => {
+          window.removeEventListener('mousemove', onMouseMove);
+          window.removeEventListener('mousedown', onMouseDown);
+          window.removeEventListener('mouseup', onMouseUp);
+        };
+      }, []);
+
+      return (
+        <>
+          <div ref={cursorRef} className="custom-cursor-dot" />
+          <div ref={ringRef} className="custom-cursor-ring" />
+        </>
       );
-      obs.observe(el);
-      observers.push(obs);
-    });
-    return () => observers.forEach((o) => o.disconnect());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ids.join(",")]);
-  return active;
-}
+    }
 
-function useMagnetic(strength = 16) {
-  const ref = useRef(null);
-  const onMouseMove = (e) => {
-    const el = ref.current;
-    if (!el) return;
-    const rect = el.getBoundingClientRect();
-    const x = e.clientX - rect.left - rect.width / 2;
-    const y = e.clientY - rect.top - rect.height / 2;
-    el.style.transition = "transform .12s ease-out";
-    el.style.transform = `translate(${(x / rect.width) * strength}px, ${(y / rect.height) * strength}px)`;
-  };
-  const onMouseLeave = () => {
-    const el = ref.current;
-    if (!el) return;
-    el.style.transition = "transform .45s cubic-bezier(.16,1,.3,1)";
-    el.style.transform = "translate(0,0)";
-  };
-  return { ref, onMouseMove, onMouseLeave };
-}
+    // Enhanced Reveal with Scale and Blur
+    function Reveal({ children, delay = 0, y = 30, style = {}, as = "div", className = "" }) {
+      const [ref, visible] = useInView(0.12);
+      const reduced = usePrefersReducedMotion();
+      const Tag = as;
+      return (
+        <Tag
+          ref={ref}
+          className={className}
+          style={{
+            opacity: reduced ? 1 : visible ? 1 : 0,
+            transform: reduced ? "none" : visible ? "translateY(0) scale(1)" : `translateY(${y}px) scale(0.96)`,
+            filter: reduced ? "none" : visible ? "blur(0px)" : "blur(8px)",
+            transition: reduced ? "none" : `all 0.8s cubic-bezier(0.16, 1, 0.3, 1) ${delay}s`,
+            ...style,
+          }}
+        >
+          {children}
+        </Tag>
+      );
+    }
 
-/* =========================================================================
-   SMALL UI PRIMITIVES
-========================================================================= */
-function Reveal({ children, delay = 0, y = 22, style = {}, as = "div", className = "" }) {
-  const [ref, visible] = useInView(0.12);
-  const reduced = usePrefersReducedMotion();
-  const Tag = as;
-  return (
-    <Tag
-      ref={ref}
-      className={className}
-      style={{
-        opacity: reduced ? 1 : visible ? 1 : 0,
-        transform: reduced ? "none" : visible ? "translateY(0)" : `translateY(${y}px)`,
-        transition: reduced ? "none" : `opacity .7s cubic-bezier(.16,1,.3,1) ${delay}s, transform .7s cubic-bezier(.16,1,.3,1) ${delay}s`,
-        ...style,
-      }}
-    >
-      {children}
-    </Tag>
-  );
-}
-
-function KineticHeading({ text }) {
-  const words = text.split(" ");
-  return (
-    <span style={{ display: "inline-flex", flexWrap: "wrap" }}>
-      {words.map((w, i) => (
-        <span key={i} style={{ display: "inline-block", overflow: "hidden", paddingBottom: "0.12em", marginRight: "0.28em" }}>
-          <span
-            className="word-inner"
-            style={{ display: "inline-block", animation: `wordUp .9s cubic-bezier(.16,1,.3,1) both`, animationDelay: `${0.15 + i * 0.09}s` }}
-          >
-            {w}
-          </span>
+    function KineticHeading({ text }) {
+      const words = text.split(" ");
+      return (
+        <span style={{ display: "inline-flex", flexWrap: "wrap" }}>
+          {words.map((w, i) => (
+            <span key={i} style={{ display: "inline-block", overflow: "hidden", paddingBottom: "0.12em", marginRight: "0.28em" }}>
+              <span
+                className="word-inner"
+                style={{ display: "inline-block", animation: `wordUp .9s cubic-bezier(.16,1,.3,1) both`, animationDelay: `${0.15 + i * 0.09}s` }}
+              >
+                {w}
+              </span>
+            </span>
+          ))}
         </span>
-      ))}
-    </span>
-  );
-}
+      );
+    }
 
-function GradTag({ color, children }) {
-  return (
-    <span
-      className="grad-tag"
-      style={{
-        display: "inline-flex",
-        alignItems: "center",
-        gap: 6,
-        padding: "6px 13px",
-        borderRadius: 999,
-        fontSize: 12.5,
-        fontWeight: 600,
-        letterSpacing: ".01em",
-        color,
-        background: hexToRgba(color, 0.13),
-        border: `1px solid ${hexToRgba(color, 0.38)}`,
-      }}
-    >
-      {children}
-    </span>
-  );
-}
+    function GradTag({ color, children }) {
+      return (
+        <span
+          className="grad-tag"
+          style={{
+            display: "inline-flex", alignItems: "center", gap: 6, padding: "6px 13px",
+            borderRadius: 999, fontSize: 12.5, fontWeight: 600, color,
+            background: hexToRgba(color, 0.13), border: `1px solid ${hexToRgba(color, 0.38)}`,
+          }}
+        >
+          {children}
+        </span>
+      );
+    }
 
-function StatCounter({ value, decimals = 0, prefix = "", suffix = "", label }) {
-  const [ref, visible] = useInView(0.4);
-  const n = useCountUp(value, visible);
-  return (
-    <div ref={ref}>
-      <div style={{ fontFamily: "'Unbounded', sans-serif", fontWeight: 700, fontSize: "clamp(26px,3.4vw,34px)", background: `linear-gradient(90deg, ${GRAD_A}, ${GRAD_B})`, WebkitBackgroundClip: "text", backgroundClip: "text", color: "transparent" }}>
-        {prefix}
-        {n.toLocaleString("en-US", { minimumFractionDigits: decimals, maximumFractionDigits: decimals })}
-        {suffix}
-      </div>
-      <div style={{ fontSize: 13, color: "#9C97B8", marginTop: 2 }}>{label}</div>
-    </div>
-  );
-}
+    function StatCounter({ value, decimals = 0, prefix = "", suffix = "", label }) {
+      const [ref, visible] = useInView(0.4);
+      const n = useCountUp(value, visible);
+      return (
+        <div ref={ref} className="stat-counter">
+          <div style={{ fontFamily: "'Unbounded', sans-serif", fontWeight: 700, fontSize: "clamp(26px,3.4vw,34px)", background: `linear-gradient(90deg, ${GRAD_A}, ${GRAD_B})`, WebkitBackgroundClip: "text", color: "transparent" }}>
+            {prefix}{n.toLocaleString("en-US", { minimumFractionDigits: decimals, maximumFractionDigits: decimals })}{suffix}
+          </div>
+          <div style={{ fontSize: 13, color: "#9C97B8", marginTop: 2 }}>{label}</div>
+        </div>
+      );
+    }
 
-function MagLink({ href, children, primary, onClick }) {
-  const { ref, onMouseMove, onMouseLeave } = useMagnetic(10);
-  const Tag = href ? "a" : "button";
-  return (
-    <Tag
-      ref={ref}
-      href={href}
-      onClick={onClick}
-      target={href ? "_blank" : undefined}
-      rel={href ? "noopener noreferrer" : undefined}
-      onMouseMove={onMouseMove}
-      onMouseLeave={onMouseLeave}
-      className={primary ? "btn-primary" : "btn-ghost"}
-    >
-      {children}
-    </Tag>
-  );
-}
+    /* =========================================================================
+       PROJECT CARD
+    ========================================================================= */
+    function ProjectCard({ project, index }) {
+      const cardRef = useRef(null);
+      const [visible, setVisible] = useState(false);
+      const reduced = usePrefersReducedMotion();
+      const cat = CATEGORY[project.tag];
+      const IconCmp = cat.icon;
 
-/* =========================================================================
-   PROJECT CARD (tilt + cursor spotlight)
-========================================================================= */
-function ProjectCard({ project, index }) {
-  const cardRef = useRef(null);
-  const [visible, setVisible] = useState(false);
-  const reduced = usePrefersReducedMotion();
-  const cat = CATEGORY[project.tag];
-  const Icon = cat.icon;
+      useEffect(() => {
+        const el = cardRef.current;
+        if (!el) return;
+        const obs = new IntersectionObserver(([entry]) => {
+          if (entry.isIntersecting) { setVisible(true); obs.unobserve(el); }
+        }, { threshold: 0.1 });
+        obs.observe(el);
+        return () => obs.disconnect();
+      }, []);
 
-  useEffect(() => {
-    const el = cardRef.current;
-    if (!el) return;
-    const obs = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true);
-          obs.unobserve(el);
-        }
-      },
-      { threshold: 0.1 }
-    );
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, []);
+      const metricValue = useCountUp(project.metric ? project.metric.value : 0, visible && !!project.metric, 1400);
 
-  const metricValue = useCountUp(project.metric ? project.metric.value : 0, visible && !!project.metric, 1400);
+      const handleMove = useCallback((e) => {
+        if (reduced) return;
+        const el = cardRef.current;
+        if (!el) return;
+        const rect = el.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const px = x / rect.width;
+        const py = y / rect.height;
+        el.style.setProperty("--mx", `${x}px`);
+        el.style.setProperty("--my", `${y}px`);
+        el.style.transition = "transform .08s linear";
+        el.style.transform = `perspective(1000px) rotateX(${(0.5 - py) * 7}deg) rotateY(${(px - 0.5) * 7}deg) translateY(-8px) scale(1.02)`;
+      }, [reduced]);
 
-  const handleMove = useCallback(
-    (e) => {
-      if (reduced) return;
-      const el = cardRef.current;
-      if (!el) return;
-      const rect = el.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      const px = x / rect.width;
-      const py = y / rect.height;
-      el.style.setProperty("--mx", `${x}px`);
-      el.style.setProperty("--my", `${y}px`);
-      el.style.transition = "transform .08s linear";
-      el.style.transform = `perspective(1000px) rotateX(${(0.5 - py) * 7}deg) rotateY(${(px - 0.5) * 7}deg) translateY(-4px)`;
-    },
-    [reduced]
-  );
+      const handleLeave = useCallback(() => {
+        const el = cardRef.current;
+        if (!el) return;
+        el.style.transition = "transform .5s cubic-bezier(.16,1,.3,1)";
+        el.style.transform = "perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0) scale(1)";
+      }, []);
 
-  const handleLeave = useCallback(() => {
-    const el = cardRef.current;
-    if (!el) return;
-    el.style.transition = "transform .5s cubic-bezier(.16,1,.3,1)";
-    el.style.transform = "perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0)";
-  }, []);
+      const baseStyle = {
+        opacity: reduced ? 1 : visible ? 1 : 0,
+        transform: reduced ? "none" : visible ? "translateY(0) scale(1)" : "translateY(30px) scale(0.95)",
+        transitionProperty: "opacity, transform",
+        transitionDuration: ".8s",
+        transitionTimingFunction: "cubic-bezier(.16,1,.3,1)",
+        transitionDelay: `${(index % 3) * 0.1}s`,
+      };
 
-  const baseStyle = {
-    opacity: reduced ? 1 : visible ? 1 : 0,
-    transitionProperty: "opacity",
-    transitionDuration: ".7s",
-    transitionTimingFunction: "cubic-bezier(.16,1,.3,1)",
-    transitionDelay: `${(index % 3) * 0.09}s`,
-  };
-  if (!reduced && !visible) baseStyle.transform = "translateY(26px)";
+      return (
+        <div ref={cardRef} onMouseMove={handleMove} onMouseLeave={handleLeave} className="project-card" style={{ ...baseStyle, "--cat": cat.color }}>
+          <div className="card-spotlight" />
+          <div className="frame-wrap" style={{ "--cat": cat.color }}>
+            <div className="frame-inner">
+              {project.image ? (
+                <>
+                  <div className="frame-bar">
+                    <span className="dot" style={{ background: "#FF5F57" }} />
+                    <span className="dot" style={{ background: "#FEBC2E" }} />
+                    <span className="dot" style={{ background: "#28C840" }} />
+                  </div>
+                  <img src={project.image} alt={project.title} loading="lazy" />
+                </>
+              ) : (
+                <div className="locked-panel">
+                  <Lock size={22} color="#9C97B8" />
+                  <span>Confidential dashboard</span>
+                </div>
+              )}
+            </div>
+          </div>
+          <div style={{ padding: "20px 22px 22px", display: "flex", flexDirection: "column", gap: 12, flex: 1 }}>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+              <GradTag color={cat.color}> <IconCmp size={13} /> {cat.label} </GradTag>
+              {project.metric && (
+                <span style={{ fontFamily: "'Unbounded'", fontWeight: 700, fontSize: 15, color: "#F4F4F8" }}>
+                  {project.metric.prefix}{metricValue.toLocaleString("en-US", { maximumFractionDigits: project.metric.decimals })}{project.metric.suffix}
+                </span>
+              )}
+            </div>
+            <div>
+              <h3 style={{ margin: 0, fontFamily: "'Unbounded'", fontWeight: 600, fontSize: 17, lineHeight: 1.35, color: "#F4F4F8" }}>{project.title}</h3>
+              <p style={{ margin: "4px 0 0", fontSize: 12.5, color: "#79748f" }}>{project.org}, {project.year}</p>
+            </div>
+            <p style={{ margin: 0, fontSize: 14, lineHeight: 1.65, color: "#B8B4CC" }}>{project.summary}</p>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginTop: "auto" }}>
+              {project.tools.map((t) => <span key={t} className="tool-chip">{t}</span>)}
+            </div>
+          </div>
+        </div>
+      );
+    }
 
-  return (
-    <div
-      ref={cardRef}
-      onMouseMove={handleMove}
-      onMouseLeave={handleLeave}
-      className="project-card"
-      style={{ ...baseStyle, "--cat": cat.color }}
-    >
-      <div className="card-spotlight" />
+    /* =========================================================================
+       MAIN APP
+    ========================================================================= */
+    function Portfolio() {
+      const [filter, setFilter] = useState("all");
+      const [openExp, setOpenExp] = useState(0);
+      const [lightbox, setLightbox] = useState(null);
+      const [menuOpen, setMenuOpen] = useState(false);
+      const [mounted, setMounted] = useState(false);
 
-      <div className="frame-wrap" style={{ "--cat": cat.color }}>
-        <div className="frame-inner">
-          {project.image ? (
-            <>
-              <div className="frame-bar">
-                <span className="dot" style={{ background: "#FF5F57" }} />
-                <span className="dot" style={{ background: "#FEBC2E" }} />
-                <span className="dot" style={{ background: "#28C840" }} />
+      const { progress, scrolled } = useScrollProgress();
+
+      useEffect(() => {
+        // Trigger page load animation
+        const t = setTimeout(() => setMounted(true), 100);
+        return () => clearTimeout(t);
+      }, []);
+
+      const filteredProjects = useMemo(() => (filter === "all" ? PROJECTS : PROJECTS.filter((p) => p.tag === filter)), [filter]);
+
+      const scrollTo = (id) => {
+        setMenuOpen(false);
+        const el = document.getElementById(id);
+        if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+      };
+
+      return (
+        <div className={`portfolio-root ${mounted ? 'is-mounted' : ''}`}>
+          <GlobalStyles />
+          <CustomCursor />
+
+          <div className="aurora-layer" aria-hidden="true">
+            <span className="orb orb-a" />
+            <span className="orb orb-b" />
+            <span className="orb orb-c" />
+          </div>
+          <div className="grain-layer" aria-hidden="true" />
+          <div className="scroll-progress" style={{ width: `${progress}%` }} />
+
+          {/* NAV */}
+          <header className={`site-nav ${scrolled ? "is-scrolled" : ""}`}>
+            <div className="container nav-inner">
+              <button className="logo" onClick={() => scrollTo("top")}>
+                <span className="logo-mark">AN</span>
+                <span className="logo-word">Ayu Nadia</span>
+              </button>
+              <nav className="desktop-nav">
+                {NAV_LINKS.map((n) => (
+                  <button key={n.id} onClick={() => scrollTo(n.id)} className="nav-link">{n.label}</button>
+                ))}
+              </nav>
+            </div>
+          </header>
+
+          {/* HERO */}
+          <section id="top" className="hero">
+            <div className="container hero-inner">
+              <div className={mounted ? "hero-copy is-in" : "hero-copy"}>
+                <div className="hero-badges">
+                  <GradTag color={GRAD_A}>Data Analyst</GradTag>
+                  <GradTag color={GRAD_B}>Marketing Strategist</GradTag>
+                </div>
+                <h1 className="hero-title"><KineticHeading text="Ayu Nadia Irawan" /></h1>
+                <p className="hero-sub">I turn campaign data, customer behavior, and operational metrics into dashboards and models that drive decisions.</p>
+                <div className="hero-cta">
+                  <a className="btn-primary" href="#projects" onClick={(e) => { e.preventDefault(); scrollTo("projects"); }}>
+                    View projects <ArrowUpRight size={16} />
+                  </a>
+                </div>
+                <div className="hero-stats">
+                  <StatCounter value={3.73} decimals={2} label="GPA, full scholarship" />
+                  <StatCounter value={690} decimals={0} label="TOEIC score" />
+                  <StatCounter value={5} decimals={0} label="Data projects shipped" />
+                </div>
               </div>
-              <img src={project.image} alt={project.title} loading="lazy" />
-            </>
-          ) : (
-            <div className="locked-panel">
-              <Lock size={22} color="#9C97B8" />
-              <span>Confidential dashboard</span>
-              <p>Details available on request</p>
+            </div>
+          </section>
+
+          {/* MARQUEE */}
+          <div className="marquee-wrap" aria-hidden="true">
+            <div className="marquee-track">
+              {[...MARQUEE_ITEMS, ...MARQUEE_ITEMS].map((item, i) => (
+                <span className="marquee-item" key={i}>{item}<span className="marquee-dot" /></span>
+              ))}
+            </div>
+          </div>
+
+          {/* PROJECTS */}
+          <section id="projects" className="section section-alt">
+            <div className="container">
+              <Reveal><p className="kicker">Selected work</p><h2 className="section-title">Data projects</h2></Reveal>
+              <Reveal delay={0.08}>
+                <div className="filter-row">
+                  {FILTERS.map((f) => (
+                    <button key={f.id} onClick={() => setFilter(f.id)} className={`filter-pill ${filter === f.id ? "active" : ""}`}>{f.label}</button>
+                  ))}
+                </div>
+              </Reveal>
+              <div className="project-grid">
+                {filteredProjects.map((p, i) => (
+                  <div key={p.id} onClick={() => p.image && setLightbox(p)}>
+                    <ProjectCard project={p} index={i} />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* SKILLS */}
+          <section id="skills" className="section">
+            <div className="container">
+              <Reveal><p className="kicker">Toolkit</p><h2 className="section-title">Tools I reach for</h2></Reveal>
+              <div className="skills-groups">
+                {SKILL_GROUPS.map((g, gi) => (
+                  <Reveal key={g.name} delay={gi * 0.1}>
+                    <div className="skill-group">
+                      <h3>{g.name}</h3>
+                      <div className="chip-row">
+                        {g.items.map((s, i) => (
+                          <span key={s} className="skill-chip" style={{ transform: `rotate(${(i % 5) - 2}deg)` }}>{s}</span>
+                        ))}
+                      </div>
+                    </div>
+                  </Reveal>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* CONTACT */}
+          <section id="contact" className="section section-alt">
+            <div className="container">
+              <Reveal>
+                <p className="kicker">Contact</p>
+                <h2 className="section-title contact-title">Let's connect.</h2>
+              </Reveal>
+              <Reveal delay={0.1}>
+                <div className="contact-row">
+                  <a className="btn-ghost" href="mailto:halloo.ayu@gmail.com"><Mail size={15} /> halloo.ayu@gmail.com</a>
+                  <a className="btn-ghost" href="#"><Linkedin size={15} /> LinkedIn</a>
+                  <a className="btn-ghost" href="#"><Github size={15} /> GitHub</a>
+                </div>
+              </Reveal>
+              <div className="footer-meta"><span><MapPin size={13} /> Indonesia</span><span>© 2026 Ayu Nadia Irawan</span></div>
+            </div>
+          </section>
+
+          {/* LIGHTBOX */}
+          {lightbox && (
+            <div className="lightbox" onClick={() => setLightbox(null)}>
+              <div className="lightbox-inner" onClick={(e) => e.stopPropagation()}>
+                <img src={lightbox.image} alt={lightbox.title} />
+                <div className="lightbox-caption">
+                  <p>{lightbox.title}</p>
+                  <button onClick={() => setLightbox(null)}><X size={16} /></button>
+                </div>
+              </div>
             </div>
           )}
         </div>
-      </div>
-
-      <div style={{ padding: "20px 22px 22px", display: "flex", flexDirection: "column", gap: 12, flex: 1 }}>
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10 }}>
-          <GradTag color={cat.color}>
-            <Icon size={13} /> {cat.label}
-          </GradTag>
-          {project.metric ? (
-            <span style={{ fontFamily: "'Unbounded', sans-serif", fontWeight: 700, fontSize: 15, color: "#F4F4F8" }}>
-              {project.metric.prefix}
-              {metricValue.toLocaleString("en-US", { maximumFractionDigits: project.metric.decimals, minimumFractionDigits: project.metric.decimals })}
-              {project.metric.suffix}
-            </span>
-          ) : project.badgeText ? (
-            <span style={{ fontSize: 12, color: "#9C97B8", fontWeight: 600 }}>{project.badgeText}</span>
-          ) : null}
-        </div>
-
-        <div>
-          <h3 style={{ margin: 0, fontFamily: "'Unbounded', sans-serif", fontWeight: 600, fontSize: 17, lineHeight: 1.35, color: "#F4F4F8" }}>
-            {project.title}
-          </h3>
-          <p style={{ margin: "4px 0 0", fontSize: 12.5, color: "#79748f" }}>
-            {project.org}, {project.year}
-          </p>
-        </div>
-
-        <p style={{ margin: 0, fontSize: 14, lineHeight: 1.65, color: "#B8B4CC" }}>{project.summary}</p>
-
-        {project.metric && <p style={{ margin: "-6px 0 0", fontSize: 11.5, color: "#79748f" }}>{project.metric.label}</p>}
-
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginTop: "auto" }}>
-          {project.tools.map((t) => (
-            <span key={t} className="tool-chip">
-              {t}
-            </span>
-          ))}
-        </div>
-
-        {project.links.length > 0 && (
-          <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginTop: 4 }}>
-            {project.links.map((l, li) => (
-              <a key={li} href={l.href} target="_blank" rel="noopener noreferrer" className="link-chip">
-                {l.label} <ExternalLink size={12} />
-              </a>
-            ))}
-          </div>
-        )}
-      </div>
-    </div>
-  );
-}
-
-/* =========================================================================
-   MAIN APP
-========================================================================= */
-export default function Portfolio() {
-  const [filter, setFilter] = useState("all");
-  const [openExp, setOpenExp] = useState(0);
-  const [showOrg, setShowOrg] = useState(false);
-  const [lightbox, setLightbox] = useState(null);
-  const [copied, setCopied] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [mounted, setMounted] = useState(false);
-
-  const { progress, scrolled } = useScrollProgress();
-  const navIds = useMemo(() => NAV_LINKS.map((n) => n.id), []);
-  const activeSection = useActiveSection(navIds);
-  const reduced = usePrefersReducedMotion();
-
-  useEffect(() => {
-    const t = setTimeout(() => setMounted(true), 60);
-    return () => clearTimeout(t);
-  }, []);
-
-  const filteredProjects = useMemo(() => (filter === "all" ? PROJECTS : PROJECTS.filter((p) => p.tag === filter)), [filter]);
-
-  const copyEmail = async () => {
-    try {
-      await navigator.clipboard.writeText("halloo.ayu@gmail.com");
-    } catch (e) {}
-    setCopied(true);
-    setTimeout(() => setCopied(false), 1800);
-  };
-
-  const scrollTo = (id) => {
-    setMenuOpen(false);
-    const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-  };
-
-  const heroMagPrimary = useMagnetic(10);
-  const heroMagGhost = useMagnetic(10);
-
-  return (
-    <div className="portfolio-root">
-      <GlobalStyles />
-
-      {/* ambient layers */}
-      <div className="aurora-layer" aria-hidden="true">
-        <span className="orb orb-a" />
-        <span className="orb orb-b" />
-        <span className="orb orb-c" />
-      </div>
-      <div className="grain-layer" aria-hidden="true" />
-
-      {/* scroll progress */}
-      <div className="scroll-progress" style={{ width: `${progress}%` }} />
-
-      {/* NAV */}
-      <header className={`site-nav ${scrolled ? "is-scrolled" : ""}`}>
-        <div className="container nav-inner">
-          <button className="logo" onClick={() => scrollTo("top")} aria-label="Back to top">
-            <span className="logo-mark">AN</span>
-            <span className="logo-word">Ayu Nadia</span>
-          </button>
-
-          <nav className="desktop-nav">
-            {NAV_LINKS.map((n) => (
-              <button key={n.id} onClick={() => scrollTo(n.id)} className={`nav-link ${activeSection === n.id ? "active" : ""}`}>
-                {n.label}
-              </button>
-            ))}
-          </nav>
-
-          <button className="mobile-menu-btn" onClick={() => setMenuOpen((v) => !v)} aria-label="Toggle menu">
-            {menuOpen ? <X size={22} /> : <Menu size={22} />}
-          </button>
-        </div>
-
-        {menuOpen && (
-          <div className="mobile-menu">
-            {NAV_LINKS.map((n) => (
-              <button key={n.id} onClick={() => scrollTo(n.id)} className={activeSection === n.id ? "active" : ""}>
-                {n.label}
-              </button>
-            ))}
-          </div>
-        )}
-      </header>
-
-      {/* HERO */}
-      <section id="top" className="hero">
-        <div className="container hero-inner">
-          <div className={mounted ? "hero-copy is-in" : "hero-copy"}>
-            <div className="hero-badges">
-              <GradTag color={GRAD_A}>Data Analyst</GradTag>
-              <GradTag color={GRAD_B}>Marketing Strategist</GradTag>
-            </div>
-
-            <h1 className="hero-title">
-              <KineticHeading text="Ayu Nadia Irawan" />
-            </h1>
-
-            <p className="hero-sub">
-              I turn campaign data, customer behavior, and operational metrics into dashboards and models that
-              drive decisions — bridging a marketing background with hands-on data analytics.
-            </p>
-
-            <div className="hero-cta">
-              <a ref={heroMagPrimary.ref} onMouseMove={heroMagPrimary.onMouseMove} onMouseLeave={heroMagPrimary.onMouseLeave} className="btn-primary" href="#projects" onClick={(e) => { e.preventDefault(); scrollTo("projects"); }}>
-                View projects <ArrowUpRight size={16} />
-              </a>
-              <a ref={heroMagGhost.ref} onMouseMove={heroMagGhost.onMouseMove} onMouseLeave={heroMagGhost.onMouseLeave} className="btn-ghost" href="#contact" onClick={(e) => { e.preventDefault(); scrollTo("contact"); }}>
-                Let's connect
-              </a>
-            </div>
-
-            <div className="hero-stats">
-              <StatCounter value={3.73} decimals={2} label="GPA, full scholarship" />
-              <StatCounter value={690} decimals={0} label="TOEIC score" />
-              <StatCounter value={5} decimals={0} label="Data projects shipped" />
-            </div>
-          </div>
-        </div>
-
-        <button className="scroll-cue" onClick={() => scrollTo("about")} aria-label="Scroll to About">
-          <ChevronDown size={20} />
-        </button>
-      </section>
-
-      {/* MARQUEE */}
-      <div className="marquee-wrap" aria-hidden="true">
-        <div className="marquee-track">
-          {[...MARQUEE_ITEMS, ...MARQUEE_ITEMS].map((item, i) => (
-            <span className="marquee-item" key={i}>
-              {item}
-              <span className="marquee-dot" />
-            </span>
-          ))}
-        </div>
-      </div>
-
-      {/* ABOUT */}
-      <section id="about" className="section">
-        <div className="container">
-          <Reveal>
-            <p className="kicker">About</p>
-            <h2 className="section-title">From marketing strategy to data storytelling</h2>
-          </Reveal>
-
-          <div className="about-grid">
-            <Reveal delay={0.05}>
-              <p className="about-copy">
-                I'm a marketing and data enthusiast with a background bridging business operations and data
-                visualization. My focus is turning raw data — from digital marketing campaigns, customer behavior,
-                or operational metrics — into automated dashboards and models that support real decisions. I
-                recently completed an Applied Bachelor's degree in International Marketing Management on a full
-                scholarship, and have shipped several data products through intensive training programs.
-              </p>
-            </Reveal>
-
-            <Reveal delay={0.15}>
-              <div className="edu-card">
-                <div className="edu-icon">
-                  <GraduationCap size={20} color={GRAD_B} />
-                </div>
-                <h3>Politeknik Tempo</h3>
-                <p className="edu-meta">International Marketing Management, 2021 – 2025</p>
-                <p className="edu-desc">GPA 3.73/4.00 with full scholarship. Member of IMMSA (International Marketing Management Student Association).</p>
-                <a className="link-chip" href="https://journal.gpcpublisher.com/index.php/insoma/article/view/57" target="_blank" rel="noopener noreferrer">
-                  Read published journal <ExternalLink size={12} />
-                </a>
-              </div>
-            </Reveal>
-          </div>
-        </div>
-      </section>
-
-      {/* PROJECTS */}
-      <section id="projects" className="section section-alt">
-        <div className="container">
-          <Reveal>
-            <p className="kicker">Selected work</p>
-            <h2 className="section-title">Data projects that turned numbers into decisions</h2>
-          </Reveal>
-
-          <Reveal delay={0.08}>
-            <div className="filter-row">
-              {FILTERS.map((f) => (
-                <button key={f.id} onClick={() => setFilter(f.id)} className={`filter-pill ${filter === f.id ? "active" : ""}`}>
-                  {f.label}
-                </button>
-              ))}
-            </div>
-          </Reveal>
-
-          <div className="project-grid">
-            {filteredProjects.map((p, i) => (
-              <div key={p.id} onClick={() => p.image && setLightbox(p)} style={{ cursor: p.image ? "zoom-in" : "default" }}>
-                <ProjectCard project={p} index={i} />
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* EXPERIENCE */}
-      <section id="experience" className="section">
-        <div className="container">
-          <Reveal>
-            <p className="kicker">Experience</p>
-            <h2 className="section-title">Where the work happened</h2>
-          </Reveal>
-
-          <TimelineList items={EXPERIENCE} openIndex={openExp} setOpenIndex={setOpenExp} />
-
-          <Reveal delay={0.1}>
-            <button className="btn-ghost" style={{ marginTop: 26 }} onClick={() => setShowOrg((v) => !v)}>
-              {showOrg ? "Hide" : "Show"} organizational & volunteer experience
-              <ChevronDown size={14} style={{ transform: showOrg ? "rotate(180deg)" : "none", transition: "transform .3s" }} />
-            </button>
-          </Reveal>
-
-          {showOrg && (
-            <div className="org-grid">
-              {ORG_EXPERIENCE.map((o, i) => (
-                <Reveal key={i} delay={i * 0.05}>
-                  <div className="org-card">
-                    <h4>{o.title}</h4>
-                    <p className="org-period">{o.period}</p>
-                    <p className="org-desc">{o.desc}</p>
-                  </div>
-                </Reveal>
-              ))}
-            </div>
-          )}
-        </div>
-      </section>
-
-      {/* SKILLS */}
-      <section id="skills" className="section section-alt">
-        <div className="container">
-          <Reveal>
-            <p className="kicker">Toolkit</p>
-            <h2 className="section-title">Tools I reach for</h2>
-          </Reveal>
-
-          <div className="skills-groups">
-            {SKILL_GROUPS.map((g, gi) => (
-              <Reveal key={g.name} delay={gi * 0.1}>
-                <div className="skill-group">
-                  <h3>{g.name}</h3>
-                  <div className="chip-row">
-                    {g.items.map((s, i) => (
-                      <span key={s} className="skill-chip" style={{ transform: `rotate(${(i % 5) - 2}deg)` }}>
-                        {s}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CERTIFICATIONS */}
-      <section id="certifications" className="section">
-        <div className="container">
-          <Reveal>
-            <p className="kicker">Certifications</p>
-            <h2 className="section-title">Continuous learning</h2>
-          </Reveal>
-
-          <div className="cert-grid">
-            {CERTIFICATIONS.map((c, i) => (
-              <Reveal key={i} delay={(i % 3) * 0.07}>
-                <a href={c.href} target="_blank" rel="noopener noreferrer" className="cert-card">
-                  <div>
-                    <p className="cert-title">{c.title}</p>
-                    <p className="cert-org">{c.org}</p>
-                  </div>
-                  <ArrowUpRight size={16} className="cert-arrow" />
-                </a>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CONTACT */}
-      <section id="contact" className="section section-alt contact-section">
-        <div className="container">
-          <Reveal>
-            <p className="kicker">Contact</p>
-            <h2 className="section-title contact-title">Let's turn your data into decisions.</h2>
-            <p className="contact-sub">Open to Data Analyst opportunities and freelance dashboard projects.</p>
-          </Reveal>
-
-          <Reveal delay={0.1}>
-            <div className="contact-row">
-              <button className="btn-ghost" onClick={copyEmail}>
-                {copied ? <Check size={15} /> : <Mail size={15} />}
-                halloo.ayu@gmail.com
-                {!copied && <Copy size={12} style={{ opacity: 0.6 }} />}
-              </button>
-              <a className="btn-ghost" href="tel:+6289501279807">
-                <Phone size={15} /> +62 895-0127-9807
-              </a>
-              <a className="btn-ghost" href="https://www.linkedin.com/in/ayunada/" target="_blank" rel="noopener noreferrer">
-                <Linkedin size={15} /> LinkedIn
-              </a>
-              <a className="btn-ghost" href="https://github.com/hallooayu" target="_blank" rel="noopener noreferrer">
-                <Github size={15} /> GitHub
-              </a>
-            </div>
-          </Reveal>
-
-          <div className="footer-meta">
-            <span>
-              <MapPin size={13} /> South Tangerang, Indonesia
-            </span>
-            <span>© 2026 Ayu Nadia Irawan</span>
-          </div>
-        </div>
-      </section>
-
-      {/* LIGHTBOX */}
-      {lightbox && (
-        <div className="lightbox" onClick={() => setLightbox(null)}>
-          <div className="lightbox-inner" onClick={(e) => e.stopPropagation()}>
-            <div className="frame-bar">
-              <span className="dot" style={{ background: "#FF5F57" }} />
-              <span className="dot" style={{ background: "#FEBC2E" }} />
-              <span className="dot" style={{ background: "#28C840" }} />
-            </div>
-            <img src={lightbox.image} alt={lightbox.title} />
-            <div className="lightbox-caption">
-              <p>{lightbox.title}</p>
-              <button onClick={() => setLightbox(null)} aria-label="Close preview">
-                <X size={16} />
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-    </div>
-  );
-}
-
-/* =========================================================================
-   TIMELINE (accordion, animated draw-in line)
-========================================================================= */
-function TimelineList({ items, openIndex, setOpenIndex }) {
-  const [ref, visible] = useInView(0.1);
-  return (
-    <div ref={ref} className="timeline">
-      <div className="timeline-line" style={{ transform: visible ? "scaleY(1)" : "scaleY(0)" }} />
-      <div className="timeline-items">
-        {items.map((e, i) => {
-          const open = openIndex === i;
-          return (
-            <Reveal key={i} delay={i * 0.06} y={16}>
-              <div className="timeline-dot" />
-              <div className="exp-card">
-                <button className="exp-head" onClick={() => setOpenIndex(open ? -1 : i)} aria-expanded={open}>
-                  <div>
-                    <h3>{e.role}</h3>
-                    <p>
-                      {e.org}, {e.period}
-                    </p>
-                  </div>
-                  <ChevronDown size={18} style={{ transform: open ? "rotate(180deg)" : "none", transition: "transform .3s" }} />
-                </button>
-                <div className={`exp-panel ${open ? "open" : ""}`}>
-                  <div className="exp-panel-inner">
-                    <ul>
-                      {e.bullets.map((b, bi) => (
-                        <li key={bi}>{b}</li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </Reveal>
-          );
-        })}
-      </div>
-    </div>
-  );
-}
-
-/* =========================================================================
-   GLOBAL STYLES
-========================================================================= */
-function GlobalStyles() {
-  return (
-    <style>{`
-      @import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
-
-      .portfolio-root, .portfolio-root * { box-sizing: border-box; }
-      .portfolio-root {
-        font-family: 'Plus Jakarta Sans', sans-serif;
-        background: #0B0A17;
-        color: #F4F4F8;
-        min-height: 100vh;
-        position: relative;
-        overflow-x: hidden;
-        line-height: 1.5;
-      }
-      .container { max-width: 1120px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 2; }
-      @media (max-width: 640px) { .container { padding: 0 18px; } }
-
-      ::selection { background: ${GRAD_A}; color: #fff; }
-
-      /* ---------- ambient background ---------- */
-      .aurora-layer { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
-      .orb { position: absolute; border-radius: 50%; filter: blur(90px); opacity: .35; }
-      .orb-a { width: 480px; height: 480px; background: ${GRAD_A}; top: -120px; left: -80px; animation: drift1 26s ease-in-out infinite alternate; }
-      .orb-b { width: 420px; height: 420px; background: ${GRAD_B}; top: 10%; right: -140px; animation: drift2 32s ease-in-out infinite alternate; }
-      .orb-c { width: 380px; height: 380px; background: #F472B6; bottom: -140px; left: 30%; opacity: .22; animation: drift3 24s ease-in-out infinite alternate; }
-      @keyframes drift1 { from { transform: translate(0,0) scale(1); } to { transform: translate(60px,80px) scale(1.15); } }
-      @keyframes drift2 { from { transform: translate(0,0) scale(1); } to { transform: translate(-70px,60px) scale(1.1); } }
-      @keyframes drift3 { from { transform: translate(0,0) scale(1); } to { transform: translate(40px,-50px) scale(1.2); } }
-
-      .grain-layer {
-        position: fixed; inset: 0; z-index: 1; pointer-events: none; opacity: .05; mix-blend-mode: overlay;
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-      }
-
-      .scroll-progress { position: fixed; top: 0; left: 0; height: 3px; background: linear-gradient(90deg, ${GRAD_A}, ${GRAD_B}); z-index: 60; transition: width .1s linear; }
-
-      @media (prefers-reduced-motion: reduce) {
-        .orb { animation: none !important; }
-        .word-inner { animation: none !important; }
-      }
-
-      /* ---------- nav ---------- */
-      .site-nav { position: sticky; top: 0; z-index: 50; background: rgba(11,10,23,.55); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid rgba(255,255,255,.06); transition: background .3s, border-color .3s; }
-      .site-nav.is-scrolled { background: rgba(11,10,23,.85); border-bottom-color: rgba(255,255,255,.1); }
-      .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 64px; }
-      .logo { display: flex; align-items: center; gap: 10px; background: none; border: none; cursor: pointer; padding: 0; }
-      .logo-mark { width: 34px; height: 34px; border-radius: 10px; background: linear-gradient(135deg, ${GRAD_A}, ${GRAD_B}); display: flex; align-items: center; justify-content: center; font-family: 'Unbounded', sans-serif; font-weight: 700; font-size: 13px; color: #0B0A17; }
-      .logo-word { font-family: 'Unbounded', sans-serif; font-weight: 600; font-size: 14.5px; color: #F4F4F8; }
-      .desktop-nav { display: flex; gap: 4px; }
-      .nav-link { position: relative; background: none; border: none; cursor: pointer; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 500; font-size: 14px; color: #B8B4CC; padding: 8px 12px; }
-      .nav-link::after { content: ""; position: absolute; left: 12px; right: 12px; bottom: 2px; height: 2px; border-radius: 2px; background: linear-gradient(90deg, ${GRAD_A}, ${GRAD_B}); transform: scaleX(0); transform-origin: left; transition: transform .3s cubic-bezier(.16,1,.3,1); }
-      .nav-link.active { color: #F4F4F8; }
-      .nav-link.active::after { transform: scaleX(1); }
-      .nav-link:hover { color: #F4F4F8; }
-      .mobile-menu-btn { display: none; background: none; border: none; color: #F4F4F8; cursor: pointer; }
-      .mobile-menu { display: flex; flex-direction: column; padding: 8px 18px 16px; border-top: 1px solid rgba(255,255,255,.06); }
-      .mobile-menu button { text-align: left; background: none; border: none; color: #B8B4CC; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 500; font-size: 15px; padding: 12px 6px; cursor: pointer; }
-      .mobile-menu button.active { color: #F4F4F8; }
-      @media (max-width: 760px) { .desktop-nav { display: none; } .mobile-menu-btn { display: block; } }
-
-      /* ---------- buttons ---------- */
-      .btn-primary, .btn-ghost {
-        display: inline-flex; align-items: center; gap: 8px; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 600; font-size: 14.5px;
-        padding: 12px 20px; border-radius: 12px; cursor: pointer; text-decoration: none; border: none; white-space: nowrap;
-      }
-      .btn-primary { background: linear-gradient(120deg, #7C3AED, #06B6D4); color: #fff; box-shadow: 0 8px 24px -6px rgba(139,92,246,.55); }
-      .btn-ghost { background: rgba(255,255,255,.05); color: #F4F4F8; border: 1px solid rgba(255,255,255,.14); }
-      .btn-ghost:hover { background: rgba(255,255,255,.09); }
-
-      /* ---------- hero ---------- */
-      .hero { position: relative; padding: 108px 0 90px; min-height: 88vh; display: flex; align-items: center; }
-      .hero-inner { width: 100%; }
-      .hero-copy { max-width: 640px; opacity: 0; transform: translateY(16px); transition: opacity .8s cubic-bezier(.16,1,.3,1), transform .8s cubic-bezier(.16,1,.3,1); }
-      .hero-copy.is-in { opacity: 1; transform: translateY(0); }
-      .hero-badges { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 22px; }
-      .hero-title { font-family: 'Unbounded', sans-serif; font-weight: 700; font-size: clamp(36px, 6.4vw, 64px); line-height: 1.08; margin: 0 0 20px; }
-      @keyframes wordUp { from { transform: translateY(112%); } to { transform: translateY(0); } }
-      .hero-sub { font-size: 16.5px; line-height: 1.7; color: #B8B4CC; max-width: 54ch; margin: 0 0 32px; }
-      .hero-cta { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 52px; }
-      .hero-stats { display: flex; gap: 40px; flex-wrap: wrap; }
-      .scroll-cue { position: absolute; left: 50%; bottom: 28px; transform: translateX(-50%); background: none; border: 1px solid rgba(255,255,255,.18); border-radius: 50%; width: 38px; height: 38px; color: #B8B4CC; display: flex; align-items: center; justify-content: center; cursor: pointer; animation: bob 2.4s ease-in-out infinite; }
-      @keyframes bob { 0%,100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(6px); } }
-      @media (prefers-reduced-motion: reduce) { .scroll-cue { animation: none; } }
-
-      /* ---------- marquee ---------- */
-      .marquee-wrap { width: 100%; overflow: hidden; border-top: 1px solid rgba(255,255,255,.08); border-bottom: 1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.02); padding: 16px 0; position: relative; z-index: 2; transform: rotate(-1deg); margin: 0 0 -1px; }
-      .marquee-track { display: flex; width: max-content; animation: marquee 26s linear infinite; }
-      .marquee-wrap:hover .marquee-track { animation-play-state: paused; }
-      @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-      .marquee-item { display: inline-flex; align-items: center; font-family: 'Unbounded', sans-serif; font-weight: 600; font-size: 14px; color: #55506e; padding: 0 22px; white-space: nowrap; }
-      .marquee-dot { width: 6px; height: 6px; border-radius: 50%; background: ${GRAD_B}; margin-left: 22px; opacity: .7; }
-      @media (prefers-reduced-motion: reduce) { .marquee-track { animation: none; } }
-
-      /* ---------- sections ---------- */
-      .section { padding: 96px 0; position: relative; z-index: 2; }
-      .section-alt { background: rgba(255,255,255,.015); }
-      .kicker { font-family: 'Unbounded', sans-serif; font-weight: 600; font-size: 13px; color: ${GRAD_B}; margin: 0 0 10px; }
-      .section-title { font-family: 'Unbounded', sans-serif; font-weight: 600; font-size: clamp(24px, 3.6vw, 34px); line-height: 1.25; margin: 0 0 40px; max-width: 20ch; }
-
-      /* ---------- about ---------- */
-      .about-grid { display: grid; grid-template-columns: 1.35fr 1fr; gap: 40px; align-items: start; }
-      @media (max-width: 760px) { .about-grid { grid-template-columns: 1fr; } }
-      .about-copy { font-size: 16.5px; line-height: 1.8; color: #B8B4CC; max-width: 60ch; }
-      .edu-card { background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); border-radius: 18px; padding: 26px; }
-      .edu-icon { width: 40px; height: 40px; border-radius: 12px; background: rgba(34,211,238,.12); display: flex; align-items: center; justify-content: center; margin-bottom: 14px; }
-      .edu-card h3 { font-family: 'Unbounded', sans-serif; font-weight: 600; font-size: 16.5px; margin: 0 0 4px; }
-      .edu-meta { font-size: 12.5px; color: #79748f; margin: 0 0 12px; }
-      .edu-desc { font-size: 14px; line-height: 1.65; color: #B8B4CC; margin: 0 0 16px; }
-
-      /* ---------- filter pills ---------- */
-      .filter-row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 36px; }
-      .filter-pill { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 600; font-size: 13.5px; padding: 9px 18px; border-radius: 999px; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.1); color: #B8B4CC; cursor: pointer; transition: background .25s, color .25s, border-color .25s; }
-      .filter-pill.active { background: linear-gradient(120deg, #7C3AED, #06B6D4); border-color: transparent; color: #fff; }
-      .filter-pill:hover { color: #F4F4F8; }
-
-      /* ---------- project cards ---------- */
-      .project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 26px; }
-      .project-card { position: relative; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.09); border-radius: 20px; overflow: hidden; display: flex; flex-direction: column; will-change: transform; }
-      .project-card::before { content: ""; position: absolute; inset: 0; border-radius: 20px; padding: 1px; background: linear-gradient(140deg, var(--cat), transparent 45%); -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude; opacity: .5; pointer-events: none; }
-      .card-spotlight { position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity .3s; background: radial-gradient(420px circle at var(--mx,50%) var(--my,50%), rgba(255,255,255,.10), transparent 60%); z-index: 1; }
-      .project-card:hover .card-spotlight { opacity: 1; }
-      .frame-wrap { padding: 16px 16px 0; }
-      .frame-inner { border-radius: 12px; overflow: hidden; background: #0d0c1a; border: 1px solid rgba(255,255,255,.08); }
-      .frame-bar { display: flex; gap: 6px; padding: 9px 11px; background: #14121f; }
-      .frame-bar .dot { width: 8px; height: 8px; border-radius: 50%; }
-      .frame-inner img { width: 100%; display: block; }
-      .locked-panel { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; padding: 44px 20px; text-align: center; background: repeating-linear-gradient(135deg, rgba(255,255,255,.03) 0 10px, transparent 10px 20px); }
-      .locked-panel span { font-family: 'Unbounded', sans-serif; font-weight: 600; font-size: 13.5px; color: #B8B4CC; }
-      .locked-panel p { margin: 0; font-size: 12px; color: #79748f; }
-      .tool-chip { font-size: 11.5px; font-weight: 600; padding: 5px 11px; border-radius: 999px; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1); color: #B8B4CC; }
-      .link-chip { display: inline-flex; align-items: center; gap: 5px; font-size: 12.5px; font-weight: 600; padding: 7px 12px; border-radius: 9px; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); color: #F4F4F8; text-decoration: none; transition: background .2s, transform .2s; }
-      .link-chip:hover { background: rgba(255,255,255,.12); transform: translateY(-1px); }
-
-      /* ---------- timeline ---------- */
-      .timeline { position: relative; padding-left: 26px; }
-      .timeline-line { position: absolute; left: 5px; top: 6px; bottom: 6px; width: 2px; background: linear-gradient(180deg, ${GRAD_A}, ${GRAD_B}); transform-origin: top; transition: transform 1.1s cubic-bezier(.16,1,.3,1); }
-      .timeline-items { display: flex; flex-direction: column; gap: 14px; }
-      .timeline-items > div { position: relative; }
-      .timeline-dot { position: absolute; left: -26px; top: 22px; width: 10px; height: 10px; border-radius: 50%; background: #0B0A17; border: 2px solid ${GRAD_B}; }
-      .exp-card { background: rgba(255,255,255,.035); border: 1px solid rgba(255,255,255,.08); border-radius: 14px; overflow: hidden; }
-      .exp-head { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 18px 20px; background: none; border: none; cursor: pointer; text-align: left; color: #F4F4F8; }
-      .exp-head h3 { margin: 0; font-family: 'Unbounded', sans-serif; font-weight: 600; font-size: 15.5px; }
-      .exp-head p { margin: 4px 0 0; font-size: 12.5px; color: #79748f; }
-      .exp-panel { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .45s cubic-bezier(.16,1,.3,1); }
-      .exp-panel.open { grid-template-rows: 1fr; }
-      .exp-panel-inner { overflow: hidden; }
-      .exp-panel ul { margin: 0; padding: 0 20px 20px 40px; font-size: 14px; line-height: 1.7; color: #B8B4CC; }
-      .exp-panel li { margin-bottom: 6px; }
-
-      .org-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 16px; margin-top: 22px; }
-      .org-card { background: rgba(255,255,255,.035); border: 1px solid rgba(255,255,255,.08); border-radius: 14px; padding: 18px 20px; }
-      .org-card h4 { margin: 0; font-family: 'Unbounded', sans-serif; font-weight: 600; font-size: 14px; }
-      .org-period { margin: 3px 0 8px; font-size: 11.5px; color: #79748f; font-weight: 600; }
-      .org-desc { margin: 0; font-size: 13px; line-height: 1.6; color: #B8B4CC; }
-
-      /* ---------- skills ---------- */
-      .skills-groups { display: flex; flex-direction: column; gap: 34px; }
-      .skill-group h3 { font-family: 'Unbounded', sans-serif; font-weight: 600; font-size: 15px; margin: 0 0 16px; color: #9C97B8; }
-      .chip-row { display: flex; flex-wrap: wrap; gap: 12px; }
-      .skill-chip { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 600; font-size: 13.5px; padding: 9px 16px; border-radius: 12px; background: rgba(255,255,255,.045); border: 1px solid rgba(255,255,255,.1); color: #F4F4F8; transition: transform .2s ease, background .2s ease; }
-      .skill-chip:hover { transform: rotate(0deg) translateY(-2px); background: rgba(255,255,255,.09); }
-
-      /* ---------- certifications ---------- */
-      .cert-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 16px; }
-      .cert-card { display: flex; align-items: center; justify-content: space-between; gap: 12px; background: rgba(255,255,255,.035); border: 1px solid rgba(255,255,255,.08); border-radius: 14px; padding: 18px 20px; text-decoration: none; color: #F4F4F8; transition: transform .2s, border-color .2s; }
-      .cert-card:hover { transform: translateY(-3px); border-color: rgba(255,255,255,.2); }
-      .cert-title { margin: 0; font-family: 'Unbounded', sans-serif; font-weight: 600; font-size: 14.5px; }
-      .cert-org { margin: 3px 0 0; font-size: 12.5px; color: #79748f; }
-      .cert-arrow { opacity: .55; flex-shrink: 0; }
-
-      /* ---------- contact ---------- */
-      .contact-title { max-width: 14ch; background: linear-gradient(90deg, #F4F4F8, #B8B4CC); -webkit-background-clip: text; background-clip: text; }
-      .contact-sub { font-size: 15.5px; color: #9C97B8; margin: -24px 0 0; }
-      .contact-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 36px; }
-      .footer-meta { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-top: 60px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,.08); font-size: 12.5px; color: #6b6684; }
-      .footer-meta span { display: inline-flex; align-items: center; gap: 6px; }
-
-      /* ---------- lightbox ---------- */
-      .lightbox { position: fixed; inset: 0; background: rgba(6,5,14,.88); backdrop-filter: blur(6px); z-index: 100; display: flex; align-items: center; justify-content: center; padding: 24px; cursor: zoom-out; animation: fadeIn .25s ease; }
-      @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-      .lightbox-inner { max-width: 640px; width: 100%; background: #0d0c1a; border: 1px solid rgba(255,255,255,.1); border-radius: 14px; overflow: hidden; cursor: default; }
-      .lightbox-inner img { width: 100%; display: block; }
-      .lightbox-caption { display: flex; align-items: center; justify-content: space-between; padding: 14px 18px; }
-      .lightbox-caption p { margin: 0; font-family: 'Unbounded', sans-serif; font-weight: 600; font-size: 14px; }
-      .lightbox-caption button { background: rgba(255,255,255,.08); border: none; color: #fff; width: 30px; height: 30px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; }
-
-      :focus-visible { outline: 2px solid ${GRAD_B}; outline-offset: 3px; }
-    `}</style>
-  );
-}
+      );
+    }
+
+    /* =========================================================================
+       GLOBAL STYLES (Injected)
+    ========================================================================= */
+    function GlobalStyles() {
+      return (
+        <style>{`
+          .portfolio-root { font-family: 'Plus Jakarta Sans', sans-serif; background: #0B0A17; color: #F4F4F8; min-height: 100vh; overflow-x: hidden; opacity: 0; transition: opacity 1s ease; }
+          .portfolio-root.is-mounted { opacity: 1; }
+          .portfolio-root * { box-sizing: border-box; }
+          .container { max-width: 1120px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 2; }
+          
+          /* Custom Cursor */
+          .custom-cursor-dot { position: fixed; top: 0; left: 0; width: 6px; height: 6px; background: #22D3EE; border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate3d(-50%, -50%, 0); transition: width 0.2s, height 0.2s; mix-blend-mode: exclusion; }
+          .custom-cursor-ring { position: fixed; top: -14px; left: -14px; width: 34px; height: 34px; border: 1px solid rgba(34, 211, 238, 0.5); border-radius: 50%; pointer-events: none; z-index: 9998; transition: transform 0.15s ease-out, width 0.2s, height 0.2s, top 0.2s, left 0.2s; }
+          .custom-cursor-ring.clicking { width: 24px; height: 24px; top: -9px; left: -9px; background: rgba(34,211,238,0.1); }
+          a:hover ~ .custom-cursor-ring, button:hover ~ .custom-cursor-ring { width: 50px; height: 50px; top: -22px; left: -22px; background: rgba(255,255,255,0.1); border-color: transparent; }
+          @media (max-width: 768px) { .custom-cursor-dot, .custom-cursor-ring { display: none; } }
+
+          /* Background Aurora */
+          .aurora-layer { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+          .orb { position: absolute; border-radius: 50%; filter: blur(90px); opacity: .35; }
+          .orb-a { width: 480px; height: 480px; background: #8B5CF6; top: -120px; left: -80px; animation: drift1 26s ease-in-out infinite alternate; }
+          .orb-b { width: 420px; height: 420px; background: #22D3EE; top: 10%; right: -140px; animation: drift2 32s ease-in-out infinite alternate; }
+          .orb-c { width: 380px; height: 380px; background: #F472B6; bottom: -140px; left: 30%; opacity: .22; animation: drift3 24s ease-in-out infinite alternate; }
+          @keyframes drift1 { from { transform: translate(0,0) scale(1); } to { transform: translate(60px,80px) scale(1.15); } }
+          @keyframes drift2 { from { transform: translate(0,0) scale(1); } to { transform: translate(-70px,60px) scale(1.1); } }
+          @keyframes drift3 { from { transform: translate(0,0) scale(1); } to { transform: translate(40px,-50px) scale(1.2); } }
+          .grain-layer { position: fixed; inset: 0; z-index: 1; pointer-events: none; opacity: .05; mix-blend-mode: overlay; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+          .scroll-progress { position: fixed; top: 0; left: 0; height: 3px; background: linear-gradient(90deg, #8B5CF6, #22D3EE); z-index: 60; transition: width .1s linear; }
+
+          /* Nav */
+          .site-nav { position: sticky; top: 0; z-index: 50; background: rgba(11,10,23,.55); backdrop-filter: blur(14px); border-bottom: 1px solid rgba(255,255,255,.06); }
+          .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+          .logo { display: flex; align-items: center; gap: 10px; background: none; border: none; cursor: pointer; }
+          .logo-mark { width: 34px; height: 34px; border-radius: 10px; background: linear-gradient(135deg, #8B5CF6, #22D3EE); display: flex; align-items: center; justify-content: center; font-family: 'Unbounded'; font-weight: 700; font-size: 13px; color: #0B0A17; }
+          .logo-word { font-family: 'Unbounded'; font-weight: 600; font-size: 14.5px; color: #F4F4F8; }
+          .desktop-nav { display: flex; gap: 4px; }
+          .nav-link { background: none; border: none; cursor: pointer; font-family: 'Plus Jakarta Sans'; font-weight: 500; font-size: 14px; color: #B8B4CC; padding: 8px 12px; transition: color 0.3s; }
+          .nav-link:hover { color: #fff; }
+
+          /* Buttons */
+          .btn-primary, .btn-ghost { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; font-size: 14.5px; padding: 12px 20px; border-radius: 12px; cursor: pointer; text-decoration: none; border: none; transition: transform 0.2s, background 0.2s; }
+          .btn-primary { background: linear-gradient(120deg, #7C3AED, #06B6D4); color: #fff; box-shadow: 0 8px 24px -6px rgba(139,92,246,.55); }
+          .btn-primary:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 12px 30px -6px rgba(139,92,246,.75); }
+          .btn-ghost { background: rgba(255,255,255,.05); color: #F4F4F8; border: 1px solid rgba(255,255,255,.14); }
+          .btn-ghost:hover { background: rgba(255,255,255,.09); transform: translateY(-3px); }
+
+          /* Hero */
+          .hero { padding: 108px 0 90px; min-height: 88vh; display: flex; align-items: center; }
+          .hero-copy { max-width: 640px; opacity: 0; transform: translateY(20px) scale(0.95); filter: blur(10px); transition: all 1s cubic-bezier(.16,1,.3,1); }
+          .hero-copy.is-in { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+          .hero-badges { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 22px; }
+          .hero-title { font-family: 'Unbounded'; font-weight: 700; font-size: clamp(36px, 6.4vw, 64px); line-height: 1.08; margin: 0 0 20px; }
+          @keyframes wordUp { from { transform: translateY(112%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+          .hero-sub { font-size: 16.5px; line-height: 1.7; color: #B8B4CC; max-width: 54ch; margin: 0 0 32px; }
+          .hero-cta { display: flex; gap: 14px; margin-bottom: 52px; }
+          .hero-stats { display: flex; gap: 40px; flex-wrap: wrap; }
+          .stat-counter:hover { transform: translateY(-4px); transition: transform 0.3s; }
+
+          /* Sections & Layout */
+          .section { padding: 96px 0; position: relative; z-index: 2; }
+          .section-alt { background: rgba(255,255,255,.015); }
+          .kicker { font-family: 'Unbounded'; font-size: 13px; color: #22D3EE; margin: 0 0 10px; }
+          .section-title { font-family: 'Unbounded'; font-size: clamp(24px, 3.6vw, 34px); margin: 0 0 40px; }
+
+          /* Marquee */
+          .marquee-wrap { overflow: hidden; background: rgba(255,255,255,.02); padding: 16px 0; transform: rotate(-1deg); }
+          .marquee-track { display: flex; width: max-content; animation: marquee 26s linear infinite; }
+          @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+          .marquee-item { display: inline-flex; align-items: center; font-family: 'Unbounded'; font-weight: 600; font-size: 14px; color: #55506e; padding: 0 22px; white-space: nowrap; }
+          .marquee-dot { width: 6px; height: 6px; border-radius: 50%; background: #22D3EE; margin-left: 22px; }
+
+          /* Projects */
+          .project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 26px; }
+          .project-card { background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.09); border-radius: 20px; overflow: hidden; display: flex; flex-direction: column; cursor: pointer; }
+          .project-card::before { content: ""; position: absolute; inset: 0; border-radius: 20px; padding: 1px; background: linear-gradient(140deg, var(--cat), transparent 45%); -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude; opacity: .5; pointer-events: none; transition: opacity 0.3s; }
+          .project-card:hover::before { opacity: 1; }
+          .frame-wrap { padding: 16px 16px 0; }
+          .frame-inner { border-radius: 12px; overflow: hidden; background: #0d0c1a; border: 1px solid rgba(255,255,255,.08); }
+          .frame-bar { display: flex; gap: 6px; padding: 9px 11px; background: #14121f; }
+          .frame-bar .dot { width: 8px; height: 8px; border-radius: 50%; }
+          .frame-inner img { width: 100%; display: block; transition: transform 0.5s ease; }
+          .project-card:hover .frame-inner img { transform: scale(1.05); }
+          .tool-chip { font-size: 11.5px; font-weight: 600; padding: 5px 11px; border-radius: 999px; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1); color: #B8B4CC; transition: all 0.2s; }
+          .tool-chip:hover { background: #22D3EE; color: #000; transform: translateY(-2px); }
+
+          /* Skills */
+          .skills-groups { display: flex; flex-direction: column; gap: 34px; }
+          .chip-row { display: flex; flex-wrap: wrap; gap: 12px; }
+          .skill-chip { font-weight: 600; font-size: 13.5px; padding: 9px 16px; border-radius: 12px; background: rgba(255,255,255,.045); border: 1px solid rgba(255,255,255,.1); transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+          .skill-chip:hover { transform: rotate(0deg) translateY(-5px) scale(1.1) !important; background: rgba(255,255,255,.15); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
+
+          /* Lightbox */
+          .lightbox { position: fixed; inset: 0; background: rgba(6,5,14,.88); backdrop-filter: blur(6px); z-index: 100; display: flex; align-items: center; justify-content: center; padding: 24px; animation: fadeIn .25s ease; }
+          @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+          .lightbox-inner { max-width: 640px; width: 100%; background: #0d0c1a; border-radius: 14px; overflow: hidden; }
+          .lightbox-inner img { width: 100%; display: block; }
+          .lightbox-caption { display: flex; justify-content: space-between; padding: 14px 18px; }
+          .lightbox-caption button { background: rgba(255,255,255,.08); border: none; color: #fff; width: 30px; height: 30px; border-radius: 50%; cursor: pointer; }
+        `}</style>
+      );
+    }
+
+    // Render the React app
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<Portfolio />);
+  </script>
+</body>
+</html>
