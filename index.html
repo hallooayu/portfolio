@@ -1,204 +1,291 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Ayu Nadia Irawan — Data Analyst & Marketing Data Portfolio">
-<title>Ayu Nadia Irawan | Data Analyst Portfolio</title>
-<style>
-:root{
-  --bg:#080b12; --panel:rgba(17,22,34,.72); --text:#f5f7fb; --muted:#aab3c5;
-  --line:rgba(255,255,255,.10); --accent:#7c5cff; --accent2:#20d6c7;
-  --accent3:#ffb86b; --max:1180px;
-}
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{
-  font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  background:radial-gradient(circle at 15% 10%,rgba(124,92,255,.18),transparent 30%),
-             radial-gradient(circle at 85% 20%,rgba(32,214,199,.10),transparent 28%),var(--bg);
-  color:var(--text); line-height:1.6; overflow-x:hidden;
-}
-body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.18;
- background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
-                  linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
- background-size:42px 42px;mask-image:linear-gradient(to bottom,black,transparent 75%);z-index:-1}
-a{color:inherit;text-decoration:none}.container{width:min(var(--max),92%);margin:auto}
-.nav{position:fixed;top:16px;left:50%;transform:translateX(-50%);width:min(1120px,92%);
- display:flex;align-items:center;justify-content:space-between;padding:12px 16px;
- background:rgba(8,11,18,.72);backdrop-filter:blur(18px);border:1px solid var(--line);
- border-radius:18px;z-index:20;box-shadow:0 15px 50px rgba(0,0,0,.25)}
-.logo{font-weight:800;letter-spacing:-.04em}.logo span{color:var(--accent2)}
-.navlinks{display:flex;gap:22px;font-size:14px;color:var(--muted)}.navlinks a:hover{color:white}
-.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 17px;border-radius:12px;
- border:1px solid var(--line);background:rgba(255,255,255,.05);transition:.25s}
-.btn:hover{transform:translateY(-2px);border-color:rgba(124,92,255,.65);box-shadow:0 10px 30px rgba(124,92,255,.16)}
-.btn.primary{background:linear-gradient(135deg,var(--accent),#9b7cff);border:0}
-.hero{min-height:100vh;display:grid;place-items:center;padding:140px 0 80px;position:relative}
-.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:55px;align-items:center}
-.eyebrow{display:inline-flex;gap:9px;align-items:center;color:#cbd1df;font-size:13px;
- padding:7px 11px;border:1px solid var(--line);background:rgba(255,255,255,.04);border-radius:99px;margin-bottom:22px}
-.dot{width:8px;height:8px;background:var(--accent2);border-radius:50%;box-shadow:0 0 18px var(--accent2);animation:pulse 1.7s infinite}
-h1{font-size:clamp(50px,7vw,88px);line-height:.94;letter-spacing:-.07em;max-width:850px}
-.gradient{background:linear-gradient(100deg,#fff 10%,#a891ff 50%,#57eadf 90%);-webkit-background-clip:text;background-clip:text;color:transparent}
-.hero p{margin:25px 0;color:var(--muted);font-size:18px;max-width:650px}
-.actions{display:flex;gap:12px;flex-wrap:wrap}.quick{display:flex;gap:24px;margin-top:34px;color:var(--muted);font-size:13px}.quick strong{display:block;color:white;font-size:20px}
-.visual{height:510px;position:relative;display:grid;place-items:center}
-.orbit,.orbit2{position:absolute;border:1px solid rgba(124,92,255,.24);border-radius:50%;animation:spin 18s linear infinite}
-.orbit{width:400px;height:400px}.orbit2{width:280px;height:280px;animation-direction:reverse;animation-duration:12s;border-color:rgba(32,214,199,.22)}
-.orbit:before,.orbit2:before{content:"";position:absolute;width:9px;height:9px;border-radius:50%;background:var(--accent2);top:16%;right:7%;box-shadow:0 0 22px var(--accent2)}
-.orbit2:before{background:var(--accent);top:auto;bottom:4%;right:auto;left:10%;box-shadow:0 0 22px var(--accent)}
-.dashboard{width:340px;padding:22px;border:1px solid var(--line);border-radius:24px;background:linear-gradient(145deg,rgba(25,31,48,.9),rgba(11,15,25,.9));backdrop-filter:blur(14px);box-shadow:0 35px 100px rgba(0,0,0,.45);position:relative;z-index:2;transform:rotate(-4deg);animation:float 5s ease-in-out infinite}
-.dtop{display:flex;justify-content:space-between;color:var(--muted);font-size:12px}.metric{font-size:34px;font-weight:800;margin:12px 0}
-.bars{height:120px;display:flex;align-items:end;gap:9px;border-bottom:1px solid var(--line);padding:10px 0}
-.bar{flex:1;border-radius:7px 7px 0 0;background:linear-gradient(to top,var(--accent),var(--accent2));animation:grow 1.2s ease both;transform-origin:bottom}
-.b1{height:35%}.b2{height:55%;animation-delay:.1s}.b3{height:45%;animation-delay:.2s}.b4{height:78%;animation-delay:.3s}.b5{height:62%;animation-delay:.4s}.b6{height:92%;animation-delay:.5s}.b7{height:72%;animation-delay:.6s}
-.chips{display:flex;gap:7px;margin-top:14px}.chip{font-size:10px;padding:5px 8px;border-radius:8px;background:rgba(255,255,255,.06);color:#bfc7d7}
-section{padding:100px 0}.section-head{display:flex;justify-content:space-between;gap:25px;align-items:end;margin-bottom:35px}
-.kicker{color:var(--accent2);font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.14em}.section-head h2{font-size:42px;letter-spacing:-.05em;margin-top:8px}.section-head p{max-width:500px;color:var(--muted)}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-.card{border:1px solid var(--line);background:var(--panel);border-radius:22px;padding:25px;transition:.3s;position:relative;overflow:hidden}
-.card:hover{transform:translateY(-7px);border-color:rgba(124,92,255,.45);box-shadow:0 25px 60px rgba(0,0,0,.25)}
-.card:after{content:"";position:absolute;width:150px;height:150px;background:var(--accent);filter:blur(80px);opacity:.08;right:-80px;top:-80px}
-.icon{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;background:rgba(124,92,255,.12);color:#a995ff;font-weight:800;margin-bottom:20px}
-.card h3{font-size:20px;margin-bottom:8px}.card p{color:var(--muted);font-size:14px}.tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:18px}.tag{font-size:11px;padding:5px 8px;border:1px solid var(--line);border-radius:8px;color:#c9d0df}
-.project{min-height:310px;display:flex;flex-direction:column;justify-content:space-between}.project .topline{display:flex;justify-content:space-between;color:var(--muted);font-size:12px}
-.project h3{font-size:25px;max-width:340px}.project .desc{margin-top:10px}
-.project .link{color:#dcd6ff;font-weight:700;font-size:13px;margin-top:20px;display:inline-block}.project .link:hover{color:var(--accent2)}
-.timeline{display:grid;gap:15px}.job{display:grid;grid-template-columns:180px 1fr;gap:30px;padding:25px 0;border-top:1px solid var(--line)}.job:last-child{border-bottom:1px solid var(--line)}
-.date{color:var(--accent2);font-size:13px;font-weight:700}.company{color:var(--muted);font-size:14px;margin:4px 0 10px}.job ul{padding-left:18px;color:#c0c7d5;font-size:14px}.job li{margin:6px 0}
-.skill-wrap{display:grid;grid-template-columns:1fr 1fr;gap:18px}.skill-row{margin:18px 0}.skill-name{display:flex;justify-content:space-between;font-size:13px;color:#d8dce6}.track{height:7px;background:rgba(255,255,255,.06);border-radius:99px;margin-top:8px;overflow:hidden}.fill{height:100%;width:var(--w);background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:99px;animation:load 1.5s ease both}
-.contact{background:linear-gradient(135deg,rgba(124,92,255,.12),rgba(32,214,199,.07));border:1px solid var(--line);border-radius:28px;padding:55px;text-align:center}.contact h2{font-size:48px;letter-spacing:-.06em}.contact p{color:var(--muted);max-width:600px;margin:15px auto 25px}.footer{padding:35px 0;color:#7f899c;font-size:12px;display:flex;justify-content:space-between;border-top:1px solid var(--line)}
-.reveal{opacity:0;transform:translateY(25px);transition:opacity .8s ease,transform .8s ease}.reveal.show{opacity:1;transform:none}
-@keyframes pulse{50%{opacity:.4;transform:scale(.8)}}@keyframes spin{to{transform:rotate(360deg)}}@keyframes float{50%{transform:rotate(-1deg) translateY(-12px)}}@keyframes grow{from{transform:scaleY(0)}}@keyframes load{from{width:0}}
-@media(max-width:850px){.hero-grid{grid-template-columns:1fr}.visual{height:420px}.grid{grid-template-columns:1fr 1fr}.skill-wrap{grid-template-columns:1fr}.navlinks{display:none}.job{grid-template-columns:1fr;gap:8px}}
-@media(max-width:560px){section{padding:70px 0}.grid{grid-template-columns:1fr}.hero{padding-top:120px}h1{font-size:54px}.visual{transform:scale(.82);margin:-35px}.contact{padding:35px 20px}.contact h2{font-size:36px}.footer{display:block}.footer span{display:block;margin-top:8px}}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ayu Nadia Irawan | Data Analyst Portfolio</title>
+    <style>
+        /* High-Tech Girly Color Palette & Variables */
+        :root {
+            --bg-dark: #0f0c29;
+            --bg-gradient: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            --neon-pink: #ff007f;
+            --neon-purple: #b026ff;
+            --soft-pink: #f8c8dc;
+            --text-light: #f1f1f1;
+            --glow-pink: 0 0 10px #ff007f, 0 0 20px #ff007f;
+            --glow-purple: 0 0 10px #b026ff, 0 0 20px #b026ff;
+        }
+
+        body {
+            background: var(--bg-gradient);
+            background-attachment: fixed;
+            color: var(--text-light);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            0% { opacity: 0; transform: translateY(-30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes borderGlow {
+            0% { border-color: var(--neon-pink); box-shadow: 0 0 5px var(--neon-pink); }
+            50% { border-color: var(--neon-purple); box-shadow: 0 0 15px var(--neon-purple); }
+            100% { border-color: var(--neon-pink); box-shadow: 0 0 5px var(--neon-pink); }
+        }
+
+        /* Layout & Typography */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            text-align: center;
+            animation: fadeInDown 1s ease-out forwards;
+            margin-bottom: 50px;
+        }
+
+        h1 {
+            font-family: 'Courier New', Courier, monospace;
+            color: var(--soft-pink);
+            text-shadow: var(--glow-pink);
+            font-size: 3em;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+
+        .subtitle {
+            color: var(--neon-purple);
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            text-shadow: 0 0 5px var(--neon-purple);
+        }
+
+        .contact-info a {
+            color: var(--text-light);
+            text-decoration: none;
+            margin: 0 10px;
+            border-bottom: 1px solid var(--neon-purple);
+            transition: all 0.3s ease;
+        }
+
+        .contact-info a:hover {
+            color: var(--neon-pink);
+            text-shadow: var(--glow-pink);
+            border-bottom-color: var(--neon-pink);
+        }
+
+        .summary {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid var(--neon-pink);
+            margin-bottom: 40px;
+            animation: fadeInUp 1s ease-out 0.2s forwards;
+            opacity: 0;
+        }
+
+        section {
+            background: rgba(15, 12, 41, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 0, 127, 0.3);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 40px;
+            animation: fadeInUp 1s ease-out 0.4s forwards;
+            opacity: 0;
+            transition: transform 0.3s ease;
+        }
+
+        section:hover {
+            transform: translateY(-5px);
+            animation: borderGlow 3s infinite;
+        }
+
+        h2 {
+            color: var(--soft-pink);
+            border-bottom: 2px solid var(--neon-purple);
+            display: inline-block;
+            padding-bottom: 5px;
+            margin-top: 0;
+        }
+
+        h3 {
+            color: var(--neon-pink);
+            margin-bottom: 5px;
+        }
+
+        .project-card {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 3px solid var(--neon-purple);
+        }
+
+        .tags {
+            margin: 10px 0;
+        }
+
+        .tag {
+            background: rgba(176, 38, 255, 0.2);
+            color: var(--soft-pink);
+            font-size: 0.85em;
+            padding: 3px 8px;
+            border-radius: 12px;
+            margin-right: 8px;
+            border: 1px solid var(--neon-purple);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 6px 12px;
+            margin-top: 10px;
+            margin-right: 10px;
+            font-size: 0.9em;
+            color: var(--text-light);
+            text-decoration: none;
+            background: transparent;
+            border: 1px solid var(--neon-pink);
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            background: var(--neon-pink);
+            color: var(--bg-dark);
+            box-shadow: var(--glow-pink);
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .skill-item {
+            background: rgba(255, 0, 127, 0.1);
+            padding: 10px;
+            text-align: center;
+            border-radius: 8px;
+            border: 1px solid var(--neon-purple);
+        }
+    </style>
 </head>
 <body>
-<nav class="nav">
-  <a class="logo" href="#home">AYU<span>.</span></a>
-  <div class="navlinks"><a href="#about">About</a><a href="#projects">Projects</a><a href="#experience">Experience</a><a href="#skills">Skills</a><a href="#contact">Contact</a></div>
-  <a class="btn" href="https://github.com/hallooayu" target="_blank" rel="noopener">GitHub ↗</a>
-</nav>
 
-<main id="home">
-<section class="hero">
-  <div class="container hero-grid">
-    <div class="reveal">
-      <div class="eyebrow"><span class="dot"></span> DATA ANALYST • MARKETING • BUSINESS</div>
-      <h1>Turning <span class="gradient">data</span> into decisions.</h1>
-      <p>A marketing and data enthusiast who transforms complex datasets into practical insights, visual stories, and strategies that support sustainable business growth.</p>
-      <div class="actions">
-        <a class="btn primary" href="#projects">Explore my work ↓</a>
-        <a class="btn" href="https://www.linkedin.com/in/ayunada/" target="_blank" rel="noopener">LinkedIn ↗</a>
-      </div>
-      <div class="quick">
-        <div><strong>3+</strong>Data Projects</div><div><strong>5K+</strong>HR Documents</div><div><strong>500+</strong>KOL Database</div>
-      </div>
+<div class="container">
+    <header>
+        <h1>AYU NADIA IRAWAN[cite: 1]</h1>
+        <div class="subtitle">Data Analyst & Marketing Enthusiast[cite: 1]</div>
+        <div class="contact-info">
+            <a href="mailto:halloo.ayu@gmail.com">halloo.ayu@gmail.com[cite: 1]</a>
+            <a href="https://www.linkedin.com/in/ayunada/" target="_blank">LinkedIn[cite: 1]</a>
+            <a href="https://github.com/hallooayu" target="_blank">GitHub[cite: 1]</a>
+            <span>South Tangerang[cite: 1]</span>
+        </div>
+    </header>
+
+    <div class="summary">
+        <p>A marketing and data enthusiast with diverse experience across KOL management, business operations, and data visualization. Motivated by a commitment to research and team education, I focus on taking complex datasets and turning them into practical strategies that facilitate sustainable business growth[cite: 1].</p>
     </div>
-    <div class="visual reveal">
-      <div class="orbit"></div><div class="orbit2"></div>
-      <div class="dashboard">
-        <div class="dtop"><span>ANALYTICS / OVERVIEW</span><span>LIVE</span></div>
-        <div class="metric">+72.4%</div>
-        <div style="color:#aab3c5;font-size:12px">Insight velocity</div>
-        <div class="bars"><i class="bar b1"></i><i class="bar b2"></i><i class="bar b3"></i><i class="bar b4"></i><i class="bar b5"></i><i class="bar b6"></i><i class="bar b7"></i></div>
-        <div class="chips"><span class="chip">Power BI</span><span class="chip">SQL</span><span class="chip">Python</span><span class="chip">DAX</span></div>
-      </div>
-    </div>
-  </div>
-</section>
 
-<section id="about">
-<div class="container reveal">
- <div class="section-head"><div><div class="kicker">01 / Profile</div><h2>Data with a business lens.</h2></div><p>My background combines International Marketing Management with hands-on experience in data visualization, research, operations, KOL management, and business development.</p></div>
- <div class="grid">
-  <article class="card"><div class="icon">01</div><h3>Analyze</h3><p>Clean, explore, and interpret datasets to uncover patterns, trends, and meaningful business signals.</p><div class="tags"><span class="tag">EDA</span><span class="tag">Excel</span><span class="tag">SQL</span><span class="tag">Python</span></div></article>
-  <article class="card"><div class="icon">02</div><h3>Visualize</h3><p>Build compact dashboards that make complex information easier for stakeholders to understand and act on.</p><div class="tags"><span class="tag">Power BI</span><span class="tag">Looker</span><span class="tag">DAX</span></div></article>
-  <article class="card"><div class="icon">03</div><h3>Translate</h3><p>Connect analytical findings to marketing, customer, operational, and growth decisions.</p><div class="tags"><span class="tag">Research</span><span class="tag">Strategy</span><span class="tag">Insights</span></div></article>
- </div>
+    <section id="projects">
+        <h2>Data Analyst Projects[cite: 1]</h2>
+        
+        <div class="project-card">
+            <h3>Global Ads Performance[cite: 1]</h3>
+            <div class="tags">
+                <span class="tag">Looker[cite: 1]</span>
+                <span class="tag">Data Visualization[cite: 1]</span>
+            </div>
+            <p>Interactive dashboard analyzing Google, Meta, and TikTok ad performance[cite: 1].</p>
+            <a href="https://datastudio.google.com/reporting/17780a3d-c6f7-4bff-8da3-9d91cc1bf2a3" class="btn" target="_blank">View Looker Dashboard</a>
+            <a href="https://www.kaggle.com/datasets/nudratabbas/global-ads-performance-google-meta-tiktok" class="btn" target="_blank">Kaggle Dataset</a>
+        </div>
+
+        <div class="project-card">
+            <h3>Customer Shopping Behavior[cite: 1]</h3>
+            <div class="tags">
+                <span class="tag">PowerBI[cite: 1]</span>
+                <span class="tag">Data Visualization[cite: 1]</span>
+            </div>
+            <p>PowerBI dashboard analyzing customer purchase patterns and behavior[cite: 1].</p>
+            <a href="https://www.kaggle.com/datasets/mohanprasanth21/customer-shopping-behavior-cleaned-dataset" class="btn" target="_blank">Kaggle Dataset</a>
+        </div>
+
+        <div class="project-card">
+            <h3>Leaf Disease Classification[cite: 1]</h3>
+            <div class="tags">
+                <span class="tag">Computer Vision[cite: 1]</span>
+                <span class="tag">ResNet50[cite: 1]</span>
+                <span class="tag">Python[cite: 1]</span>
+            </div>
+            <p>A deep learning approach for computer vision using a ResNet50 model[cite: 1].</p>
+            <a href="https://colab.research.google.com/drive/1dR_RWM7T4YQPY9eiKUmpbGPzu6aXBQAQ?usp=drive_link" class="btn" target="_blank">Model (Colab)</a>
+            <a href="https://colab.research.google.com/drive/1LWlFkf8g7T3btbWfoRRNYM_Ii3h4_LDJ?usp=drive_link" class="btn" target="_blank">Gradio App</a>
+            <a href="https://universe.roboflow.com/st-aloysius-college-1bndf/leaf-disease-detection-mpdfi/dataset/3" class="btn" target="_blank">Roboflow Dataset</a>
+        </div>
+
+        <div class="project-card">
+            <h3>Sentiment Analysis of Shopee User Reviews[cite: 1]</h3>
+            <div class="tags">
+                <span class="tag">NLP[cite: 1]</span>
+                <span class="tag">Python[cite: 1]</span>
+            </div>
+            <p>Analyzed user reviews from the Google Play Store[cite: 1].</p>
+            <a href="https://github.com/hallooayu/nlp_shopee.git" class="btn" target="_blank">NLP Repo</a>
+            <a href="https://github.com/hallooayu/shopee_sentiment.git" class="btn" target="_blank">Chatbot Repo</a>
+        </div>
+    </section>
+
+    <section id="experience">
+        <h2>Experience Highlights[cite: 1]</h2>
+        <ul>
+            <li><strong>Data Analyst | PPKD Jakarta Selatan (Jul - Sep 2026):</strong> Executed multiple visualization and machine learning projects including TransJakarta VOC, Global Ads, and Leaf Disease Classification[cite: 1].</li>
+            <li><strong>HR Administration Intern | Radikari (Jan - Apr 2026):</strong> Processed over 5,000 HR documents and managed confidential employee relations for major enterprise clients like Gojek, DANA, and Halodoc[cite: 1].</li>
+            <li><strong>Business Development Intern | Radikari (Oct 2025 - Jan 2026):</strong> Sourced 250+ prospects and coordinated complete tender submissions for client pitches[cite: 1].</li>
+            <li><strong>KOL Specialist Intern | Gushcloud Indonesia (Aug - Oct 2025):</strong> Managed end-to-end brand ambassador partnerships with 20 KOLs for brands including Schneider, Hyundai, and Philips[cite: 1].</li>
+        </ul>
+    </section>
+
+    <section id="skills-certs">
+        <h2>Skills & Certifications[cite: 1]</h2>
+        <div class="skills-grid">
+            <div class="skill-item">Python, SQL, DAX[cite: 1]</div>
+            <div class="skill-item">Power BI, Looker[cite: 1]</div>
+            <div class="skill-item">Meta Business Suite[cite: 1]</div>
+            <div class="skill-item">SPSS, Excel[cite: 1]</div>
+        </div>
+        
+        <h3 style="margin-top: 20px;">Credentials[cite: 1]</h3>
+        <a href="https://drive.google.com/drive/folders/1tL7_JyCseBs68uDnpAMnQ3MKGKHVilAX?usp=drive_link" class="btn" target="_blank">Data Analyst (PPKD)[cite: 1]</a>
+        <a href="https://drive.google.com/drive/folders/1j7H6viNx6f5zbccPQPTJ5WbUAzT5Q4EF?usp=drive_link" class="btn" target="_blank">Digital Marketing (BNSP)[cite: 1]</a>
+        <a href="https://drive.google.com/drive/folders/1Li7mcqZEVwDCRTGoGY5wIAnwORjCQ2gS?usp=drive_link" class="btn" target="_blank">DQLab[cite: 1]</a>
+        <a href="https://drive.google.com/drive/folders/1DwSxcG1qCxSrQ7g7zI4oDXHSgDGOByDm?usp=drive_link" class="btn" target="_blank">English (TOEIC/EF SET)[cite: 1]</a>
+    </section>
 </div>
-</section>
 
-<section id="projects">
-<div class="container reveal">
- <div class="section-head"><div><div class="kicker">02 / Selected Work</div><h2>Projects that tell a story.</h2></div><p>A selection of data, visualization, NLP, and machine-learning projects from my Data Analyst project experience.</p></div>
- <div class="grid">
-  <article class="card project"><div><div class="topline"><span>POWER BI</span><span>2026</span></div><h3>Voice of Customer — TransJakarta</h3><p class="desc">Data visualization project focused on understanding customer voice and turning internal data into decision-ready visuals.</p><div class="tags"><span class="tag">Power BI</span><span class="tag">Data Visualization</span><span class="tag">Customer Insight</span></div></div><span class="link">Confidential dataset · Internal project</span></article>
-  <article class="card project"><div><div class="topline"><span>POWER BI</span><span>2026</span></div><h3>Customer Shopping Behavior</h3><p class="desc">Explored customer demographics, purchasing behavior, categories, payment methods, subscriptions, and shopping patterns.</p><div class="tags"><span class="tag">Power BI</span><span class="tag">DAX</span><span class="tag">Kaggle</span></div></div><a class="link" href="https://www.kaggle.com/" target="_blank" rel="noopener">Dataset source · Kaggle ↗</a></article>
-  <article class="card project"><div><div class="topline"><span>LOOKER</span><span>2026</span></div><h3>Global Ads Performance</h3><p class="desc">Compact marketing dashboard designed to surface the most actionable advertising performance insights for an ads team.</p><div class="tags"><span class="tag">Looker</span><span class="tag">Ads Analytics</span><span class="tag">Kaggle</span></div></div><a class="link" href="https://www.kaggle.com/" target="_blank" rel="noopener">Dataset source · Kaggle ↗</a></article>
-  <article class="card project"><div><div class="topline"><span>NLP</span><span>2026</span></div><h3>Shopee Review Sentiment Analysis</h3><p class="desc">NLP project analyzing user reviews from Google Play Store to classify sentiment and extract customer feedback signals.</p><div class="tags"><span class="tag">Colab</span><span class="tag">NLP</span><span class="tag">Sentiment</span></div></div><span class="link">Notebook / chatbot workflow</span></article>
-  <article class="card project"><div><div class="topline"><span>COMPUTER VISION</span><span>2026</span></div><h3>Leaf Disease Classification</h3><p class="desc">Project Based Learning using a ResNet50 deep-learning model for leaf disease classification.</p><div class="tags"><span class="tag">ResNet50</span><span class="tag">Colab</span><span class="tag">Gradio</span><span class="tag">Roboflow</span></div></div><a class="link" href="https://roboflow.com/" target="_blank" rel="noopener">Dataset platform · Roboflow ↗</a></article>
- </div>
-</div>
-</section>
-
-<section id="experience">
-<div class="container reveal">
- <div class="section-head"><div><div class="kicker">03 / Experience</div><h2>Where analysis meets execution.</h2></div><p>Experience across data, business development, HR operations, KOL management, and marketing.</p></div>
- <div class="timeline">
-  <div class="job"><div class="date">JUL 2026 — SEP 2026</div><div><h3>Data Analyst · PPKD Jakarta Selatan</h3><div class="company">Data visualization, NLP & computer vision projects</div><ul><li>Built and explored Power BI and Looker visualization projects.</li><li>Worked on sentiment analysis and a ResNet50 computer vision project.</li></ul></div></div>
-  <div class="job"><div class="date">JAN 2026 — APR 2026</div><div><h3>HR Administration Intern · Radikari</h3><div class="company">High-volume documentation & operations</div><ul><li>Processed 5,000+ critical HR documents and up to 200+ letters in a single day.</li><li>Handled confidential employee relations and offboarding documentation with accuracy.</li></ul></div></div>
-  <div class="job"><div class="date">OCT 2025 — JAN 2026</div><div><h3>Business Development Intern · Radikari</h3><div class="company">Prospecting, market research & tender support</div><ul><li>Sourced 250+ prospect clients across manufacturing and logistics.</li><li>Conducted market and competitor research for BPO and MPO services.</li></ul></div></div>
-  <div class="job"><div class="date">AUG 2025 — OCT 2025</div><div><h3>KOL Specialist Intern · Gushcloud Indonesia</h3><div class="company">Influencer campaign operations & analytics</div><ul><li>Evaluated 40+ KOLs daily and managed partnerships with 20 KOLs.</li><li>Collected content analytics to measure campaign success.</li></ul></div></div>
-  <div class="job"><div class="date">SEP 2024 — MAR 2025</div><div><h3>KOL Specialist Intern · PT HIIP Inovasi Indonesia</h3><div class="company">Influencer sourcing & campaign management</div><ul><li>Built a 500+ influencer rate-card database across TikTok, Instagram, and YouTube.</li><li>Worked with clients including Permata Bank, Soklin, Blibli, and Erajaya.</li></ul></div></div>
-  <div class="job"><div class="date">OCT 2023 — FEB 2024</div><div><h3>Marketing Intern · Tempo Inti Media Group</h3><div class="company">Partnerships, research & B2G prospecting</div><ul><li>Created partnership documents, executive reports, and proposals.</li><li>Built a government ministry prospect database for targeted telesales.</li></ul></div></div>
- </div>
-</div>
-</section>
-
-<section id="skills">
-<div class="container reveal">
- <div class="section-head"><div><div class="kicker">04 / Toolkit</div><h2>My analytical stack.</h2></div><p>A practical toolkit spanning analytics, visualization, marketing intelligence, and business operations.</p></div>
- <div class="skill-wrap">
-  <div class="card">
-   <div class="skill-row"><div class="skill-name"><span>Power BI / DAX</span><span>90%</span></div><div class="track"><div class="fill" style="--w:90%"></div></div></div>
-   <div class="skill-row"><div class="skill-name"><span>Excel / Google Workspace</span><span>90%</span></div><div class="track"><div class="fill" style="--w:90%"></div></div></div>
-   <div class="skill-row"><div class="skill-name"><span>Looker / Data Studio</span><span>82%</span></div><div class="track"><div class="fill" style="--w:82%"></div></div></div>
-   <div class="skill-row"><div class="skill-name"><span>Python / Colab</span><span>78%</span></div><div class="track"><div class="fill" style="--w:78%"></div></div></div>
-  </div>
-  <div class="card">
-   <div class="skill-row"><div class="skill-name"><span>SQL</span><span>78%</span></div><div class="track"><div class="fill" style="--w:78%"></div></div></div>
-   <div class="skill-row"><div class="skill-name"><span>SPSS</span><span>72%</span></div><div class="track"><div class="fill" style="--w:72%"></div></div></div>
-   <div class="skill-row"><div class="skill-name"><span>Marketing Analytics</span><span>88%</span></div><div class="track"><div class="fill" style="--w:88%"></div></div></div>
-   <div class="skill-row"><div class="skill-name"><span>Research & Business Analysis</span><span>90%</span></div><div class="track"><div class="fill" style="--w:90%"></div></div></div>
-  </div>
- </div>
- <div class="grid" style="margin-top:18px">
-  <div class="card"><h3>Education</h3><p>Politeknik Tempo · International Marketing Management · 2021–2025</p><p style="margin-top:8px;color:#d9dcef">GPA 3.73/4.00 · Full Scholarship</p></div>
-  <div class="card"><h3>Certification</h3><p>Data Analyst — PPKD Jakarta Selatan · Digital Marketing — BNSP 2024 · DQLab · Jobstreet · Maganghub</p></div>
-  <div class="card"><h3>Language</h3><p>English · TOEIC 690 · EF SET 56/100 · CEFR B2</p></div>
- </div>
-</div>
-</section>
-
-<section id="contact">
-<div class="container reveal">
- <div class="contact">
-  <div class="kicker">05 / Let's connect</div>
-  <h2>Have a dataset?<br><span class="gradient">Let's find the story.</span></h2>
-  <p>Open to opportunities where data analysis, visualization, marketing insight, and business thinking can work together.</p>
-  <div class="actions" style="justify-content:center">
-   <a class="btn primary" href="mailto:halloo.ayu@gmail.com">Email me ↗</a>
-   <a class="btn" href="https://www.linkedin.com/in/ayunada/" target="_blank" rel="noopener">LinkedIn ↗</a>
-   <a class="btn" href="https://github.com/hallooayu" target="_blank" rel="noopener">GitHub ↗</a>
-  </div>
- </div>
-</div>
-</section>
-</main>
-
-<footer class="container footer">
- <span>© 2026 Ayu Nadia Irawan</span>
- <span>Built for data, designed for decisions.</span>
-</footer>
-
-<script>
-const observer = new IntersectionObserver((entries)=>{
- entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('show')})
-},{threshold:.12});
-document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
-</script>
 </body>
 </html>
