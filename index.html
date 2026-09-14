@@ -1,291 +1,1059 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ayu Nadia Irawan | Data Analyst Portfolio</title>
-    <style>
-        /* High-Tech Girly Color Palette & Variables */
-        :root {
-            --bg-dark: #0f0c29;
-            --bg-gradient: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-            --neon-pink: #ff007f;
-            --neon-purple: #b026ff;
-            --soft-pink: #f8c8dc;
-            --text-light: #f1f1f1;
-            --glow-pink: 0 0 10px #ff007f, 0 0 20px #ff007f;
-            --glow-purple: 0 0 10px #b026ff, 0 0 20px #b026ff;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ayu Nadia Irawan — Data Analyst</title>
+<meta name="description" content="Portfolio of Ayu Nadia Irawan — Data Analyst specializing in marketing insight and data visualization.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Quicksand:wght@400;500;600;700&family=Caveat:wght@600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#fff2f8;
+    --bg-panel:#ffffff;
+    --bg-elevated:#ffe8f2;
+    --bg-elevated-2:#ffd9ec;
+    --line:#ffc9e0;
+    --line-soft:#ffe3ef;
+    --text:#4a2540;
+    --text-dim:#8a5a75;
+    --text-faint:#c093ab;
+    --accent:#ef4d99;
+    --accent-dim:#c22f79;
+    --accent-warm:#ffb648;
+    --accent-violet:#b18bff;
+    --accent-pink:#ffb3d9;
+    --accent-mint:#3dbfa0;
+    --shadow-soft:0 20px 40px -24px rgba(74,37,64,0.22);
+    --radius-card: 16px;
+    --sidebar-w: 300px;
+  }
 
-        body {
-            background: var(--bg-gradient);
-            background-attachment: fixed;
-            color: var(--text-light);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 0;
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Quicksand', sans-serif;
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{ background:var(--accent); color:#fff5fa; }
 
-        /* Animations */
-        @keyframes fadeInDown {
-            0% { opacity: 0; transform: translateY(-30px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
+  /* ---------- pretty background blobs ---------- */
+  .blob-field{
+    position:fixed;
+    inset:0;
+    z-index:0;
+    pointer-events:none;
+    overflow:hidden;
+  }
+  .blob{
+    position:absolute;
+    border-radius:50%;
+    filter:blur(60px);
+    opacity:0.28;
+    animation:blobFloat 16s ease-in-out infinite;
+  }
+  .blob-1{ width:420px; height:420px; top:-8%; left:8%; background:radial-gradient(circle, var(--accent), transparent 70%); animation-duration:18s; }
+  .blob-2{ width:360px; height:360px; top:30%; right:-6%; background:radial-gradient(circle, var(--accent-violet), transparent 70%); animation-duration:22s; animation-delay:-4s; }
+  .blob-3{ width:320px; height:320px; bottom:2%; left:22%; background:radial-gradient(circle, var(--accent-pink), transparent 70%); animation-duration:20s; animation-delay:-9s; }
+  .blob-4{ width:260px; height:260px; bottom:30%; right:16%; background:radial-gradient(circle, var(--accent-warm), transparent 70%); animation-duration:24s; animation-delay:-13s; opacity:0.18; }
+  @keyframes blobFloat{
+    0%,100%{ transform:translate(0,0) scale(1); }
+    33%{ transform:translate(30px,-24px) scale(1.08); }
+    66%{ transform:translate(-24px,18px) scale(0.94); }
+  }
+  .shell{ position:relative; z-index:1; }
 
-        @keyframes fadeInUp {
-            0% { opacity: 0; transform: translateY(30px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
+  .gradient-text{
+    background:linear-gradient(100deg, var(--accent) 0%, var(--accent-violet) 55%, var(--accent-pink) 100%);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+  }
 
-        @keyframes borderGlow {
-            0% { border-color: var(--neon-pink); box-shadow: 0 0 5px var(--neon-pink); }
-            50% { border-color: var(--neon-purple); box-shadow: 0 0 15px var(--neon-purple); }
-            100% { border-color: var(--neon-pink); box-shadow: 0 0 5px var(--neon-pink); }
-        }
+  /* ---------- mascot ---------- */
+  .mascot-wrap{
+    display:flex;
+    justify-content:center;
+    margin-bottom:0.4rem;
+  }
+  #mascot{ width:118px; height:auto; animation:mascotFloat 4.2s ease-in-out infinite; }
+  @keyframes mascotFloat{
+    0%,100%{ transform:translateY(0) rotate(-1deg); }
+    50%{ transform:translateY(-10px) rotate(1deg); }
+  }
+  #mascotArm{ transform-origin:97px 92px; animation:mascotWave 2.2s ease-in-out infinite; }
+  @keyframes mascotWave{
+    0%,100%{ transform:rotate(0deg); }
+    20%{ transform:rotate(-22deg); }
+    40%{ transform:rotate(4deg); }
+    60%{ transform:rotate(-16deg); }
+    80%{ transform:rotate(2deg); }
+  }
+  .mascot-eye{ animation:mascotBlink 4.6s ease-in-out infinite; transform-box:fill-box; transform-origin:center; }
+  @keyframes mascotBlink{
+    0%, 92%, 100%{ transform:scaleY(1); }
+    95%{ transform:scaleY(0.12); }
+  }
+  #mascotBar1,#mascotBar2,#mascotBar3{ transform-box:fill-box; transform-origin:bottom; }
+  #mascotBar1{ animation:barPulse 2.4s ease-in-out infinite; }
+  #mascotBar2{ animation:barPulse 2.4s ease-in-out infinite -0.3s; }
+  #mascotBar3{ animation:barPulse 2.4s ease-in-out infinite -0.6s; }
+  @keyframes barPulse{
+    0%,100%{ transform:scaleY(1); }
+    50%{ transform:scaleY(0.5); }
+  }
+  #mascotAntenna{ animation:antennaBob 2.4s ease-in-out infinite; transform-origin:60px 10px; }
+  @keyframes antennaBob{
+    0%,100%{ transform:rotate(0deg); }
+    50%{ transform:rotate(8deg); }
+  }
 
-        /* Layout & Typography */
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 40px 20px;
-        }
+  h1,h2,h3,h4{
+    font-family:'Fredoka', sans-serif;
+    font-weight:600;
+    margin:0;
+    letter-spacing:-0.01em;
+  }
+  a{ color:inherit; text-decoration:none; }
+  p{ margin:0; }
+  ul{ margin:0; padding:0; list-style:none; }
+  .mono{ font-family:'IBM Plex Mono', monospace; }
 
-        header {
-            text-align: center;
-            animation: fadeInDown 1s ease-out forwards;
-            margin-bottom: 50px;
-        }
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; scroll-behavior:auto !important; }
+  }
 
-        h1 {
-            font-family: 'Courier New', Courier, monospace;
-            color: var(--soft-pink);
-            text-shadow: var(--glow-pink);
-            font-size: 3em;
-            margin-bottom: 10px;
-            letter-spacing: 2px;
-        }
+  /* ---------- layout shell ---------- */
+  .shell{
+    display:flex;
+    min-height:100vh;
+  }
 
-        .subtitle {
-            color: var(--neon-purple);
-            font-size: 1.2em;
-            margin-bottom: 15px;
-            text-shadow: 0 0 5px var(--neon-purple);
-        }
+  /* ---------- sidebar ---------- */
+  .sidebar{
+    width:var(--sidebar-w);
+    flex-shrink:0;
+    position:sticky;
+    top:0;
+    height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    padding:2.5rem 2rem;
+    border-right:1px solid var(--line-soft);
+    background:
+      radial-gradient(circle at 15% 8%, rgba(47,230,200,0.07), transparent 45%),
+      var(--bg-panel);
+  }
+  .sidebar-top{ display:flex; flex-direction:column; gap:2.6rem; }
+  .brand{ display:flex; flex-direction:column; gap:0.3rem; }
+  .brand-name{ font-size:1.15rem; line-height:1.3; font-weight:700; color:var(--text); }
+  .brand-role{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.72rem;
+    color:var(--accent);
+    letter-spacing:0.02em;
+  }
 
-        .contact-info a {
-            color: var(--text-light);
-            text-decoration: none;
-            margin: 0 10px;
-            border-bottom: 1px solid var(--neon-purple);
-            transition: all 0.3s ease;
-        }
+  .side-nav{ display:flex; flex-direction:column; gap:0.15rem; }
+  .side-nav a{
+    display:flex;
+    align-items:center;
+    gap:0.7rem;
+    padding:0.55rem 0.5rem;
+    font-size:0.88rem;
+    color:var(--text-dim);
+    border-radius:3px;
+    transition:color .2s ease;
+    position:relative;
+  }
+  .side-nav a::before{
+    content:"";
+    width:6px; height:6px;
+    border-radius:50%;
+    background:var(--line);
+    flex-shrink:0;
+    transition:background .2s ease, box-shadow .2s ease;
+  }
+  .side-nav a:hover{ color:var(--text); }
+  .side-nav a.active{ color:var(--text); }
+  .side-nav a.active::before{
+    background:var(--accent);
+    box-shadow:0 0 0 3px rgba(47,230,200,0.15);
+  }
 
-        .contact-info a:hover {
-            color: var(--neon-pink);
-            text-shadow: var(--glow-pink);
-            border-bottom-color: var(--neon-pink);
-        }
+  .sidebar-bottom{ display:flex; flex-direction:column; gap:1.1rem; }
+  .side-location{ font-size:0.78rem; color:var(--text-faint); }
+  .side-socials{ display:flex; gap:0.9rem; }
+  .side-socials a{
+    width:34px; height:34px;
+    display:flex; align-items:center; justify-content:center;
+    border:1px solid var(--line);
+    border-radius:3px;
+    color:var(--text-dim);
+    transition:border-color .2s ease, color .2s ease, transform .2s ease;
+  }
+  .side-socials a:hover{ border-color:var(--accent); color:var(--accent); transform:translateY(-2px); }
+  .side-socials svg{ width:16px; height:16px; }
 
-        .summary {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 20px;
-            border-radius: 10px;
-            border-left: 4px solid var(--neon-pink);
-            margin-bottom: 40px;
-            animation: fadeInUp 1s ease-out 0.2s forwards;
-            opacity: 0;
-        }
+  /* ---------- main ---------- */
+  .main{ flex:1; min-width:0; }
+  section{
+    padding:6.5rem 4.5rem;
+    border-bottom:1px solid var(--line-soft);
+  }
+  section:last-of-type{ border-bottom:none; }
 
-        section {
-            background: rgba(15, 12, 41, 0.6);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 0, 127, 0.3);
-            border-radius: 15px;
-            padding: 30px;
-            margin-bottom: 40px;
-            animation: fadeInUp 1s ease-out 0.4s forwards;
-            opacity: 0;
-            transition: transform 0.3s ease;
-        }
+  .section-head{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    gap:2rem;
+    margin-bottom:3rem;
+  }
+  .section-head h2{ font-size:1.7rem; }
+  .section-head .section-note{ font-size:0.85rem; color:var(--text-faint); max-width:280px; text-align:right; }
 
-        section:hover {
-            transform: translateY(-5px);
-            animation: borderGlow 3s infinite;
-        }
+  /* ---------- hero ---------- */
+  .hero{
+    padding-top:5rem;
+    display:grid;
+    grid-template-columns:1.15fr 0.85fr;
+    gap:3rem;
+    align-items:center;
+    min-height:88vh;
+  }
+  .hero-kicker{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.8rem;
+    color:var(--accent);
+    margin-bottom:1.1rem;
+    display:flex;
+    align-items:center;
+    gap:0.6rem;
+  }
+  .hero-kicker .dot{
+    width:7px;height:7px;border-radius:50%;background:var(--accent);
+    box-shadow:0 0 0 4px rgba(47,230,200,0.15);
+  }
+  .hero h1{
+    font-size:clamp(2.6rem, 4.4vw, 4rem);
+    line-height:1.04;
+    margin-bottom:1.4rem;
+  }
+  .hero h1 span{ color:var(--text-dim); font-weight:400; }
+  .hero-lede{
+    font-size:1.08rem;
+    color:var(--text-dim);
+    max-width:46ch;
+    margin-bottom:2.4rem;
+  }
+  .hero-actions{ display:flex; gap:1rem; margin-bottom:3.2rem; flex-wrap:wrap; }
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:0.5rem;
+    padding:0.85rem 1.4rem;
+    font-size:0.92rem;
+    font-family:'Quicksand', sans-serif;
+    font-weight:600;
+    border-radius:26px;
+    border:1px solid transparent;
+    cursor:pointer;
+    transition:transform .28s cubic-bezier(.34,1.56,.64,1), border-color .18s ease, background .18s ease, box-shadow .28s ease;
+  }
+  .btn-solid{ background:linear-gradient(100deg, var(--accent), var(--accent-violet)); color:#fff5fa; }
+  .btn-solid:hover{ transform:translateY(-3px) scale(1.04); box-shadow:0 14px 26px -12px rgba(239,77,153,0.5); }
+  .btn-outline{ border-color:var(--line); color:var(--text); background:transparent; }
+  .btn-outline:hover{ border-color:var(--accent); color:var(--accent); transform:translateY(-3px) scale(1.04); }
 
-        h2 {
-            color: var(--soft-pink);
-            border-bottom: 2px solid var(--neon-purple);
-            display: inline-block;
-            padding-bottom: 5px;
-            margin-top: 0;
-        }
+  .hero-stats{ display:flex; gap:2.6rem; flex-wrap:wrap; }
+  .stat-num{ font-family:'IBM Plex Mono', monospace; font-size:1.5rem; color:var(--accent-warm); display:block; }
+  .stat-label{ font-size:0.78rem; color:var(--text-faint); margin-top:0.25rem; }
 
-        h3 {
-            color: var(--neon-pink);
-            margin-bottom: 5px;
-        }
+  /* hero chart */
+  .hero-visual{
+    position:relative;
+    background:var(--bg-elevated);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:1.2rem 1.6rem 1.2rem;
+    min-height:420px;
+    display:flex;
+    flex-direction:column;
+    box-shadow:0 30px 60px -30px rgba(177,139,255,0.25);
+  }
+  .hero-visual-head{
+    display:flex; justify-content:space-between; align-items:center;
+    font-family:'IBM Plex Mono', monospace; font-size:0.7rem; color:var(--text-faint);
+    margin-bottom:0.8rem;
+  }
+  .hero-visual-head .live{ color:var(--accent); display:flex; align-items:center; gap:0.4rem; }
+  .hero-visual-head .live::before{ content:""; width:6px; height:6px; border-radius:50%; background:var(--accent); animation:pulse 1.8s ease-in-out infinite; }
+  @keyframes pulse{ 0%,100%{ opacity:1;} 50%{ opacity:0.25; } }
+  #heroChart{ width:100%; flex:1; }
+  .hero-visual-foot{
+    display:flex; gap:1.4rem; margin-top:0.9rem; padding-top:0.9rem; border-top:1px solid var(--line-soft);
+    font-size:0.72rem; color:var(--text-faint);
+  }
+  .hero-visual-foot span b{ color:var(--text); font-family:'IBM Plex Mono', monospace; font-weight:500; }
 
-        .project-card {
-            background: rgba(255, 255, 255, 0.03);
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            border-left: 3px solid var(--neon-purple);
-        }
+  /* ---------- interactive chart ---------- */
+  .chart-tabs{ display:flex; gap:0.4rem; margin-bottom:0.9rem; flex-wrap:wrap; }
+  .chart-tab{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.7rem;
+    padding:0.4rem 0.7rem;
+    border:1px solid var(--line);
+    border-radius:20px;
+    color:var(--text-dim);
+    background:transparent;
+    cursor:pointer;
+    transition:all .2s ease;
+  }
+  .chart-tab:hover{ color:var(--text); border-color:var(--text-faint); }
+  .chart-tab.active{
+    color:#04120f;
+    border-color:transparent;
+    background:linear-gradient(100deg, var(--accent), var(--accent-violet));
+    font-weight:600;
+  }
+  .chart-stage{ position:relative; flex:1; }
+  #heroChart{ cursor:crosshair; }
+  #heroChart rect.bar{ transition:filter .15s ease; }
+  #heroChart rect.bar:hover{ filter:brightness(1.35); }
+  .chart-tooltip{
+    position:absolute;
+    top:0; left:0;
+    transform:translate(-50%,-115%);
+    background:var(--bg-elevated-2);
+    border:1px solid var(--accent-dim);
+    border-radius:6px;
+    padding:0.4rem 0.65rem;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.72rem;
+    white-space:nowrap;
+    pointer-events:none;
+    opacity:0;
+    transition:opacity .12s ease;
+    z-index:3;
+  }
+  .chart-tooltip.show{ opacity:1; }
+  .chart-tooltip .tt-val{ color:var(--accent); font-weight:600; }
+  .hero-visual-headline{ display:flex; align-items:baseline; justify-content:space-between; margin-bottom:0.4rem; }
+  .hero-visual-headline .hv-num{ font-family:'IBM Plex Mono', monospace; font-size:1.6rem; color:var(--accent-warm); }
+  .hero-visual-headline .hv-lbl{ font-size:0.7rem; color:var(--text-faint); }
 
-        .tags {
-            margin: 10px 0;
-        }
+  /* ---------- projects (bento) ---------- */
+  .project-grid{
+    display:grid;
+    grid-template-columns:repeat(6, 1fr);
+    gap:1.1rem;
+  }
+  .card{
+    background:var(--bg-panel);
+    border:1px solid var(--line);
+    border-left:2px solid var(--line);
+    padding:1.7rem;
+    display:flex;
+    flex-direction:column;
+    gap:1rem;
+    transition:border-left-color .2s ease, transform .25s cubic-bezier(.34,1.56,.64,1), background .2s ease, box-shadow .25s ease;
+  }
+  .card:hover{ border-left-color:var(--accent); background:var(--bg-elevated); transform:translateY(-5px) scale(1.015); box-shadow:0 14px 30px -18px rgba(47,230,200,0.35); }
+  .card.span-4{ grid-column:span 4; }
+  .card.span-2{ grid-column:span 2; }
+  .card.span-3{ grid-column:span 3; }
+  .card.span-6{ grid-column:span 6; }
+  .card.confidential{ opacity:0.82; }
 
-        .tag {
-            background: rgba(176, 38, 255, 0.2);
-            color: var(--soft-pink);
-            font-size: 0.85em;
-            padding: 3px 8px;
-            border-radius: 12px;
-            margin-right: 8px;
-            border: 1px solid var(--neon-purple);
-        }
+  .card-tools{ display:flex; gap:0.4rem; flex-wrap:wrap; }
+  .tag{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.68rem;
+    padding:0.25rem 0.55rem;
+    border:1px solid var(--line);
+    border-radius:2px;
+    color:var(--text-dim);
+  }
+  .tag.tag-accent{ color:var(--accent); border-color:var(--accent-dim); }
+  .card h3{ font-size:1.15rem; }
+  .card p{ color:var(--text-dim); font-size:0.9rem; }
+  .card-links{ display:flex; gap:1.2rem; margin-top:auto; padding-top:0.6rem; flex-wrap:wrap; }
+  .card-links a{
+    font-size:0.82rem;
+    color:var(--text);
+    display:flex; align-items:center; gap:0.35rem;
+    border-bottom:1px solid var(--line);
+    padding-bottom:2px;
+    transition:border-color .2s ease, color .2s ease;
+  }
+  .card-links a:hover{ color:var(--accent); border-color:var(--accent); }
+  .card-links svg{ width:14px; height:14px; }
+  .card-links .disabled{ color:var(--text-faint); border-color:transparent; cursor:default; }
 
-        .btn {
-            display: inline-block;
-            padding: 6px 12px;
-            margin-top: 10px;
-            margin-right: 10px;
-            font-size: 0.9em;
-            color: var(--text-light);
-            text-decoration: none;
-            background: transparent;
-            border: 1px solid var(--neon-pink);
-            border-radius: 5px;
-            transition: all 0.3s;
-        }
+  /* ---------- experience timeline ---------- */
+  .timeline{ display:flex; flex-direction:column; }
+  .tl-item{
+    display:grid;
+    grid-template-columns:150px 1fr;
+    gap:2rem;
+    padding:1.7rem 0;
+    border-top:1px solid var(--line-soft);
+    position:relative;
+  }
+  .tl-item:first-child{ border-top:1px solid var(--line-soft); }
+  .tl-date{ font-family:'IBM Plex Mono', monospace; font-size:0.78rem; color:var(--text-faint); padding-top:0.15rem; }
+  .tl-role{ font-size:1.05rem; margin-bottom:0.2rem; font-weight:600; }
+  .tl-org{ color:var(--accent); font-size:0.88rem; margin-bottom:0.7rem; display:block; }
+  .tl-desc{ color:var(--text-dim); font-size:0.92rem; max-width:65ch; }
 
-        .btn:hover {
-            background: var(--neon-pink);
-            color: var(--bg-dark);
-            box-shadow: var(--glow-pink);
-        }
+  .other-exp{ margin-top:2.6rem; padding-top:2rem; border-top:1px dashed var(--line); }
+  .other-exp h4{ font-size:0.85rem; color:var(--text-faint); font-family:'IBM Plex Mono', monospace; font-weight:500; margin-bottom:1rem; }
+  .other-exp ul{ display:flex; flex-direction:column; gap:0.55rem; }
+  .other-exp li{ font-size:0.88rem; color:var(--text-dim); display:flex; gap:0.6rem; }
+  .other-exp li b{ color:var(--text); font-weight:500; }
 
-        ul {
-            padding-left: 20px;
-        }
+  /* ---------- skills + education split ---------- */
+  .split{ display:grid; grid-template-columns:1fr 1fr; gap:3.5rem; }
+  .skill-group{ margin-bottom:1.8rem; }
+  .skill-group h4{ font-size:0.82rem; color:var(--text-faint); font-family:'IBM Plex Mono', monospace; font-weight:500; margin-bottom:0.8rem; }
+  .skill-chips{ display:flex; flex-wrap:wrap; gap:0.5rem; }
+  .chip{
+    font-size:0.83rem;
+    padding:0.4rem 0.75rem;
+    border:1px solid var(--line);
+    border-radius:16px;
+    color:var(--text-dim);
+    display:inline-block;
+    transition:border-color .2s ease, color .2s ease, transform .25s cubic-bezier(.34,1.56,.64,1), background .2s ease;
+  }
+  .chip:hover{ border-color:var(--accent); color:var(--text); transform:translateY(-2px) rotate(-1.5deg) scale(1.05); background:rgba(239,77,153,0.08); }
 
-        li {
-            margin-bottom: 10px;
-        }
+  .edu-card{
+    background:var(--bg-panel);
+    border:1px solid var(--line);
+    padding:1.8rem;
+    border-radius:8px;
+  }
+  .edu-card h3{ font-size:1.1rem; margin-bottom:0.2rem; }
+  .edu-card .edu-sub{ color:var(--accent); font-size:0.88rem; margin-bottom:1.1rem; display:block; }
+  .edu-meta{ display:flex; gap:1.8rem; margin-bottom:1.1rem; }
+  .edu-meta div span{ display:block; }
+  .edu-meta .m-val{ font-family:'IBM Plex Mono', monospace; color:var(--accent-warm); font-size:1.05rem; }
+  .edu-meta .m-lbl{ font-size:0.72rem; color:var(--text-faint); margin-top:0.15rem; }
+  .edu-card ul{ display:flex; flex-direction:column; gap:0.5rem; margin-bottom:1.1rem; }
+  .edu-card ul li{ font-size:0.88rem; color:var(--text-dim); padding-left:0.9rem; position:relative; }
+  .edu-card ul li::before{ content:"—"; position:absolute; left:0; color:var(--text-faint); }
 
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
-        }
+  /* ---------- credentials ---------- */
+  .cred-split{ display:grid; grid-template-columns:1.4fr 1fr; gap:3.5rem; }
+  .cert-list{ display:flex; flex-direction:column; }
+  .cert-item{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:1.05rem 0;
+    border-top:1px solid var(--line-soft);
+  }
+  .cert-item:last-child{ border-bottom:1px solid var(--line-soft); }
+  .cert-name{ font-size:0.95rem; font-weight:500; }
+  .cert-issuer{ font-size:0.78rem; color:var(--text-faint); margin-top:0.15rem; }
+  .cert-link{
+    font-family:'IBM Plex Mono', monospace; font-size:0.72rem; color:var(--accent);
+    border:1px solid var(--accent-dim); padding:0.35rem 0.65rem; border-radius:4px;
+    display:flex; align-items:center; gap:0.35rem; flex-shrink:0; transition: background .2s ease;
+  }
+  .cert-link:hover{ background:rgba(239,77,153,0.08); }
 
-        .skill-item {
-            background: rgba(255, 0, 127, 0.1);
-            padding: 10px;
-            text-align: center;
-            border-radius: 8px;
-            border: 1px solid var(--neon-purple);
-        }
-    </style>
+  .lang-card{ background:var(--bg-panel); border:1px solid var(--line); padding:1.8rem; height:fit-content; border-radius:8px;}
+  .lang-card h4{ font-size:0.82rem; color:var(--text-faint); font-family:'IBM Plex Mono', monospace; font-weight:500; margin-bottom:1.2rem; }
+  .lang-row{ display:flex; justify-content:space-between; margin-bottom:1rem; }
+  .lang-name{ font-size:1rem; font-weight:600;}
+  .lang-scores{ display:flex; gap:1.4rem; margin-top:1rem; }
+  .lang-scores div span{ display:block; }
+  .lang-scores .l-val{ font-family:'IBM Plex Mono', monospace; color:var(--accent-warm); font-size:1.1rem; }
+  .lang-scores .l-lbl{ font-size:0.7rem; color:var(--text-faint); margin-top:0.15rem; }
+
+  /* ---------- contact / footer ---------- */
+  .contact-section{
+    display:grid;
+    grid-template-columns:1.2fr 0.8fr;
+    gap:3rem;
+    align-items:end;
+  }
+  .contact-section h2{ font-size:2.2rem; line-height:1.15; margin-bottom:1.2rem; max-width:16ch; }
+  .contact-section p{ color:var(--text-dim); max-width:42ch; margin-bottom:1.8rem; }
+  .contact-links{ display:flex; flex-direction:column; gap:0; border-top:1px solid var(--line-soft); }
+  .contact-links a{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:1.1rem 0; border-bottom:1px solid var(--line-soft);
+    font-size:0.98rem; font-weight:500;
+  }
+  .contact-links a:hover{ color:var(--accent); }
+  .contact-links a span.small{ font-size:0.78rem; color:var(--text-faint); font-weight:400; font-family:'IBM Plex Mono', monospace; }
+  .contact-links a:hover span.small{ color:var(--accent-dim); }
+
+  footer{ padding:2rem 4.5rem; font-size:0.78rem; color:var(--text-faint); display:flex; justify-content:space-between; }
+
+  /* reveal on scroll */
+  .reveal{ opacity:0; transform:translateY(16px); transition:opacity .7s ease, transform .7s ease; }
+  .reveal.in{ opacity:1; transform:translateY(0); }
+
+  @media (max-width: 1080px){
+    section{ padding:5rem 2.4rem; }
+    .hero{ grid-template-columns:1fr; padding-top:2.5rem; }
+    .hero-visual{ min-height:auto; }
+    .split, .cred-split, .contact-section{ grid-template-columns:1fr; }
+    .card.span-4, .card.span-3, .card.span-2{ grid-column:span 6; }
+  }
+
+  @media (max-width: 780px){
+    .shell{ flex-direction:column; }
+    .sidebar{
+      position:relative; width:100%; height:auto; top:0;
+      flex-direction:row; align-items:center; justify-content:space-between;
+      padding:1.1rem 1.4rem; border-right:none; border-bottom:1px solid var(--line-soft); z-index:10;
+    }
+    .sidebar-top{ flex-direction:row; align-items:center; gap:1rem; }
+    .side-nav{ display:none; }
+    .sidebar-bottom{ flex-direction:row; align-items:center; gap:0.9rem; }
+    .side-location{ display:none; }
+    section{ padding:3.4rem 1.3rem; }
+    .section-head{ flex-direction:column; align-items:flex-start; gap:0.6rem; }
+    .section-head .section-note{ text-align:left; }
+    .tl-item{ grid-template-columns:1fr; gap:0.4rem; }
+    .hero-stats{ flex-wrap:wrap; row-gap:1.2rem; }
+    footer{ padding:1.6rem 1.3rem; flex-direction:column; gap:0.4rem; }
+  }
+</style>
 </head>
 <body>
 
-<div class="container">
-    <header>
-        <h1>AYU NADIA IRAWAN[cite: 1]</h1>
-        <div class="subtitle">Data Analyst & Marketing Enthusiast[cite: 1]</div>
-        <div class="contact-info">
-            <a href="mailto:halloo.ayu@gmail.com">halloo.ayu@gmail.com[cite: 1]</a>
-            <a href="https://www.linkedin.com/in/ayunada/" target="_blank">LinkedIn[cite: 1]</a>
-            <a href="https://github.com/hallooayu" target="_blank">GitHub[cite: 1]</a>
-            <span>South Tangerang[cite: 1]</span>
-        </div>
-    </header>
-
-    <div class="summary">
-        <p>A marketing and data enthusiast with diverse experience across KOL management, business operations, and data visualization. Motivated by a commitment to research and team education, I focus on taking complex datasets and turning them into practical strategies that facilitate sustainable business growth[cite: 1].</p>
-    </div>
-
-    <section id="projects">
-        <h2>Data Analyst Projects[cite: 1]</h2>
-        
-        <div class="project-card">
-            <h3>Global Ads Performance[cite: 1]</h3>
-            <div class="tags">
-                <span class="tag">Looker[cite: 1]</span>
-                <span class="tag">Data Visualization[cite: 1]</span>
-            </div>
-            <p>Interactive dashboard analyzing Google, Meta, and TikTok ad performance[cite: 1].</p>
-            <a href="https://datastudio.google.com/reporting/17780a3d-c6f7-4bff-8da3-9d91cc1bf2a3" class="btn" target="_blank">View Looker Dashboard</a>
-            <a href="https://www.kaggle.com/datasets/nudratabbas/global-ads-performance-google-meta-tiktok" class="btn" target="_blank">Kaggle Dataset</a>
-        </div>
-
-        <div class="project-card">
-            <h3>Customer Shopping Behavior[cite: 1]</h3>
-            <div class="tags">
-                <span class="tag">PowerBI[cite: 1]</span>
-                <span class="tag">Data Visualization[cite: 1]</span>
-            </div>
-            <p>PowerBI dashboard analyzing customer purchase patterns and behavior[cite: 1].</p>
-            <a href="https://www.kaggle.com/datasets/mohanprasanth21/customer-shopping-behavior-cleaned-dataset" class="btn" target="_blank">Kaggle Dataset</a>
-        </div>
-
-        <div class="project-card">
-            <h3>Leaf Disease Classification[cite: 1]</h3>
-            <div class="tags">
-                <span class="tag">Computer Vision[cite: 1]</span>
-                <span class="tag">ResNet50[cite: 1]</span>
-                <span class="tag">Python[cite: 1]</span>
-            </div>
-            <p>A deep learning approach for computer vision using a ResNet50 model[cite: 1].</p>
-            <a href="https://colab.research.google.com/drive/1dR_RWM7T4YQPY9eiKUmpbGPzu6aXBQAQ?usp=drive_link" class="btn" target="_blank">Model (Colab)</a>
-            <a href="https://colab.research.google.com/drive/1LWlFkf8g7T3btbWfoRRNYM_Ii3h4_LDJ?usp=drive_link" class="btn" target="_blank">Gradio App</a>
-            <a href="https://universe.roboflow.com/st-aloysius-college-1bndf/leaf-disease-detection-mpdfi/dataset/3" class="btn" target="_blank">Roboflow Dataset</a>
-        </div>
-
-        <div class="project-card">
-            <h3>Sentiment Analysis of Shopee User Reviews[cite: 1]</h3>
-            <div class="tags">
-                <span class="tag">NLP[cite: 1]</span>
-                <span class="tag">Python[cite: 1]</span>
-            </div>
-            <p>Analyzed user reviews from the Google Play Store[cite: 1].</p>
-            <a href="https://github.com/hallooayu/nlp_shopee.git" class="btn" target="_blank">NLP Repo</a>
-            <a href="https://github.com/hallooayu/shopee_sentiment.git" class="btn" target="_blank">Chatbot Repo</a>
-        </div>
-    </section>
-
-    <section id="experience">
-        <h2>Experience Highlights[cite: 1]</h2>
-        <ul>
-            <li><strong>Data Analyst | PPKD Jakarta Selatan (Jul - Sep 2026):</strong> Executed multiple visualization and machine learning projects including TransJakarta VOC, Global Ads, and Leaf Disease Classification[cite: 1].</li>
-            <li><strong>HR Administration Intern | Radikari (Jan - Apr 2026):</strong> Processed over 5,000 HR documents and managed confidential employee relations for major enterprise clients like Gojek, DANA, and Halodoc[cite: 1].</li>
-            <li><strong>Business Development Intern | Radikari (Oct 2025 - Jan 2026):</strong> Sourced 250+ prospects and coordinated complete tender submissions for client pitches[cite: 1].</li>
-            <li><strong>KOL Specialist Intern | Gushcloud Indonesia (Aug - Oct 2025):</strong> Managed end-to-end brand ambassador partnerships with 20 KOLs for brands including Schneider, Hyundai, and Philips[cite: 1].</li>
-        </ul>
-    </section>
-
-    <section id="skills-certs">
-        <h2>Skills & Certifications[cite: 1]</h2>
-        <div class="skills-grid">
-            <div class="skill-item">Python, SQL, DAX[cite: 1]</div>
-            <div class="skill-item">Power BI, Looker[cite: 1]</div>
-            <div class="skill-item">Meta Business Suite[cite: 1]</div>
-            <div class="skill-item">SPSS, Excel[cite: 1]</div>
-        </div>
-        
-        <h3 style="margin-top: 20px;">Credentials[cite: 1]</h3>
-        <a href="https://drive.google.com/drive/folders/1tL7_JyCseBs68uDnpAMnQ3MKGKHVilAX?usp=drive_link" class="btn" target="_blank">Data Analyst (PPKD)[cite: 1]</a>
-        <a href="https://drive.google.com/drive/folders/1j7H6viNx6f5zbccPQPTJ5WbUAzT5Q4EF?usp=drive_link" class="btn" target="_blank">Digital Marketing (BNSP)[cite: 1]</a>
-        <a href="https://drive.google.com/drive/folders/1Li7mcqZEVwDCRTGoGY5wIAnwORjCQ2gS?usp=drive_link" class="btn" target="_blank">DQLab[cite: 1]</a>
-        <a href="https://drive.google.com/drive/folders/1DwSxcG1qCxSrQ7g7zI4oDXHSgDGOByDm?usp=drive_link" class="btn" target="_blank">English (TOEIC/EF SET)[cite: 1]</a>
-    </section>
+<div class="blob-field" aria-hidden="true">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+  <div class="blob blob-4"></div>
 </div>
+
+<div class="shell">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-top">
+      <div class="brand">
+        <span class="brand-name">Ayu Nadia Irawan[cite: 1]</span>
+        <span class="brand-role">DATA ANALYST</span>
+      </div>
+      <nav class="side-nav" id="sideNav">
+        <a href="#overview" class="active">Overview</a>
+        <a href="#projects">Projects</a>
+        <a href="#experience">Experience</a>
+        <a href="#skills">Skills &amp; Education</a>
+        <a href="#credentials">Certifications</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+    <div class="sidebar-bottom">
+      <div class="side-location">South Tangerang, Indonesia[cite: 1]</div>
+      <div class="side-socials">
+        <a href="https://github.com/hallooayu" target="_blank" rel="noopener" aria-label="GitHub">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2.2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1.1-.8.1-.8.1-.8 1.2.1 1.9 1.2 1.9 1.2 1.1 1.9 2.9 1.3 3.6 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .3Z"/></svg>
+        </a>
+        <a href="https://www.linkedin.com/in/ayunada/" target="_blank" rel="noopener" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM.5 8.5h9V23h-9V8.5Zm14.5 0h4.3v2h.06c.6-1.1 2-2.3 4.1-2.3 4.4 0 5.2 2.9 5.2 6.6V23h-4.5v-6.4c0-1.5 0-3.5-2.1-3.5-2.2 0-2.5 1.7-2.5 3.4V23h-4.5V8.5Z"/></svg>
+        </a>
+        <a href="mailto:halloo.ayu@gmail.com" aria-label="Email">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 5h18v14H3z"/><path d="m3 6 9 7 9-7"/></svg>
+        </a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- HERO -->
+    <section id="overview" class="hero">
+      <div>
+        <div class="hero-kicker"><span class="dot"></span> AVAILABLE FOR DATA ANALYST ROLES</div>
+        <h1>Turning marketing<br>data into <span class="gradient-text">decisions.</span></h1>
+        <p class="hero-lede">A marketing and data enthusiast who takes complex datasets and turns them into practical strategies to facilitate sustainable business growth — across KOL management, business operations, and data visualization[cite: 1].</p>
+        <div class="hero-actions">
+          <a href="#projects" class="btn btn-solid">View Projects</a>
+          <a href="https://github.com/hallooayu" target="_blank" rel="noopener" class="btn btn-outline">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" style="margin-right:4px;"><path d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2.2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1.1-.8.1-.8.1-.8 1.2.1 1.9 1.2 1.9 1.2 1.1 1.9 2.9 1.3 3.6 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .3Z"/></svg>
+            GitHub Profile[cite: 1]
+          </a>
+        </div>
+        <div class="hero-stats">
+          <div>
+            <span class="stat-num">3.73</span>
+            <span class="stat-label">GPA / 4.00, Full Scholarship[cite: 1]</span>
+          </div>
+          <div>
+            <span class="stat-num">690</span>
+            <span class="stat-label">ETS TOEIC Score[cite: 1]</span>
+          </div>
+          <div>
+            <span class="stat-num">5,000+</span>
+            <span class="stat-label">HR Documents Processed[cite: 1]</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-visual reveal">
+        <div class="mascot-wrap">
+          <svg id="mascot" viewBox="0 0 160 130" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="80" cy="118" rx="42" ry="7" fill="rgba(0,0,0,0.35)"/>
+            <g id="mascotAntenna">
+              <line x1="60" y1="18" x2="60" y2="4" stroke="#2fe6c8" stroke-width="3" stroke-linecap="round"/>
+              <circle cx="60" cy="4" r="4.5" fill="#ff8fc7"/>
+            </g>
+            <rect x="24" y="52" width="72" height="52" rx="16" fill="#2a3a5c"/>
+            <rect x="32" y="60" width="56" height="36" rx="10" fill="#0b1220"/>
+            <rect id="mascotBar1" x="40" y="82" width="8" height="10" rx="2" fill="#2fe6c8"/>
+            <rect id="mascotBar2" x="56" y="76" width="8" height="16" rx="2" fill="#ffb648"/>
+            <rect id="mascotBar3" x="72" y="70" width="8" height="22" rx="2" fill="#ff8fc7"/>
+            <g id="mascotArm">
+              <rect x="88" y="60" width="11" height="34" rx="5.5" fill="#b18bff"/>
+              <circle cx="97" cy="58" r="7" fill="#ffd9b3"/>
+            </g>
+            <rect x="16" y="58" width="11" height="30" rx="5.5" fill="#b18bff"/>
+            <rect x="18" y="18" width="44" height="36" rx="14" fill="#3a4d78"/>
+            <circle class="mascot-eye" cx="34" cy="36" r="3.6" fill="#eaf1ff"/>
+            <circle class="mascot-eye" cx="50" cy="36" r="3.6" fill="#eaf1ff"/>
+            <path d="M32 45 Q40 50 48 45" stroke="#2fe6c8" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="hero-visual-head">
+          <span>interactive_demo.chart</span>
+          <span class="live">hover me</span>
+        </div>
+        <div class="chart-tabs" id="chartTabs"></div>
+        <div class="hero-visual-headline">
+          <span class="hv-num" id="hvNum">—</span>
+          <span class="hv-lbl" id="hvLbl">select a metric</span>
+        </div>
+        <div class="chart-stage">
+          <svg id="heroChart" viewBox="0 0 420 190" preserveAspectRatio="none"></svg>
+          <div class="chart-tooltip" id="chartTooltip"><span class="tt-week"></span>: <span class="tt-val"></span></div>
+        </div>
+        <div class="hero-visual-foot">
+          <span>Tools <b>Power BI · Looker · Python · SQL</b></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects">
+      <div class="section-head reveal">
+        <h2>Data Visualization &amp; AI Projects[cite: 1]</h2>
+        <p class="section-note">Projects completed during the Data Analyst track at PPKD Jakarta Selatan (Jul - Sep 2026)[cite: 1].</p>
+      </div>
+
+      <div class="project-grid">
+        <!-- Customer Shopping Behavior -->
+        <div class="card span-3 reveal">
+          <div class="card-tools">
+            <span class="tag tag-accent">Power BI</span>
+            <span class="tag">Kaggle Dataset</span>
+          </div>
+          <h3>Customer Shopping Behavior[cite: 1]</h3>
+          <p>An interactive Power BI dashboard tracking shopping behavior and customer purchasing trends based on Kaggle data[cite: 1].</p>
+          <div class="card-links">
+            <a href="https://www.kaggle.com/datasets/mohanprasanth21/customer-shopping-behavior-cleaned-dataset" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14 21 3"/></svg> Kaggle Dataset[cite: 1]
+            </a>
+          </div>
+        </div>
+
+        <!-- Global Ads Performance -->
+        <div class="card span-3 reveal">
+          <div class="card-tools">
+            <span class="tag tag-accent">Looker Studio</span>
+            <span class="tag">Kaggle Dataset</span>
+          </div>
+          <h3>Global Ads Performance[cite: 1]</h3>
+          <p>A Google Data Studio dashboard comparing ad performance and analytics across Meta, Google, and TikTok platforms[cite: 1].</p>
+          <div class="card-links">
+            <a href="https://datastudio.google.com/reporting/17780a3d-c6f7-4bff-8da3-9d91cc1bf2a3" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14 21 3"/></svg> View Dashboard[cite: 1]
+            </a>
+            <a href="https://www.kaggle.com/datasets/nudratabbas/global-ads-performance-google-meta-tiktok" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14 21 3"/></svg> Dataset[cite: 1]
+            </a>
+          </div>
+        </div>
+
+        <!-- NLP Sentiment Analysis -->
+        <div class="card span-3 reveal">
+          <div class="card-tools">
+            <span class="tag tag-accent">NLP</span>
+            <span class="tag">Python</span>
+            <span class="tag">Colab</span>
+          </div>
+          <h3>Sentiment Analysis of Shopee User Reviews[cite: 1]</h3>
+          <p>Natural Language Processing models analyzing Google Play Store user reviews for Shopee, integrated into a Chatbot[cite: 1].</p>
+          <div class="card-links">
+            <a href="https://github.com/hallooayu/nlp_shopee.git" target="_blank" rel="noopener" style="color:var(--accent);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14 21 3"/></svg> NLP GitHub Repo[cite: 1]
+            </a>
+            <a href="https://github.com/hallooayu/shopee_sentiment.git" target="_blank" rel="noopener" style="color:var(--accent);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14 21 3"/></svg> Chatbot GitHub Repo[cite: 1]
+            </a>
+          </div>
+        </div>
+
+        <!-- Computer Vision -->
+        <div class="card span-3 reveal">
+          <div class="card-tools">
+            <span class="tag tag-accent">Computer Vision</span>
+            <span class="tag">ResNet50</span>
+            <span class="tag">Gradio</span>
+          </div>
+          <h3>A Deep Learning Approach to Leaf Disease Classification[cite: 1]</h3>
+          <p>Project Based Learning computer vision using a ResNet50 model to classify plant diseases from image datasets, deployed via Gradio[cite: 1].</p>
+          <div class="card-links">
+            <a href="https://colab.research.google.com/drive/1dR_RWM7T4YQPY9eiKUmpbGPzu6aXBQAQ?usp=drive_link" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14 21 3"/></svg> Colab Model[cite: 1]
+            </a>
+            <a href="https://colab.research.google.com/drive/1LWlFkf8g7T3btbWfoRRNYM_Ii3h4_LDJ?usp=drive_link" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14 21 3"/></svg> Gradio Demo[cite: 1]
+            </a>
+            <a href="https://universe.roboflow.com/st-aloysius-college-1bndf/leaf-disease-detection-mpdfi/dataset/3" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14 21 3"/></svg> Roboflow Dataset[cite: 1]
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section id="experience">
+      <div class="section-head reveal">
+        <h2>Work Experience[cite: 1]</h2>
+      </div>
+
+      <div class="timeline">
+        <div class="tl-item reveal">
+          <div class="tl-date">Jan 2026 - Apr 2026[cite: 1]</div>
+          <div>
+            <div class="tl-role">HR Administration (Internship)[cite: 1]</div>
+            <span class="tl-org">Radikari[cite: 1]</span>
+            <p class="tl-desc">Successfully drafted and processed over 5,000 critical HR documents (NDAs, contracts) handling up to 200+ letters daily. Managed highly confidential offboarding for enterprise clients like Gojek, DANA, and Halodoc[cite: 1].</p>
+          </div>
+        </div>
+        
+        <div class="tl-item reveal">
+          <div class="tl-date">Oct 2025 - Jan 2026[cite: 1]</div>
+          <div>
+            <div class="tl-role">Business Development (Internship)[cite: 1]</div>
+            <span class="tl-org">Radikari[cite: 1]</span>
+            <p class="tl-desc">Sourced 250+ prospects in manufacturing/logistics. Conducted market research for BPO/MPO services and coordinated tender submissions[cite: 1].</p>
+          </div>
+        </div>
+
+        <div class="tl-item reveal">
+          <div class="tl-date">Aug 2025 - Oct 2025[cite: 1]</div>
+          <div>
+            <div class="tl-role">KOL Specialist (Internship)[cite: 1]</div>
+            <span class="tl-org">Gushcloud Indonesia[cite: 1]</span>
+            <p class="tl-desc">Built influencer databases shortlisting 40+ KOLs daily. Managed end-to-end partnerships with 20 KOLs for brands including Schneider, Hyundai, and Philips[cite: 1].</p>
+          </div>
+        </div>
+
+        <div class="tl-item reveal">
+          <div class="tl-date">Jul 2025 - Aug 2025[cite: 1]</div>
+          <div>
+            <div class="tl-role">KOL Specialist (Internship)[cite: 1]</div>
+            <span class="tl-org">PT AFG Ventura Teknologi (GoVisa)[cite: 1]</span>
+            <p class="tl-desc">Executed KOL sourcing connecting with 400+ influencers. Secured high-impact partnerships with a CPV under Rp. 50, well below industry average[cite: 1].</p>
+          </div>
+        </div>
+
+        <div class="tl-item reveal">
+          <div class="tl-date">Sep 2024 - Mar 2025[cite: 1]</div>
+          <div>
+            <div class="tl-role">KOL Specialist (Internship)[cite: 1]</div>
+            <span class="tl-org">PT HIIP Inovasi Indonesia[cite: 1]</span>
+            <p class="tl-desc">Compiled a ratecard database of 500+ influencers across TikTok, Instagram, and YouTube. Collaborated with clients like Permata Bank, Soklin, and Blibli[cite: 1].</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="other-exp reveal">
+        <h4>Other Experience &amp; Projects[cite: 1]</h4>
+        <ul>
+          <li><b>Tempo Inti Media Group (Marketing Intern) —</b> Authored pitch decks and built a B2G prospect database of government ministries (Oct 2023 - Feb 2024)[cite: 1].</li>
+          <li><b>HaiBunda Event Crew —</b> Managed end-to-end photobooth sessions, visitor registration, and guest assistance (Dec 2024)[cite: 1].</li>
+          <li><b>"Kafe Ngemil" —</b> Launched a custom Google Site and implemented Linktree cross-platform integration for the client[cite: 1].</li>
+          <li><b>UMKM Bogor at BTM Mall —</b> Provided on-ground insights to vendors on capturing social media content (Oct - Dec 2023)[cite: 1].</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- SKILLS + EDUCATION -->
+    <section id="skills">
+      <div class="section-head reveal">
+        <h2>Skills &amp; Education[cite: 1]</h2>
+      </div>
+      <div class="split">
+        <div class="reveal">
+          <div class="skill-group">
+            <h4>Data &amp; Analytics[cite: 1]</h4>
+            <div class="skill-chips">
+              <span class="chip">Python[cite: 1]</span>
+              <span class="chip">SQL[cite: 1]</span>
+              <span class="chip">DAX[cite: 1]</span>
+              <span class="chip">Power BI[cite: 1]</span>
+              <span class="chip">Looker[cite: 1]</span>
+              <span class="chip">SPSS[cite: 1]</span>
+              <span class="chip">Excel[cite: 1]</span>
+            </div>
+          </div>
+          <div class="skill-group">
+            <h4>Marketing &amp; Project Management[cite: 1]</h4>
+            <div class="skill-chips">
+              <span class="chip">Meta Business Suite[cite: 1]</span>
+              <span class="chip">Social Media Analytics[cite: 1]</span>
+              <span class="chip">Survey Apps[cite: 1]</span>
+              <span class="chip">Google Workspace[cite: 1]</span>
+              <span class="chip">Canva[cite: 1]</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="reveal">
+          <div class="edu-card">
+            <h3>Politeknik Tempo[cite: 1]</h3>
+            <span class="edu-sub">International Marketing Management[cite: 1]</span>
+            <div class="edu-meta">
+              <div><span class="m-val">3.73/4.00</span><span class="m-lbl">GPA, Full Scholarship[cite: 1]</span></div>
+              <div><span class="m-val">2021 - 2025</span><span class="m-lbl">Duration[cite: 1]</span></div>
+            </div>
+            <ul>
+              <li>Part of IMMSA (International Marketing Management Student Association)[cite: 1].</li>
+              <li>Journal Publication: "The Influence of Brand Image, Product Quality, and Price on Purchase Decisions for Cimory Products"[cite: 1].</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CREDENTIALS -->
+    <section id="credentials">
+      <div class="section-head reveal">
+        <h2>Certifications &amp; Language[cite: 1]</h2>
+      </div>
+      <div class="cred-split">
+        <div class="cert-list reveal">
+          <div class="cert-item">
+            <div><div class="cert-name">Data Analyst[cite: 1]</div><div class="cert-issuer">PPKD Jakarta Selatan[cite: 1]</div></div>
+            <a class="cert-link" href="https://drive.google.com/drive/folders/1tL7_JyCseBs68uDnpAMnQ3MKGKHVilAX?usp=drive_link" target="_blank" rel="noopener">View[cite: 1]</a>
+          </div>
+          <div class="cert-item">
+            <div><div class="cert-name">Digital Marketing[cite: 1]</div><div class="cert-issuer">BNSP 2024[cite: 1]</div></div>
+            <a class="cert-link" href="https://drive.google.com/drive/folders/1j7H6viNx6f5zbccPQPTJ5WbUAzT5Q4EF?usp=drive_link" target="_blank" rel="noopener">View[cite: 1]</a>
+          </div>
+          <div class="cert-item">
+            <div><div class="cert-name">Maganghub Skill[cite: 1]</div><div class="cert-issuer">Maganghub[cite: 1]</div></div>
+            <a class="cert-link" href="https://drive.google.com/drive/folders/19UOb6qng_fl8HSw9Lm3TuE1bCBiRYbTL?usp=drive_link" target="_blank" rel="noopener">View[cite: 1]</a>
+          </div>
+          <div class="cert-item">
+            <div><div class="cert-name">DQLab[cite: 1]</div><div class="cert-issuer">Data Analytics Platform[cite: 1]</div></div>
+            <a class="cert-link" href="https://drive.google.com/drive/folders/1Li7mcqZEVwDCRTGoGY5wIAnwORjCQ2gS?usp=drive_link" target="_blank" rel="noopener">View[cite: 1]</a>
+          </div>
+          <div class="cert-item">
+            <div><div class="cert-name">Jobstreet Certification[cite: 1]</div><div class="cert-issuer">Jobstreet[cite: 1]</div></div>
+            <a class="cert-link" href="https://drive.google.com/drive/folders/1NsBanM7Nws5JO_Fx34jg4LoUAkc5BdH8?usp=drive_link" target="_blank" rel="noopener">View[cite: 1]</a>
+          </div>
+        </div>
+
+        <div class="lang-card reveal">
+          <h4>Language Capabilities[cite: 1]</h4>
+          <div class="lang-row"><span class="lang-name">English[cite: 1]</span></div>
+          <div class="lang-scores">
+            <div><span class="l-val">690</span><span class="l-lbl">ETS TOEIC[cite: 1]</span></div>
+            <div><span class="l-val">56/100</span><span class="l-lbl">EF SET[cite: 1]</span></div>
+            <div><span class="l-val">B2</span><span class="l-lbl">CEFR[cite: 1]</span></div>
+          </div>
+          <div style="margin-top:1.4rem;">
+            <a href="https://drive.google.com/drive/folders/1DwSxcG1qCxSrQ7g7zI4oDXHSgDGOByDm?usp=drive_link" target="_blank" rel="noopener" style="font-size:0.83rem; border-bottom:1px solid var(--line); padding-bottom:2px; color:var(--text); text-decoration:none;">View English Certificates →[cite: 1]</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="contact-section">
+      <div class="reveal">
+        <h2>Ready to collaborate on data-driven growth?</h2>
+        <p>I'm open to Data Analyst and Marketing roles. Reach out via email or explore my GitHub repositories for the latest projects.</p>
+      </div>
+      <div class="contact-links reveal">
+        <a href="mailto:halloo.ayu@gmail.com">Email <span class="small">halloo.ayu@gmail.com[cite: 1]</span></a>
+        <a href="tel:+6289501279807">Phone <span class="small">+6289501279807[cite: 1]</span></a>
+        <a href="https://www.linkedin.com/in/ayunada/" target="_blank" rel="noopener">LinkedIn <span class="small">/in/ayunada/[cite: 1]</span></a>
+        <a href="https://github.com/hallooayu" target="_blank" rel="noopener" style="color:var(--accent);">GitHub <span class="small">/hallooayu[cite: 1]</span></a>
+      </div>
+    </section>
+
+    <footer>
+      <span>© 2026 Ayu Nadia Irawan</span>
+      <span>South Tangerang, Indonesia[cite: 1]</span>
+    </footer>
+
+  </main>
+</div>
+
+<script>
+  // Active nav highlight
+  const links = document.querySelectorAll('.side-nav a');
+  const sections = [...links].map(l => document.querySelector(l.getAttribute('href')));
+  const navObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = '#' + entry.target.id;
+        links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === id));
+      }
+    });
+  }, { rootMargin: '-40% 0px -50% 0px', threshold: 0 });
+  sections.forEach(s => s && navObserver.observe(s));
+
+  // Reveal on scroll
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+  // Interactive hero chart: switchable datasets, hover tooltips, animated transitions
+  (function heroChart(){
+    const svg = document.getElementById('heroChart');
+    const tabsWrap = document.getElementById('chartTabs');
+    const tooltip = document.getElementById('chartTooltip');
+    const stage = document.querySelector('.chart-stage');
+    const hvNum = document.getElementById('hvNum');
+    const hvLbl = document.getElementById('hvLbl');
+    const ns = 'http://www.w3.org/2000/svg';
+    const W = 420, H = 190, pad = 14;
+
+    const datasets = [
+      { key:'engagement', label:'Engagement', unit:'%', color:'#2fe6c8', barFill:'rgba(47,230,200,0.85)',
+        weeks:['W1','W2','W3','W4','W5','W6','W7','W8'], values:[42,55,48,61,58,70,66,78] },
+      { key:'conversion', label:'Conversion', unit:'%', color:'#ffb648', barFill:'rgba(255,182,72,0.85)',
+        weeks:['W1','W2','W3','W4','W5','W6','W7','W8'], values:[18,22,20,27,31,29,35,40] },
+      { key:'retention', label:'Retention', unit:'%', color:'#ff8fc7', barFill:'rgba(255,143,199,0.85)',
+        weeks:['W1','W2','W3','W4','W5','W6','W7','W8'], values:[64,60,67,63,71,69,75,80] },
+    ];
+
+    let active = 0;
+
+    tabsWrap.innerHTML = datasets.map((d,i) =>
+      `<button class="chart-tab${i===0?' active':''}" data-i="${i}" type="button">${d.label}</button>`
+    ).join('');
+
+    function render(i, animated){
+      const d = datasets[i];
+      svg.innerHTML = '';
+      const stepX = (W - pad*2) / (d.values.length - 1);
+      const max = Math.max(...d.values) * 1.15;
+
+      // grid lines
+      for (let g=1; g<4; g++){
+        const y = pad + g*(H-pad*2)/4;
+        const line = document.createElementNS(ns,'line');
+        line.setAttribute('x1', pad); line.setAttribute('x2', W-pad);
+        line.setAttribute('y1', y); line.setAttribute('y2', y);
+        line.setAttribute('stroke','rgba(140,155,196,0.12)');
+        line.setAttribute('stroke-width','1');
+        svg.appendChild(line);
+      }
+
+      const coords = d.values.map((v,idx) => [pad + idx*stepX, H-pad - (v/max)*(H-pad*2)]);
+
+      // bars
+      d.values.forEach((v,idx) => {
+        const barH = (v/max) * (H-pad*2);
+        const rect = document.createElementNS(ns,'rect');
+        rect.setAttribute('class','bar');
+        rect.setAttribute('x', coords[idx][0]-8);
+        rect.setAttribute('width', 16);
+        rect.setAttribute('rx', 3);
+        rect.setAttribute('fill', d.barFill);
+        rect.setAttribute('y', H-pad);
+        rect.setAttribute('height', 0);
+        svg.appendChild(rect);
+        rect.animate(
+          [{ height:0, y:H-pad }, { height:barH, y:H-pad-barH }],
+          { duration: animated?600:900, delay: animated? idx*35 : 350+idx*60, fill:'forwards', easing:'cubic-bezier(.2,.8,.2,1)' }
+        );
+
+        rect.addEventListener('pointermove', (e) => {
+          const box = stage.getBoundingClientRect();
+          tooltip.querySelector('.tt-week').textContent = d.weeks[idx];
+          tooltip.querySelector('.tt-val').textContent = v + d.unit;
+          tooltip.style.left = (e.clientX - box.left) + 'px';
+          tooltip.style.top = (e.clientY - box.top) + 'px';
+          tooltip.classList.add('show');
+          hvNum.textContent = v + d.unit;
+          hvLbl.textContent = d.label + ' · ' + d.weeks[idx];
+        });
+        rect.addEventListener('pointerleave', () => {
+          tooltip.classList.remove('show');
+          hvNum.textContent = Math.max(...d.values) + d.unit;
+          hvLbl.textContent = d.label + ' · peak';
+        });
+      });
+
+      // line path
+      const pathD = coords.map((c,idx) => (idx===0?'M':'L') + c[0].toFixed(1) + ',' + c[1].toFixed(1)).join(' ');
+      const path = document.createElementNS(ns,'path');
+      path.setAttribute('d', pathD);
+      path.setAttribute('fill','none');
+      path.setAttribute('stroke', d.color);
+      path.setAttribute('stroke-width','2.5');
+      path.setAttribute('stroke-linecap','round');
+      path.setAttribute('stroke-linejoin','round');
+      path.setAttribute('opacity','0.9');
+      svg.appendChild(path);
+      const len = path.getTotalLength();
+      path.style.strokeDasharray = len;
+      path.style.strokeDashoffset = len;
+      path.animate(
+        [{ strokeDashoffset:len }, { strokeDashoffset:0 }],
+        { duration: animated?700:1200, delay: animated?0:250, easing:'cubic-bezier(.2,.7,.2,1)', fill:'forwards' }
+      );
+
+      hvNum.textContent = Math.max(...d.values) + d.unit;
+      hvLbl.textContent = d.label + ' · peak';
+      hvNum.style.color = d.color;
+    }
+
+    tabsWrap.addEventListener('click', (e) => {
+      const btn = e.target.closest('.chart-tab');
+      if (!btn) return;
+      const i = Number(btn.dataset.i);
+      if (i === active) return;
+      active = i;
+      [...tabsWrap.children].forEach(c => c.classList.toggle('active', Number(c.dataset.i)===i));
+      render(i, true);
+    });
+
+    render(0, false);
+  })();
+</script>
 
 </body>
 </html>
