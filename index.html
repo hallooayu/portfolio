@@ -278,19 +278,6 @@
       );
     }
 
-    function StatCounter({ value, decimals = 0, prefix = "", suffix = "", label }) {
-      const [ref, visible] = useInView(0.4);
-      const n = useCountUp(value, visible);
-      return (
-        <div ref={ref} className="stat-counter liquid-glass-clear">
-          <div className="stat-number">
-            {prefix}{n.toLocaleString("en-US", { minimumFractionDigits: decimals, maximumFractionDigits: decimals })}{suffix}
-          </div>
-          <div className="stat-label">{label}</div>
-        </div>
-      );
-    }
-
     /* =========================================================================
        ALTERNATING TIMELINE COMPONENT
     ========================================================================= */
@@ -489,11 +476,6 @@
                     Contact Me
                   </a>
                 </div>
-                <div className="hero-stats">
-                  <StatCounter value={3.73} decimals={2} label="GPA, full scholarship" />
-                  <StatCounter value={81.44} decimals={2} suffix="%" label="Best SVM Accuracy" />
-                  <StatCounter value={5} decimals={0} label="Data projects shipped" />
-                </div>
               </div>
             </div>
           </section>
@@ -653,7 +635,6 @@
             border: 1px solid rgba(255, 255, 255, 0.7); /* Brighter border */
             border-radius: 24px;
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.04); /* Softer shadow */
-            /* contain: strict; removed to allow hover scales and dropdowns to not get clipped */
           }
 
           .scroll-progress { position: fixed; top: 0; left: 0; height: 4px; background: linear-gradient(90deg, #8B5CF6, #3B82F6); z-index: 60; transition: width .1s linear; }
@@ -677,7 +658,7 @@
           .btn-ghost:hover { background: rgba(255,255,255,0.8); transform: translateY(-3px); }
 
           /* Hero */
-          .hero { padding: 140px 0 100px; min-height: 85vh; display: flex; align-items: center; }
+          .hero { padding: 140px 0 100px; min-height: 70vh; display: flex; align-items: center; }
           .hero-copy { max-width: 720px; opacity: 0; transform: translateY(20px) scale(0.95); filter: blur(10px); transition: all 1s cubic-bezier(.16,1,.3,1); }
           .hero-copy.is-in { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
           .hero-badges { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 28px; }
@@ -697,21 +678,7 @@
           @keyframes wordUp { from { transform: translateY(112%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
           .hero-sub { font-size: 18px; line-height: 1.7; color: #475569; max-width: 58ch; margin: 0 0 40px; font-weight: 500; }
           
-          .hero-cta { display: flex; gap: 16px; margin-bottom: 60px; }
-          .hero-stats { display: flex; gap: 30px; flex-wrap: wrap; }
-          
-          /* GPA, SVM, Data Projects Cards updated to liquid-glass-clear */
-          .stat-counter { 
-            padding: 20px 28px; 
-            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s, border-color 0.3s; 
-          }
-          .stat-counter:hover { 
-            transform: translateY(-6px); 
-            box-shadow: 0 15px 35px rgba(139, 92, 246, 0.08); 
-            border-color: rgba(255, 255, 255, 1);
-          }
-          .stat-number { font-family: 'Unbounded'; font-weight: 700; font-size: clamp(26px,3.4vw,34px); background: linear-gradient(90deg, #8B5CF6, #3B82F6); -webkit-background-clip: text; color: transparent; }
-          .stat-label { font-size: 13.5px; color: #64748B; margin-top: 4px; font-weight: 600; }
+          .hero-cta { display: flex; gap: 16px; margin-bottom: 20px; }
 
           /* Sections & Layout */
           .section { padding: 100px 0; position: relative; z-index: 2; }
