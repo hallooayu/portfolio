@@ -18,10 +18,10 @@
             mono: ['JetBrains Mono', 'monospace'],
           },
           colors: {
-            dark: '#030305',
-            surface: '#0a0a0f',
-            'surface-hover': '#13131c',
-            bordercol: '#1f1f2e',
+            dark: '#08080f',
+            surface: '#12121c',
+            'surface-hover': '#1a1a26',
+            bordercol: '#2a2a3c',
             accent: {
               pink: '#ff007f',
               violet: '#7000ff',
@@ -34,13 +34,13 @@
   </script>
   <style>
     body {
-      background-color: #030305;
-      color: #ffffff;
+      background-color: #08080f;
+      color: #f8fafc;
       cursor: none;
     }
     .bg-grid {
-      background-image: linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-                        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+      background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
       background-size: 50px 50px;
     }
     #cursor {
@@ -60,8 +60,16 @@
     }
     a:hover ~ #cursor {
       transform: translate(-50%, -50%) scale(1.8);
-      background-color: rgba(0, 240, 255, 0.1);
+      background-color: rgba(0, 240, 255, 0.15);
       border-color: #ff007f;
+    }
+    /* Hide scrollbar for horizontal carousel */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
     }
   </style>
 </head>
@@ -69,8 +77,8 @@
 
   <!-- Background Effects -->
   <div class="fixed inset-0 bg-grid pointer-events-none z-[-3]"></div>
-  <div class="fixed -top-[10%] -left-[5%] w-[45vw] h-[45vh] bg-accent-pink/20 blur-[90px] rounded-full pointer-events-none z-[-2] animate-pulse"></div>
-  <div class="fixed -bottom-[10%] -right-[5%] w-[50vw] h-[50vh] bg-accent-cyan/15 blur-[100px] rounded-full pointer-events-none z-[-2]"></div>
+  <div class="fixed -top-[10%] -left-[5%] w-[45vw] h-[45vh] bg-accent-pink/15 blur-[120px] rounded-full pointer-events-none z-[-2] animate-pulse"></div>
+  <div class="fixed -bottom-[10%] -right-[5%] w-[50vw] h-[50vh] bg-accent-cyan/15 blur-[140px] rounded-full pointer-events-none z-[-2]"></div>
 
   <!-- Custom Cursor -->
   <div id="cursor"></div>
@@ -79,70 +87,81 @@
   <div class="max-w-7xl mx-auto px-6 flex flex-col lg:flex-row gap-16 lg:gap-20">
     
     <!-- Sticky Sidebar -->
-    <aside class="w-full lg:w-[380px] lg:h-screen lg:sticky lg:top-0 py-12 lg:py-20 flex flex-col justify-between shrink-0">
+    <aside class="w-full lg:w-[380px] lg:h-screen lg:sticky lg:top-0 py-12 lg:py-20 flex flex-col justify-between shrink-0 z-10">
       <div>
         <div class="space-y-4">
-          <h1 class="font-outfit text-4xl lg:text-5xl font-extrabold tracking-tight">Ayu Nadia Irawan</h1>
+          <h1 class="font-outfit text-4xl lg:text-5xl font-extrabold tracking-tight text-white drop-shadow-md">Ayu Nadia Irawan</h1>
           <h2 class="font-outfit text-xl font-semibold bg-gradient-to-r from-accent-cyan via-accent-pink to-accent-violet bg-clip-text text-transparent">Data Analyst</h2>
-          <p class="text-slate-400 text-sm leading-relaxed max-w-sm">
+          <p class="text-slate-300 text-sm leading-relaxed max-w-sm">
             Marketing and data enthusiast bridging business operations and data visualization into automated dashboards and models that drive decisions.
           </p>
         </div>
 
         <nav class="mt-10 hidden lg:flex flex-col gap-4">
           <a href="#about" class="nav-link flex items-center gap-3 text-xs font-bold uppercase tracking-widest text-slate-400 hover:text-white transition-all group">
-            <span class="w-8 h-[1px] bg-slate-700 group-hover:w-16 group-hover:bg-accent-cyan transition-all"></span> About
+            <span class="w-8 h-[1px] bg-slate-600 group-hover:w-16 group-hover:bg-accent-cyan transition-all"></span> About
           </a>
           <a href="#projects" class="nav-link flex items-center gap-3 text-xs font-bold uppercase tracking-widest text-slate-400 hover:text-white transition-all group">
-            <span class="w-8 h-[1px] bg-slate-700 group-hover:w-16 group-hover:bg-accent-cyan transition-all"></span> Projects
+            <span class="w-8 h-[1px] bg-slate-600 group-hover:w-16 group-hover:bg-accent-cyan transition-all"></span> Projects
           </a>
           <a href="#certifications" class="nav-link flex items-center gap-3 text-xs font-bold uppercase tracking-widest text-slate-400 hover:text-white transition-all group">
-            <span class="w-8 h-[1px] bg-slate-700 group-hover:w-16 group-hover:bg-accent-cyan transition-all"></span> Credentials
+            <span class="w-8 h-[1px] bg-slate-600 group-hover:w-16 group-hover:bg-accent-cyan transition-all"></span> Credentials
           </a>
         </nav>
       </div>
 
       <div class="flex gap-4 mt-8 lg:mt-0">
-        <a href="https://github.com/hallooayu" target="_blank" class="p-3 bg-surface border border-bordercol rounded-full text-slate-400 hover:text-accent-pink hover:border-accent-pink transition-all transform hover:-translate-y-1 shadow-lg">
+        <a href="https://github.com/hallooayu" target="_blank" class="p-3 bg-surface border border-bordercol rounded-full text-slate-300 hover:text-accent-pink hover:border-accent-pink transition-all transform hover:-translate-y-1 shadow-lg">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
         </a>
-        <a href="https://www.linkedin.com/in/ayunada/" target="_blank" class="p-3 bg-surface border border-bordercol rounded-full text-slate-400 hover:text-accent-pink hover:border-accent-pink transition-all transform hover:-translate-y-1 shadow-lg">
+        <a href="https://www.linkedin.com/in/ayunada/" target="_blank" class="p-3 bg-surface border border-bordercol rounded-full text-slate-300 hover:text-accent-pink hover:border-accent-pink transition-all transform hover:-translate-y-1 shadow-lg">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
         </a>
-        <a href="mailto:halloo.ayu@gmail.com" class="p-3 bg-surface border border-bordercol rounded-full text-slate-400 hover:text-accent-pink hover:border-accent-pink transition-all transform hover:-translate-y-1 shadow-lg">
+        <a href="mailto:halloo.ayu@gmail.com" class="p-3 bg-surface border border-bordercol rounded-full text-slate-300 hover:text-accent-pink hover:border-accent-pink transition-all transform hover:-translate-y-1 shadow-lg">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
         </a>
       </div>
     </aside>
 
     <!-- Main Content Area -->
-    <main class="flex-1 py-12 lg:py-20 flex flex-col gap-28">
+    <main class="flex-1 py-12 lg:py-20 flex flex-col gap-28 overflow-hidden">
 
-      <!-- Projects Section -->
-      <section id="projects" class="space-y-8">
-        <h3 class="text-2xl font-outfit font-bold lg:hidden text-accent-cyan">Featured Projects</h3>
+      <!-- Projects Section (Horizontal Scrolling Carousel) -->
+      <section id="projects" class="space-y-6">
+        <div class="flex items-center justify-between">
+          <h3 class="text-2xl font-outfit font-bold text-white">Featured Projects</h3>
+          <div class="flex gap-2">
+            <button onclick="scrollCarousel(-1)" class="p-2.5 rounded-xl bg-surface border border-bordercol text-slate-300 hover:text-accent-cyan hover:border-accent-cyan transition-all">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"/></svg>
+            </button>
+            <button onclick="scrollCarousel(1)" class="p-2.5 rounded-xl bg-surface border border-bordercol text-slate-300 hover:text-accent-cyan hover:border-accent-cyan transition-all">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+        </div>
         
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Horizontal Carousel Container -->
+        <div id="project-carousel" class="flex gap-6 overflow-x-auto no-scrollbar scroll-smooth pb-4 pt-1 snap-x snap-mandatory">
           
           <!-- Project 1: Customer Shopping Behavior -->
-          <div class="group bg-surface border border-bordercol rounded-2xl overflow-hidden flex flex-col hover:border-accent-cyan transition-all duration-300 hover:shadow-2xl hover:shadow-accent-cyan/10 hover:-translate-y-1">
-            <div class="w-full h-56 bg-black flex items-center justify-center p-2 overflow-hidden border-b border-bordercol relative">
+          <div class="w-[360px] md:w-[420px] shrink-0 snap-start group bg-surface border border-bordercol rounded-2xl overflow-hidden flex flex-col hover:border-accent-cyan transition-all duration-300 hover:shadow-2xl hover:shadow-accent-cyan/20 hover:-translate-y-1">
+            <div class="w-full h-64 bg-slate-950 flex items-center justify-center p-3 overflow-hidden border-b border-bordercol relative">
               <img src="image_5e3e4e.png" alt="Customer Shopping Behavior" class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500">
             </div>
             <div class="p-6 flex flex-col flex-1 justify-between">
               <div>
-                <h4 class="font-outfit text-lg font-bold text-white mb-2">Customer Shopping Behavior</h4>
-                <p class="text-slate-400 text-sm mb-4 leading-relaxed">Interactive Power BI dashboard uncovering customer purchase patterns and segments.</p>
+                <h4 class="font-outfit text-xl font-bold text-white mb-2">Customer Shopping Behavior</h4>
+                <p class="text-slate-300 text-sm mb-4 leading-relaxed">Interactive Power BI dashboard uncovering customer purchase patterns and segments.</p>
                 <div class="flex flex-wrap gap-2 mb-6 font-mono">
                   <span class="text-xs px-3 py-1 rounded-full bg-accent-pink/10 text-accent-pink border border-accent-pink/30">Power BI (.pbix)</span>
                   <span class="text-xs px-3 py-1 rounded-full bg-accent-cyan/10 text-accent-cyan border border-accent-cyan/30">Data Viz</span>
                 </div>
               </div>
-              <div class="flex flex-wrap gap-2 pt-2 border-t border-bordercol/50">
-                <a href="https://github.com/hallooayu/portfolioppkd/blob/main/Customer%20Shopping%20Behavior%20AYU.pbix" target="_blank" class="text-xs font-medium px-3 py-2 bg-white/5 border border-bordercol rounded-lg hover:border-accent-cyan hover:text-accent-cyan transition-all flex items-center gap-1.5">
+              <div class="flex flex-wrap gap-2 pt-3 border-t border-bordercol/60">
+                <a href="https://github.com/hallooayu/portfolioppkd/blob/main/Customer%20Shopping%20Behavior%20AYU.pbix" target="_blank" class="text-xs font-medium px-3.5 py-2 bg-white/5 border border-bordercol rounded-lg hover:border-accent-cyan hover:text-accent-cyan transition-all flex items-center gap-1.5">
                   <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14 21 3"/></svg> Live Report (.pbix)
                 </a>
-                <a href="https://www.kaggle.com/datasets/mohanprasanth21/customer-shopping-behavior-cleaned-dataset" target="_blank" class="text-xs font-medium px-3 py-2 bg-white/5 border border-bordercol rounded-lg hover:border-accent-cyan hover:text-accent-cyan transition-all flex items-center gap-1.5">
+                <a href="https://www.kaggle.com/datasets/mohanprasanth21/customer-shopping-behavior-cleaned-dataset" target="_blank" class="text-xs font-medium px-3.5 py-2 bg-white/5 border border-bordercol rounded-lg hover:border-accent-cyan hover:text-accent-cyan transition-all flex items-center gap-1.5">
                   <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14 21 3"/></svg> Dataset
                 </a>
               </div>
@@ -150,24 +169,24 @@
           </div>
 
           <!-- Project 2: Global Ads Performance -->
-          <div class="group bg-surface border border-bordercol rounded-2xl overflow-hidden flex flex-col hover:border-accent-cyan transition-all duration-300 hover:shadow-2xl hover:shadow-accent-cyan/10 hover:-translate-y-1">
-            <div class="w-full h-56 bg-black flex items-center justify-center p-2 overflow-hidden border-b border-bordercol relative">
+          <div class="w-[360px] md:w-[420px] shrink-0 snap-start group bg-surface border border-bordercol rounded-2xl overflow-hidden flex flex-col hover:border-accent-cyan transition-all duration-300 hover:shadow-2xl hover:shadow-accent-cyan/20 hover:-translate-y-1">
+            <div class="w-full h-64 bg-slate-950 flex items-center justify-center p-3 overflow-hidden border-b border-bordercol relative">
               <img src="image_5e41d7.png" alt="Global Ads Performance" class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500">
             </div>
             <div class="p-6 flex flex-col flex-1 justify-between">
               <div>
-                <h4 class="font-outfit text-lg font-bold text-white mb-2">Global Ads Performance</h4>
-                <p class="text-slate-400 text-sm mb-4 leading-relaxed">Looker Studio tracking ad returns and performance across Google, Meta, and TikTok.</p>
+                <h4 class="font-outfit text-xl font-bold text-white mb-2">Global Ads Performance</h4>
+                <p class="text-slate-300 text-sm mb-4 leading-relaxed">Looker Studio tracking ad returns and performance across Google, Meta, and TikTok.</p>
                 <div class="flex flex-wrap gap-2 mb-6 font-mono">
                   <span class="text-xs px-3 py-1 rounded-full bg-accent-pink/10 text-accent-pink border border-accent-pink/30">Looker Studio</span>
                   <span class="text-xs px-3 py-1 rounded-full bg-accent-cyan/10 text-accent-cyan border border-accent-cyan/30">Marketing Analytics</span>
                 </div>
               </div>
-              <div class="flex flex-wrap gap-2 pt-2 border-t border-bordercol/50">
-                <a href="https://datastudio.google.com/reporting/17780a3d-c6f7-4bff-8da3-9d91cc1bf2a3" target="_blank" class="text-xs font-medium px-3 py-2 bg-white/5 border border-bordercol rounded-lg hover:border-accent-cyan hover:text-accent-cyan transition-all flex items-center gap-1.5">
+              <div class="flex flex-wrap gap-2 pt-3 border-t border-bordercol/60">
+                <a href="https://datastudio.google.com/reporting/17780a3d-c6f7-4bff-8da3-9d91cc1bf2a3" target="_blank" class="text-xs font-medium px-3.5 py-2 bg-white/5 border border-bordercol rounded-lg hover:border-accent-cyan hover:text-accent-cyan transition-all flex items-center gap-1.5">
                   <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14 21 3"/></svg> Live Report
                 </a>
-                <a href="https://www.kaggle.com/datasets/nudratabbas/global-ads-performance-google-meta-tiktok" target="_blank" class="text-xs font-medium px-3 py-2 bg-white/5 border border-bordercol rounded-lg hover:border-accent-cyan hover:text-accent-cyan transition-all flex items-center gap-1.5">
+                <a href="https://www.kaggle.com/datasets/nudratabbas/global-ads-performance-google-meta-tiktok" target="_blank" class="text-xs font-medium px-3.5 py-2 bg-white/5 border border-bordercol rounded-lg hover:border-accent-cyan hover:text-accent-cyan transition-all flex items-center gap-1.5">
                   <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14 21 3"/></svg> Dataset
                 </a>
               </div>
@@ -175,24 +194,24 @@
           </div>
 
           <!-- Project 3: Shopee Review Sentiment Analysis -->
-          <div class="group bg-surface border border-bordercol rounded-2xl overflow-hidden flex flex-col hover:border-accent-cyan transition-all duration-300 hover:shadow-2xl hover:shadow-accent-cyan/10 hover:-translate-y-1">
-            <div class="w-full h-56 bg-black flex items-center justify-center p-2 overflow-hidden border-b border-bordercol relative">
+          <div class="w-[360px] md:w-[420px] shrink-0 snap-start group bg-surface border border-bordercol rounded-2xl overflow-hidden flex flex-col hover:border-accent-cyan transition-all duration-300 hover:shadow-2xl hover:shadow-accent-cyan/20 hover:-translate-y-1">
+            <div class="w-full h-64 bg-slate-950 flex items-center justify-center p-3 overflow-hidden border-b border-bordercol relative">
               <img src="image_5e4955.png" alt="Shopee Sentiment Analysis" class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500">
             </div>
             <div class="p-6 flex flex-col flex-1 justify-between">
               <div>
-                <h4 class="font-outfit text-lg font-bold text-white mb-2">Shopee Review Sentiment Analysis</h4>
-                <p class="text-slate-400 text-sm mb-4 leading-relaxed">NLP sentiment classification model analyzing Google Play Store user reviews, deployed as a chatbot.</p>
+                <h4 class="font-outfit text-xl font-bold text-white mb-2">Shopee Review Sentiment Analysis</h4>
+                <p class="text-slate-300 text-sm mb-4 leading-relaxed">NLP sentiment classification model analyzing Google Play Store user reviews, deployed as a chatbot.</p>
                 <div class="flex flex-wrap gap-2 mb-6 font-mono">
                   <span class="text-xs px-3 py-1 rounded-full bg-accent-pink/10 text-accent-pink border border-accent-pink/30">NLP</span>
                   <span class="text-xs px-3 py-1 rounded-full bg-accent-cyan/10 text-accent-cyan border border-accent-cyan/30">Chatbot</span>
                 </div>
               </div>
-              <div class="flex flex-wrap gap-2 pt-2 border-t border-bordercol/50">
-                <a href="https://github.com/hallooayu/nlp_shopee.git" target="_blank" class="text-xs font-medium px-3 py-2 bg-white/5 border border-bordercol rounded-lg hover:border-accent-cyan hover:text-accent-cyan transition-all flex items-center gap-1.5">
+              <div class="flex flex-wrap gap-2 pt-3 border-t border-bordercol/60">
+                <a href="https://github.com/hallooayu/nlp_shopee.git" target="_blank" class="text-xs font-medium px-3.5 py-2 bg-white/5 border border-bordercol rounded-lg hover:border-accent-cyan hover:text-accent-cyan transition-all flex items-center gap-1.5">
                   <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg> NLP Repo
                 </a>
-                <a href="https://github.com/hallooayu/shopee_sentiment.git" target="_blank" class="text-xs font-medium px-3 py-2 bg-white/5 border border-bordercol rounded-lg hover:border-accent-cyan hover:text-accent-cyan transition-all flex items-center gap-1.5">
+                <a href="https://github.com/hallooayu/shopee_sentiment.git" target="_blank" class="text-xs font-medium px-3.5 py-2 bg-white/5 border border-bordercol rounded-lg hover:border-accent-cyan hover:text-accent-cyan transition-all flex items-center gap-1.5">
                   <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg> Chatbot Repo
                 </a>
               </div>
@@ -200,27 +219,27 @@
           </div>
 
           <!-- Project 4: Leaf Disease Classification -->
-          <div class="group bg-surface border border-bordercol rounded-2xl overflow-hidden flex flex-col hover:border-accent-cyan transition-all duration-300 hover:shadow-2xl hover:shadow-accent-cyan/10 hover:-translate-y-1">
-            <div class="w-full h-56 bg-black flex items-center justify-center p-2 overflow-hidden border-b border-bordercol relative">
+          <div class="w-[360px] md:w-[420px] shrink-0 snap-start group bg-surface border border-bordercol rounded-2xl overflow-hidden flex flex-col hover:border-accent-cyan transition-all duration-300 hover:shadow-2xl hover:shadow-accent-cyan/20 hover:-translate-y-1">
+            <div class="w-full h-64 bg-slate-950 flex items-center justify-center p-3 overflow-hidden border-b border-bordercol relative">
               <img src="image_5e33e9.jpg" alt="Leaf Disease Classification" class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500">
             </div>
             <div class="p-6 flex flex-col flex-1 justify-between">
               <div>
-                <h4 class="font-outfit text-lg font-bold text-white mb-2">Leaf Disease Classification (ResNet50)</h4>
-                <p class="text-slate-400 text-sm mb-4 leading-relaxed">A deep learning approach to computer vision classifying plant leaf conditions with model deployment.</p>
+                <h4 class="font-outfit text-xl font-bold text-white mb-2">Leaf Disease Classification (ResNet50)</h4>
+                <p class="text-slate-300 text-sm mb-4 leading-relaxed">A deep learning approach to computer vision classifying plant leaf conditions with model deployment.</p>
                 <div class="flex flex-wrap gap-2 mb-6 font-mono">
                   <span class="text-xs px-3 py-1 rounded-full bg-accent-pink/10 text-accent-pink border border-accent-pink/30">Computer Vision</span>
                   <span class="text-xs px-3 py-1 rounded-full bg-accent-cyan/10 text-accent-cyan border border-accent-cyan/30">Gradio</span>
                 </div>
               </div>
-              <div class="flex flex-wrap gap-2 pt-2 border-t border-bordercol/50">
-                <a href="https://colab.research.google.com/drive/1dR_RWM7T4YQPY9eiKUmpbGPzu6aXBQAQ?usp=drive_link" target="_blank" class="text-xs font-medium px-3 py-2 bg-white/5 border border-bordercol rounded-lg hover:border-accent-cyan hover:text-accent-cyan transition-all flex items-center gap-1.5">
+              <div class="flex flex-wrap gap-2 pt-3 border-t border-bordercol/60">
+                <a href="https://colab.research.google.com/drive/1dR_RWM7T4YQPY9eiKUmpbGPzu6aXBQAQ?usp=drive_link" target="_blank" class="text-xs font-medium px-3.5 py-2 bg-white/5 border border-bordercol rounded-lg hover:border-accent-cyan hover:text-accent-cyan transition-all flex items-center gap-1.5">
                   <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14 21 3"/></svg> Colab Model
                 </a>
-                <a href="https://colab.research.google.com/drive/1LWlFkf8g7T3btbWfoRRNYM_Ii3h4_LDJ?usp=drive_link" target="_blank" class="text-xs font-medium px-3 py-2 bg-white/5 border border-bordercol rounded-lg hover:border-accent-cyan hover:text-accent-cyan transition-all flex items-center gap-1.5">
+                <a href="https://colab.research.google.com/drive/1LWlFkf8g7T3btbWfoRRNYM_Ii3h4_LDJ?usp=drive_link" target="_blank" class="text-xs font-medium px-3.5 py-2 bg-white/5 border border-bordercol rounded-lg hover:border-accent-cyan hover:text-accent-cyan transition-all flex items-center gap-1.5">
                   <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14 21 3"/></svg> Gradio
                 </a>
-                <a href="https://universe.roboflow.com/st-aloysius-college-1bndf/leaf-disease-detection-mpdfi/dataset/3" target="_blank" class="text-xs font-medium px-3 py-2 bg-white/5 border border-bordercol rounded-lg hover:border-accent-cyan hover:text-accent-cyan transition-all flex items-center gap-1.5">
+                <a href="https://universe.roboflow.com/st-aloysius-college-1bndf/leaf-disease-detection-mpdfi/dataset/3" target="_blank" class="text-xs font-medium px-3.5 py-2 bg-white/5 border border-bordercol rounded-lg hover:border-accent-cyan hover:text-accent-cyan transition-all flex items-center gap-1.5">
                   <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14 21 3"/></svg> Roboflow
                 </a>
               </div>
@@ -240,52 +259,52 @@
             <h4 class="text-xs font-mono uppercase tracking-widest text-slate-400">Professional Certifications</h4>
             <div class="space-y-3">
               
-              <div class="flex items-center justify-between p-4 bg-surface border border-bordercol rounded-xl hover:border-accent-cyan transition-all group">
+              <div class="flex items-center justify-between p-4 bg-surface border border-bordercol rounded-xl hover:border-accent-cyan transition-all group shadow-sm">
                 <div>
                   <div class="font-medium text-white group-hover:text-accent-cyan transition-colors">Data Analyst</div>
                   <div class="text-xs text-slate-400 font-mono">PPKD Jakarta Selatan</div>
                 </div>
-                <a href="https://drive.google.com/drive/folders/1tL7_JyCseBs68uDnpAMnQ3MKGKHVilAX?usp=drive_link" target="_blank" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-slate-400 group-hover:bg-accent-cyan group-hover:text-black transition-all">
+                <a href="https://drive.google.com/drive/folders/1tL7_JyCseBs68uDnpAMnQ3MKGKHVilAX?usp=drive_link" target="_blank" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-slate-300 group-hover:bg-accent-cyan group-hover:text-black transition-all">
                   <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
                 </a>
               </div>
 
-              <div class="flex items-center justify-between p-4 bg-surface border border-bordercol rounded-xl hover:border-accent-cyan transition-all group">
+              <div class="flex items-center justify-between p-4 bg-surface border border-bordercol rounded-xl hover:border-accent-cyan transition-all group shadow-sm">
                 <div>
                   <div class="font-medium text-white group-hover:text-accent-cyan transition-colors">Digital Marketing</div>
                   <div class="text-xs text-slate-400 font-mono">BNSP 2024</div>
                 </div>
-                <a href="https://drive.google.com/drive/folders/1j7H6viNx6f5zbccPQPTJ5WbUAzT5Q4EF?usp=drive_link" target="_blank" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-slate-400 group-hover:bg-accent-cyan group-hover:text-black transition-all">
+                <a href="https://drive.google.com/drive/folders/1j7H6viNx6f5zbccPQPTJ5WbUAzT5Q4EF?usp=drive_link" target="_blank" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-slate-300 group-hover:bg-accent-cyan group-hover:text-black transition-all">
                   <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
                 </a>
               </div>
 
-              <div class="flex items-center justify-between p-4 bg-surface border border-bordercol rounded-xl hover:border-accent-cyan transition-all group">
+              <div class="flex items-center justify-between p-4 bg-surface border border-bordercol rounded-xl hover:border-accent-cyan transition-all group shadow-sm">
                 <div>
                   <div class="font-medium text-white group-hover:text-accent-cyan transition-colors">Maganghub Skill</div>
                   <div class="text-xs text-slate-400 font-mono">Maganghub</div>
                 </div>
-                <a href="https://drive.google.com/drive/folders/19UOb6qng_fl8HSw9Lm3TuE1bCBiRYbTL?usp=drive_link" target="_blank" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-slate-400 group-hover:bg-accent-cyan group-hover:text-black transition-all">
+                <a href="https://drive.google.com/drive/folders/19UOb6qng_fl8HSw9Lm3TuE1bCBiRYbTL?usp=drive_link" target="_blank" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-slate-300 group-hover:bg-accent-cyan group-hover:text-black transition-all">
                   <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
                 </a>
               </div>
 
-              <div class="flex items-center justify-between p-4 bg-surface border border-bordercol rounded-xl hover:border-accent-cyan transition-all group">
+              <div class="flex items-center justify-between p-4 bg-surface border border-bordercol rounded-xl hover:border-accent-cyan transition-all group shadow-sm">
                 <div>
                   <div class="font-medium text-white group-hover:text-accent-cyan transition-colors">Data Analytics Platform</div>
                   <div class="text-xs text-slate-400 font-mono">DQLab</div>
                 </div>
-                <a href="https://drive.google.com/drive/folders/1Li7mcqZEVwDCRTGoGY5wIAnwORjCQ2gS?usp=drive_link" target="_blank" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-slate-400 group-hover:bg-accent-cyan group-hover:text-black transition-all">
+                <a href="https://drive.google.com/drive/folders/1Li7mcqZEVwDCRTGoGY5wIAnwORjCQ2gS?usp=drive_link" target="_blank" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-slate-300 group-hover:bg-accent-cyan group-hover:text-black transition-all">
                   <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
                 </a>
               </div>
 
-              <div class="flex items-center justify-between p-4 bg-surface border border-bordercol rounded-xl hover:border-accent-cyan transition-all group">
+              <div class="flex items-center justify-between p-4 bg-surface border border-bordercol rounded-xl hover:border-accent-cyan transition-all group shadow-sm">
                 <div>
                   <div class="font-medium text-white group-hover:text-accent-cyan transition-colors">Jobstreet</div>
                   <div class="text-xs text-slate-400 font-mono">Jobstreet Platform</div>
                 </div>
-                <a href="https://drive.google.com/drive/folders/1NsBanM7Nws5JO_Fx34jg4LoUAkc5BdH8?usp=drive_link" target="_blank" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-slate-400 group-hover:bg-accent-cyan group-hover:text-black transition-all">
+                <a href="https://drive.google.com/drive/folders/1NsBanM7Nws5JO_Fx34jg4LoUAkc5BdH8?usp=drive_link" target="_blank" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-slate-300 group-hover:bg-accent-cyan group-hover:text-black transition-all">
                   <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
                 </a>
               </div>
@@ -294,12 +313,12 @@
           </div>
 
           <div class="space-y-6">
-            <div class="p-4 bg-accent-cyan/5 border border-accent-cyan/30 rounded-xl flex items-center justify-between group">
+            <div class="p-4 bg-accent-cyan/10 border border-accent-cyan/30 rounded-xl flex items-center justify-between group shadow-sm">
               <div>
                 <div class="font-medium text-accent-cyan">Language: English</div>
-                <div class="text-xs text-slate-400 font-mono">ETS TOEIC 690 &amp; EF SET 56/100 (CEFR B2)</div>
+                <div class="text-xs text-slate-300 font-mono">ETS TOEIC 690 &amp; EF SET 56/100 (CEFR B2)</div>
               </div>
-              <a href="https://drive.google.com/drive/folders/1DwSxcG1qCxSrQ7g7zI4oDXHSgDGOByDm?usp=drive_link" target="_blank" class="w-10 h-10 rounded-full bg-accent-cyan text-black flex items-center justify-center hover:scale-110 transition-transform">
+              <a href="https://drive.google.com/drive/folders/1DwSxcG1qCxSrQ7g7zI4oDXHSgDGOByDm?usp=drive_link" target="_blank" class="w-10 h-10 rounded-full bg-accent-cyan text-black flex items-center justify-center hover:scale-110 transition-transform shadow-md">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
               </a>
             </div>
@@ -307,11 +326,11 @@
             <div class="space-y-3">
               <h4 class="text-xs font-mono uppercase tracking-widest text-slate-400">Data &amp; Analytics Core</h4>
               <div class="flex flex-wrap gap-2">
-                <span class="px-3.5 py-2 bg-surface border border-bordercol rounded-lg text-sm hover:border-accent-pink hover:bg-accent-pink/5 transition-all">Python</span>
-                <span class="px-3.5 py-2 bg-surface border border-bordercol rounded-lg text-sm hover:border-accent-pink hover:bg-accent-pink/5 transition-all">SQL</span>
-                <span class="px-3.5 py-2 bg-surface border border-bordercol rounded-lg text-sm hover:border-accent-pink hover:bg-accent-pink/5 transition-all">Power BI</span>
-                <span class="px-3.5 py-2 bg-surface border border-bordercol rounded-lg text-sm hover:border-accent-pink hover:bg-accent-pink/5 transition-all">Looker Studio</span>
-                <span class="px-3.5 py-2 bg-surface border border-bordercol rounded-lg text-sm hover:border-accent-pink hover:bg-accent-pink/5 transition-all">NLP</span>
+                <span class="px-3.5 py-2 bg-surface border border-bordercol rounded-lg text-sm hover:border-accent-pink hover:bg-accent-pink/5 transition-all shadow-sm">Python</span>
+                <span class="px-3.5 py-2 bg-surface border border-bordercol rounded-lg text-sm hover:border-accent-pink hover:bg-accent-pink/5 transition-all shadow-sm">SQL</span>
+                <span class="px-3.5 py-2 bg-surface border border-bordercol rounded-lg text-sm hover:border-accent-pink hover:bg-accent-pink/5 transition-all shadow-sm">Power BI</span>
+                <span class="px-3.5 py-2 bg-surface border border-bordercol rounded-lg text-sm hover:border-accent-pink hover:bg-accent-pink/5 transition-all shadow-sm">Looker Studio</span>
+                <span class="px-3.5 py-2 bg-surface border border-bordercol rounded-lg text-sm hover:border-accent-pink hover:bg-accent-pink/5 transition-all shadow-sm">NLP</span>
               </div>
             </div>
           </div>
@@ -320,7 +339,7 @@
       </section>
 
       <!-- Footer -->
-      <footer class="pt-8 border-t border-bordercol flex flex-col sm:flex-row justify-between items-center text-xs text-slate-500 gap-4">
+      <footer class="pt-8 border-t border-bordercol flex flex-col sm:flex-row justify-between items-center text-xs text-slate-400 gap-4">
         <span>Designed &amp; Built for Ayu Nadia Irawan</span>
         <span>2026 • South Tangerang, Indonesia</span>
       </footer>
@@ -341,6 +360,12 @@
         top: `${e.clientY}px`
       }, { duration: 400, fill: "forwards" });
     });
+
+    function scrollCarousel(direction) {
+      const carousel = document.getElementById('project-carousel');
+      const scrollAmount = 440;
+      carousel.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
+    }
   </script>
 </body>
 </html>
