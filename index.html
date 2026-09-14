@@ -79,9 +79,6 @@
       cv: { label: "Computer Vision", color: "#10B981", icon: Leaf },
     };
 
-    const GRAD_A = "#8B5CF6"; 
-    const GRAD_B = "#3B82F6"; 
-
     function hexToRgba(hex, a) {
       const h = hex.replace("#", "");
       const r = parseInt(h.substring(0, 2), 16);
@@ -112,10 +109,11 @@
         year: "2026", 
         image: IMG_POWERBI, 
         summary: "Retail analytics dashboard covering 3,900 customers — purchase value, demographics, seasonal trends.", 
-        tools: ["Power BI"], 
+        tools: ["Power BI", "Kaggle"], 
         metric: { value: 3900, decimals: 0, prefix: "", suffix: "", label: "customers profiled" }, 
         links: [
-          { label: "Open Power BI Report", href: "https://app.powerbi.com/" }
+          { label: "Power BI File (.pbix)", href: "https://github.com/hallooayu/portfolioppkd/blob/main/Customer%20Shopping%20Behavior%20AYU.pbix" },
+          { label: "Kaggle Dataset", href: "https://www.kaggle.com/datasets/mohanprasanth21/customer-shopping-behavior-cleaned-dataset" }
         ] 
       },
       { 
@@ -126,16 +124,17 @@
         year: "2026", 
         image: IMG_LOOKER, 
         summary: "Cross-platform ad performance report comparing Google, TikTok, and Meta — ROAS broken down by platform and country.", 
-        tools: ["Looker Studio"], 
+        tools: ["Looker Studio", "Kaggle"], 
         metric: { value: 54, decimals: 0, prefix: "$", suffix: "M+", label: "revenue tracked" }, 
         links: [
-          { label: "Open Looker Studio", href: "https://lookerstudio.google.com/" }
+          { label: "Looker Studio Report", href: "https://datastudio.google.com/reporting/17780a3d-c6f7-4bff-8da3-9d91cc1bf2a3" },
+          { label: "Kaggle Dataset", href: "https://www.kaggle.com/datasets/nudratabbas/global-ads-performance-google-meta-tiktok" }
         ] 
       },
       { 
         id: "nlp-shopee", 
         tag: "nlp", 
-        title: "Shopee Review Sentiment & Support Bot", 
+        title: "Sentiment Analysis of Shopee User Reviews on Google Play Store", 
         org: "PPKD Jakarta Selatan", 
         year: "2026", 
         image: IMG_CHATBOT, 
@@ -144,23 +143,24 @@
         metric: { value: 81.44, decimals: 2, prefix: "", suffix: "%", label: "SVM Accuracy" }, 
         badgeText: "Live prototype", 
         links: [
-          { label: "Google Colab", href: "https://colab.research.google.com/" },
-          { label: "Chatbot Repo", href: "https://github.com/" }
+          { label: "Colab Repo", href: "https://github.com/hallooayu/nlp_shopee.git" },
+          { label: "Chatbot Repo", href: "https://github.com/hallooayu/shopee_sentiment.git" }
         ] 
       },
       { 
         id: "leaf-disease", 
         tag: "cv", 
-        title: "Leaf Disease Classification with Deep Learning", 
+        title: "A Deep Learning Approach to Leaf Disease Classification", 
         org: "PPKD Jakarta Selatan", 
         year: "2026", 
         image: IMG_LEAF, 
-        summary: "A ResNet50 image classifier detecting five leaf diseases, deployed as a real-time Gradio demo.", 
-        tools: ["Gradio", "ResNet50"], 
+        summary: "A ResNet50 image classifier detecting five leaf diseases, deployed as an interactive notebook demo.", 
+        tools: ["Gradio", "ResNet50", "Roboflow"], 
         metric: { value: 91.38, decimals: 2, prefix: "", suffix: "%", label: "model accuracy" }, 
         links: [
-          { label: "Gradio Demo", href: "https://huggingface.co/spaces" },
-          { label: "Google Colab", href: "https://colab.research.google.com/" }
+          { label: "Colab (Training)", href: "https://colab.research.google.com/drive/1dR_RWM7T4YQPY9eiKUmpbGPzu6aXBQAQ?usp=drive_link" },
+          { label: "Colab (Gradio)", href: "https://colab.research.google.com/drive/1LWlFkf8g7T3btbWfoRRNYM_Ii3h4_LDJ?usp=drive_link" },
+          { label: "Roboflow Dataset", href: "https://universe.roboflow.com/st-aloysius-college-1bndf/leaf-disease-detection-mpdfi/dataset/3" }
         ] 
       },
     ];
@@ -789,7 +789,7 @@
           .project-summary { margin: 0; font-size: 14.5px; line-height: 1.65; color: #475569; }
           .tool-chip { font-size: 12.5px; font-weight: 600; padding: 8px 16px; border-radius: 999px; background: rgba(255,255,255,0.6); border: 1px solid rgba(255,255,255,0.9); color: #334155; transition: all 0.2s; box-shadow: 0 2px 6px rgba(0,0,0,0.02); }
           .tool-chip:hover { background: #fff; transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
-          .project-ext-link { display: inline-flex; align-items: center; gap: 5px; font-size: 12.5px; font-weight: 600; color: #8B5CF6; background: rgba(139, 92, 246, 0.08); padding: 6px 12px; border-radius: 999px; text-decoration: none; border: 1px solid rgba(139, 92, 246, 0.2); transition: all 0.2s; }
+          .project-ext-link { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 600; color: #8B5CF6; background: rgba(139, 92, 246, 0.08); padding: 6px 10px; border-radius: 999px; text-decoration: none; border: 1px solid rgba(139, 92, 246, 0.2); transition: all 0.2s; }
           .project-ext-link:hover { background: #8B5CF6; color: #fff; transform: translateY(-1px); }
           .locked-panel { padding: 60px 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; background: repeating-linear-gradient(135deg, rgba(0,0,0,.02) 0 10px, transparent 10px 20px); text-align: center; }
           .locked-panel span { font-family: 'Unbounded'; font-weight: 600; font-size: 14px; color: #475569; }
