@@ -174,7 +174,7 @@
       { id: "all", label: "All Projects" }, { id: "powerbi", label: "Power BI" }, { id: "looker", label: "Looker Studio" }, { id: "nlp", label: "NLP" }, { id: "cv", label: "Computer Vision" },
     ];
 
-    const EXPERIENCE = [
+    const EXPERIENCES = [
       { role: "HR Administration (Internship)", org: "Radikari", period: "Jan 2026 – Apr 2026", bullets: ["Drafted and processed 5,000+ HR documents, including employment contracts and NDAs.", "Processed up to 200+ letters a day while maintaining strict legal compliance."] },
       { role: "Business Development (Internship)", org: "Radikari", period: "Oct 2025 – Jan 2026", bullets: ["Sourced 250+ new prospect clients across manufacturing and logistics.", "Ran market and competitor research for BPO and MPO services."] },
       { role: "KOL Specialist (Internship)", org: "Gushcloud Indonesia", period: "Aug 2025 – Oct 2025", bullets: ["Shortlisted and evaluated 40+ KOLs daily to keep a continuous campaign pipeline.", "Managed brand ambassador partnerships for Schneider, Hyundai, and Philips."] },
@@ -216,7 +216,7 @@
       { id: "projects", label: "Projects" },
       { id: "skills", label: "Skills" },
       { id: "certifications", label: "Certifications" },
-      { id: "experience", label: "Experience" },
+      { id: "experiences", label: "Experiences" },
       { id: "contact", label: "Contact" },
     ];
 
@@ -525,7 +525,7 @@
     /* =========================================================================
        EXPERIENCE: HORIZONTAL SCROLL CARDS WITH COLLAPSIBLE DETAILS
     ========================================================================= */
-    function ExperienceCarousel({ items }) {
+    function ExperiencesCarousel({ items }) {
       const trackRef = useRef(null);
       const [openIdx, setOpenIdx] = useState(null);
 
@@ -540,10 +540,10 @@
       return (
         <div className="exp-wrap">
           <div className="exp-controls">
-            <button className="exp-arrow liquid-glass-sub hover-spring" aria-label="Previous experience" onClick={() => scrollByCard(-1)}>
+            <button className="exp-arrow liquid-glass-sub hover-spring" aria-label="Previous experiences" onClick={() => scrollByCard(-1)}>
               <Icon name="chevron-left" size={20} color="#fff" />
             </button>
-            <button className="exp-arrow liquid-glass-sub hover-spring" aria-label="Next experience" onClick={() => scrollByCard(1)}>
+            <button className="exp-arrow liquid-glass-sub hover-spring" aria-label="Next experiences" onClick={() => scrollByCard(1)}>
               <Icon name="chevron-right" size={20} color="#fff" />
             </button>
           </div>
@@ -834,11 +834,11 @@
             </div>
           </section>
 
-          {/* EXPERIENCE TIMELINE (now at the bottom) */}
+          {/* EXPERIENCES TIMELINE (now at the bottom) */}
           <section id="experience" className="section">
             <div className="container">
-              <Reveal><h2 className="section-title">My Experience</h2></Reveal>
-              <Reveal delay={0.1}><ExperienceCarousel items={EXPERIENCE} /></Reveal>
+              <Reveal><h2 className="section-title">My Experiences</h2></Reveal>
+              <Reveal delay={0.1}><ExperiencesCarousel items={EXPERIENCES} /></Reveal>
             </div>
           </section>
 
@@ -1114,7 +1114,7 @@
             transition: box-shadow 0.4s ease; }
           .skill-chip:hover .skill-icon { box-shadow: 0 0 40px color-mix(in srgb, var(--c) 55%, transparent), inset 0 1px 2px rgba(255,255,255,0.2); }
 
-          /* Experience (horizontal scroll cards) */
+          /* Experiences (horizontal scroll cards) */
           .exp-controls { display: flex; justify-content: flex-end; gap: 10px; margin: -28px 0 20px; }
           .exp-arrow { width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; cursor: pointer; padding: 0; color: #fff; }
           .exp-track { display: flex; align-items: flex-start; gap: 24px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 28px 4px 36px; margin: 0 -4px; scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.25) transparent; -webkit-overflow-scrolling: touch; }
