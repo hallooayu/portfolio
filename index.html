@@ -75,10 +75,10 @@
     /* =========================================================================
        IMAGE ASSETS
     ========================================================================= */
-const IMG_POWERBI = "assets/power%20bi.png";
-const IMG_LOOKER = "assets/looker.png";
-const IMG_CHATBOT = "assets/chatbot.jpg";
-const IMG_LEAF = "assets/cv%20leaf.jpg";
+    const IMG_POWERBI = "assets/power%20bi.png";
+    const IMG_LOOKER = "assets/looker.png";
+    const IMG_CHATBOT = "assets/chatbot.jpg";
+    const IMG_LEAF = "assets/cv%20leaf.jpg";
 
     /* =========================================================================
        DESIGN TOKENS & DATA
@@ -191,17 +191,30 @@ const IMG_LEAF = "assets/cv%20leaf.jpg";
     ];
 
     const SKILL_GROUPS = [
-      { name: "Data & Analytics", items: ["Power BI", "Looker Studio", "Python", "SQL", "DAX", "Microsoft Excel"] },
-      { name: "Marketing & Productivity", items: ["Google Workspace", "Meta Business Suite", "Canva", "Microsoft PowerPoint"] },
+      { name: "Data & Analytics", items: [
+        { name: "Power BI", icon: "bar-chart-3", color: "#F59E0B" },
+        { name: "Looker Studio", icon: "pie-chart", color: "#3B82F6" },
+        { name: "Python", icon: "terminal", color: "#FACC15" },
+        { name: "SQL", icon: "database", color: "#2DD4BF" },
+        { name: "DAX", icon: "sigma", color: "#F472B6" },
+        { name: "Microsoft Excel", icon: "table", color: "#22C55E" },
+      ]},
+      { name: "Marketing & Productivity", items: [
+        { name: "Google Workspace", icon: "cloud", color: "#38BDF8" },
+        { name: "Meta Business Suite", icon: "megaphone", color: "#818CF8" },
+        { name: "Canva", icon: "palette", color: "#A78BFA" },
+        { name: "Microsoft PowerPoint", icon: "presentation", color: "#FB923C" },
+      ]},
     ];
 
     const MARQUEE_ITEMS = ["DATA ANALYST", "POWER BI", "LOOKER STUDIO", "PYTHON", "SQL", "DAX", "MARKETING STRATEGY"];
 
     const NAV_LINKS = [
       { id: "top", label: "Home" },
-      { id: "projects", label: "Projects" }, 
-      { id: "experience", label: "Experience" }, 
-      { id: "certifications", label: "Certifications" }, 
+      { id: "projects", label: "Projects" },
+      { id: "skills", label: "Skills" },
+      { id: "certifications", label: "Certifications" },
+      { id: "experience", label: "Experience" },
       { id: "contact", label: "Contact" },
     ];
 
@@ -481,6 +494,33 @@ const IMG_LEAF = "assets/cv%20leaf.jpg";
     }
 
     /* =========================================================================
+       SKILLS
+    ========================================================================= */
+    function SkillsSection() {
+      return (
+        <>
+          {SKILL_GROUPS.map((g, gi) => (
+            <div key={g.name} className="skill-group">
+              <Reveal delay={gi * 0.1}><h3 className="skill-group-title">{g.name}</h3></Reveal>
+              <div className="skill-grid">
+                {g.items.map((s, i) => (
+                  <Reveal key={s.name} delay={(i % 6) * 0.08} y={24}>
+                    <div className="skill-chip liquid-glass-clear hover-spring" style={{ "--c": s.color }}>
+                      <div className="skill-icon">
+                        <Icon name={s.icon} size={26} color={s.color} />
+                      </div>
+                      <span>{s.name}</span>
+                    </div>
+                  </Reveal>
+                ))}
+              </div>
+            </div>
+          ))}
+        </>
+      );
+    }
+
+    /* =========================================================================
        ALTERNATING TIMELINE COMPONENT
     ========================================================================= */
     function TimelineList({ items }) {
@@ -636,6 +676,21 @@ const IMG_LEAF = "assets/cv%20leaf.jpg";
         return () => clearTimeout(t);
       }, []);
 
+      // Highlight the nav link of the section currently in view
+      useEffect(() => {
+        const ids = NAV_LINKS.map((n) => n.id);
+        const obs = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) setActiveSection(entry.target.id);
+          });
+        }, { rootMargin: "-40% 0px -55% 0px" });
+        ids.forEach((id) => {
+          const el = document.getElementById(id);
+          if (el) obs.observe(el);
+        });
+        return () => obs.disconnect();
+      }, []);
+
       const filteredProjects = useMemo(() => (filter === "all" ? PROJECTS : PROJECTS.filter((p) => p.tag === filter)), [filter]);
 
       const scrollTo = (id) => {
@@ -652,7 +707,7 @@ const IMG_LEAF = "assets/cv%20leaf.jpg";
           
           <div className="scroll-progress" style={{ width: `${progress}%` }} />
 
-          {/* DYNAMIC ISLAND NAVIGATION (Clean, No UFO beside Home) */}
+          {/* DYNAMIC ISLAND NAVIGATION */}
           <nav className={`dynamic-island ${scrolled ? 'is-scrolled' : ''}`}>
             <div className="island-links">
               {NAV_LINKS.map((n) => (
@@ -719,11 +774,11 @@ const IMG_LEAF = "assets/cv%20leaf.jpg";
             </div>
           </section>
 
-          {/* EXPERIENCE TIMELINE */}
-          <section id="experience" className="section">
+          {/* SKILLS */}
+          <section id="skills" className="section">
             <div className="container">
-              <Reveal><h2 className="section-title text-center">My Experience</h2></Reveal>
-              <TimelineList items={EXPERIENCE} />
+              <Reveal><h2 className="section-title">Skills</h2></Reveal>
+              <SkillsSection />
             </div>
           </section>
 
@@ -745,6 +800,14 @@ const IMG_LEAF = "assets/cv%20leaf.jpg";
                   </Reveal>
                 ))}
               </div>
+            </div>
+          </section>
+
+          {/* EXPERIENCE TIMELINE (now at the bottom) */}
+          <section id="experience" className="section">
+            <div className="container">
+              <Reveal><h2 className="section-title text-center">My Experience</h2></Reveal>
+              <TimelineList items={EXPERIENCE} />
             </div>
           </section>
 
@@ -869,6 +932,7 @@ const IMG_LEAF = "assets/cv%20leaf.jpg";
             border-radius: 999px;
             cursor: pointer;
             outline: none;
+            white-space: nowrap;
             transition: all 0.3s ease;
           }
           .island-link:hover, .island-link.active {
@@ -878,7 +942,7 @@ const IMG_LEAF = "assets/cv%20leaf.jpg";
           }
           
           @media (max-width: 768px) {
-            .dynamic-island { width: 92%; justify-content: center; top: 16px; overflow-x: auto; scrollbar-width: none; }
+            .dynamic-island { width: 92%; justify-content: flex-start; top: 16px; overflow-x: auto; scrollbar-width: none; }
             .island-link { font-size: 13px; padding: 6px 12px; }
           }
 
@@ -961,7 +1025,7 @@ const IMG_LEAF = "assets/cv%20leaf.jpg";
           @keyframes galaxyShine { to { background-position: 200% center; } }
           
           .hero-sub { font-size: 20px; line-height: 1.7; max-width: 65ch; margin: 0 0 45px; font-weight: 500; }
-          .hero-cta { display: flex; gap: 18px; margin-bottom: 20px; }
+          .hero-cta { display: flex; gap: 18px; margin-bottom: 20px; flex-wrap: wrap; }
 
           /* Sections & Layout */
           .section { padding: 120px 0; position: relative; z-index: 2; }
@@ -999,12 +1063,25 @@ const IMG_LEAF = "assets/cv%20leaf.jpg";
           .project-summary { margin: 0; font-size: 15px; line-height: 1.7; color: rgba(255,255,255,0.8); }
           .tool-chip { font-size: 12.5px; font-weight: 700; padding: 8px 18px; color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,0.4); }
           
-          .project-links-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; paddingTop: 16px; border-top: 1px solid rgba(255,255,255,0.1); }
+          .project-links-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.1); }
           .project-ext-link { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 700; color: #fff; background: rgba(255,255,255,0.08); padding: 8px 16px; border-radius: 999px; text-decoration: none; border: 1px solid rgba(255,255,255,0.15); transition: all 0.3s; text-shadow: 0 1px 2px rgba(0,0,0,0.4); box-shadow: inset 0 1px 2px rgba(255,255,255,0.05); }
           .project-ext-link:hover { background: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.3); }
           
           .locked-panel { padding: 80px 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; background: rgba(0,0,0,0.6); text-align: center; }
           .locked-panel span { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 15px; color: #fff; text-shadow: 0 2px 5px rgba(0,0,0,0.5); }
+
+          /* Skills */
+          .skill-group { margin-bottom: 56px; }
+          .skill-group:last-child { margin-bottom: 0; }
+          .skill-group-title { font-family: 'Space Grotesk', sans-serif; font-size: 18px; font-weight: 700; color: rgba(255,255,255,0.7); letter-spacing: 1px; text-transform: uppercase; margin: 0 0 24px; }
+          .skill-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 18px; }
+          .skill-chip { display: flex; flex-direction: column; align-items: center; gap: 16px; padding: 28px 16px; border-radius: 28px; text-align: center; font-weight: 700; font-size: 15px; height: 100%; }
+          .skill-icon { width: 60px; height: 60px; border-radius: 20px; display: flex; align-items: center; justify-content: center;
+            background: color-mix(in srgb, var(--c) 16%, transparent);
+            border: 1px solid color-mix(in srgb, var(--c) 45%, transparent);
+            box-shadow: 0 0 28px color-mix(in srgb, var(--c) 30%, transparent), inset 0 1px 2px rgba(255,255,255,0.15);
+            transition: box-shadow 0.4s ease; }
+          .skill-chip:hover .skill-icon { box-shadow: 0 0 40px color-mix(in srgb, var(--c) 55%, transparent), inset 0 1px 2px rgba(255,255,255,0.2); }
 
           /* Timeline */
           .timeline-center { position: relative; max-width: 960px; margin: 0 auto; padding: 40px 0; }
