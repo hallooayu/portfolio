@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link rel="icon" type="image/png" href="assets/star.jpg">
-<link rel="apple-touch-icon" href="assets/star.jpg">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ayu Nadia - Portfolio</title>
@@ -523,29 +521,58 @@
     }
 
     /* =========================================================================
-       ALTERNATING TIMELINE COMPONENT
+       EXPERIENCE: HORIZONTAL SCROLL CARDS WITH COLLAPSIBLE DETAILS
     ========================================================================= */
-    function TimelineList({ items }) {
-      const [ref, visible] = useInView(0.1);
+    function ExperienceCarousel({ items }) {
+      const trackRef = useRef(null);
+      const [openIdx, setOpenIdx] = useState(null);
+
+      const scrollByCard = (dir) => {
+        const el = trackRef.current;
+        if (!el) return;
+        const card = el.querySelector(".exp-card");
+        const step = card ? card.offsetWidth + 24 : 340;
+        el.scrollBy({ left: dir * step, behavior: "smooth" });
+      };
+
       return (
-        <div ref={ref} className="timeline-center">
-          {items.map((e, i) => {
-            const isLeft = i % 2 === 0;
-            return (
-              <Reveal key={i} delay={i * 0.15} y={30} className={`timeline-item ${isLeft ? 'left' : 'right'}`}>
-                <div className="timeline-content liquid-glass-clear hover-spring">
-                  <div className="timeline-icon">
-                    <Briefcase size={18} color="#fff" />
-                  </div>
+        <div className="exp-wrap">
+          <div className="exp-controls">
+            <button className="exp-arrow liquid-glass-sub hover-spring" aria-label="Previous experience" onClick={() => scrollByCard(-1)}>
+              <Icon name="chevron-left" size={20} color="#fff" />
+            </button>
+            <button className="exp-arrow liquid-glass-sub hover-spring" aria-label="Next experience" onClick={() => scrollByCard(1)}>
+              <Icon name="chevron-right" size={20} color="#fff" />
+            </button>
+          </div>
+          <div className="exp-track" ref={trackRef}>
+            {items.map((e, i) => {
+              const open = openIdx === i;
+              return (
+                <div key={i} className={`exp-card liquid-glass-clear ${open ? "open" : ""}`}>
+                  <div className="exp-card-icon"><Briefcase size={18} color="#fff" /></div>
+                  <p className="exp-period">{e.period}</p>
                   <h3>{e.role}</h3>
-                  <p className="exp-org">{e.org} • {e.period}</p>
-                  <ul>
-                    {e.bullets.map((b, bi) => <li key={bi}>{b}</li>)}
-                  </ul>
+                  <p className="exp-org">{e.org}</p>
+                  <button
+                    className="exp-toggle"
+                    aria-expanded={open}
+                    onClick={() => setOpenIdx(open ? null : i)}
+                  >
+                    {open ? "Hide details" : "View details"}
+                    <span className="exp-chevron"><Icon name="chevron-down" size={16} color="#fff" /></span>
+                  </button>
+                  <div className="exp-details">
+                    <div className="exp-details-inner">
+                      <ul>
+                        {e.bullets.map((b, bi) => <li key={bi}>{b}</li>)}
+                      </ul>
+                    </div>
+                  </div>
                 </div>
-              </Reveal>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
       );
     }
@@ -808,8 +835,8 @@
           {/* EXPERIENCE TIMELINE (now at the bottom) */}
           <section id="experience" className="section">
             <div className="container">
-              <Reveal><h2 className="section-title text-center">My Experience</h2></Reveal>
-              <TimelineList items={EXPERIENCE} />
+              <Reveal><h2 className="section-title">My Experience</h2></Reveal>
+              <Reveal delay={0.1}><ExperienceCarousel items={EXPERIENCE} /></Reveal>
             </div>
           </section>
 
@@ -1085,35 +1112,32 @@
             transition: box-shadow 0.4s ease; }
           .skill-chip:hover .skill-icon { box-shadow: 0 0 40px color-mix(in srgb, var(--c) 55%, transparent), inset 0 1px 2px rgba(255,255,255,0.2); }
 
-          /* Timeline */
-          .timeline-center { position: relative; max-width: 960px; margin: 0 auto; padding: 40px 0; }
-          .timeline-center::after { content: ''; position: absolute; width: 2px; background: rgba(255,255,255,0.1); top: 0; bottom: 0; left: 50%; margin-left: -1px; }
-          .timeline-item { padding: 10px 50px; position: relative; width: 50%; }
-          .timeline-item.left { left: 0; text-align: right; }
-          .timeline-item.right { left: 50%; text-align: left; }
-          .timeline-content { padding: 32px; position: relative; border-radius: 32px; }
-          .timeline-item::after { content: ''; position: absolute; width: 20px; height: 20px; right: -10px; background: rgba(255,255,255,0.8); border: 4px solid #38bdf8; top: 44px; border-radius: 50%; z-index: 2; box-shadow: 0 0 15px rgba(56, 189, 248, 0.5); }
-          .timeline-item.right::after { left: -10px; }
-          .timeline-icon { position: absolute; top: -20px; background: linear-gradient(135deg, #38bdf8, #ffffff); width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 20px rgba(56, 189, 248, 0.4), inset 0 2px 5px rgba(255,255,255,0.4); border: 2px solid rgba(255,255,255,0.5); z-index: 3; }
-          .timeline-item.left .timeline-icon { right: -60px; }
-          .timeline-item.right .timeline-icon { left: -60px; }
-          .timeline-content h3 { margin: 0; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 19px; color: #fff; text-shadow: 0 2px 5px rgba(0,0,0,0.4); }
-          .timeline-content .exp-org { margin: 8px 0 20px; font-size: 14.5px; color: #bae6fd; font-weight: 800; letter-spacing: 0.5px; text-transform: uppercase; }
-          .timeline-content ul { margin: 0; padding: 0; list-style: none; font-size: 15px; line-height: 1.7; color: rgba(255,255,255,0.8); }
-          .timeline-content li { margin-bottom: 10px; position: relative; }
-          .timeline-item.right li { padding-left: 18px; }
-          .timeline-item.left li { padding-right: 18px; }
-          .timeline-item.right li::before { content: '✨'; position: absolute; left: -5px; font-size: 12px; }
-          .timeline-item.left li::before { content: '✨'; position: absolute; right: -5px; font-size: 12px; }
-          
-          @media screen and (max-width: 768px) {
-            .timeline-center::after { left: 40px; }
-            .timeline-item { width: 100%; padding-left: 90px; padding-right: 15px; }
-            .timeline-item.left, .timeline-item.right { left: 0; text-align: left; }
-            .timeline-item.left::after, .timeline-item.right::after { left: 30px; }
-            .timeline-item.left .timeline-icon, .timeline-item.right .timeline-icon { left: 18px; right: auto; }
-            .timeline-item.left li { padding-right: 0; padding-left: 18px; }
-            .timeline-item.left li::before { left: -5px; right: auto; }
+          /* Experience (horizontal scroll cards) */
+          .exp-controls { display: flex; justify-content: flex-end; gap: 10px; margin: -28px 0 20px; }
+          .exp-arrow { width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; cursor: pointer; padding: 0; color: #fff; }
+          .exp-track { display: flex; align-items: flex-start; gap: 24px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 28px 4px 36px; margin: 0 -4px; scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.25) transparent; -webkit-overflow-scrolling: touch; }
+          .exp-track::-webkit-scrollbar { height: 6px; }
+          .exp-track::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.25); border-radius: 999px; }
+          .exp-card { flex: 0 0 340px; scroll-snap-align: start; position: relative; padding: 36px 28px 28px; border-radius: 32px; transition: border-color 0.4s ease, box-shadow 0.4s ease; }
+          .exp-card.open { border-top-color: rgba(56, 189, 248, 0.6); box-shadow: 0 20px 50px rgba(0,0,0,0.5), 0 0 30px rgba(56, 189, 248, 0.15); }
+          .exp-card-icon { position: absolute; top: -22px; left: 28px; background: linear-gradient(135deg, #38bdf8, #ffffff); width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 20px rgba(56, 189, 248, 0.4), inset 0 2px 5px rgba(255,255,255,0.4); border: 2px solid rgba(255,255,255,0.5); }
+          .exp-period { margin: 0 0 10px; font-family: 'Space Grotesk', sans-serif; font-size: 13.5px; font-weight: 700; color: #bae6fd; letter-spacing: 0.3px; }
+          .exp-card h3 { margin: 0; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 19px; line-height: 1.35; color: #fff; text-shadow: 0 2px 5px rgba(0,0,0,0.4); }
+          .exp-org { margin: 8px 0 20px; font-size: 14.5px; color: rgba(255,255,255,0.65); font-weight: 700; }
+          .exp-toggle { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); color: #fff; font-family: 'Plus Jakarta Sans'; font-weight: 700; font-size: 13px; padding: 9px 16px; border-radius: 999px; cursor: pointer; outline: none; transition: background 0.3s ease; }
+          .exp-toggle:hover, .exp-toggle:focus-visible { background: rgba(255,255,255,0.16); }
+          .exp-chevron { display: inline-flex; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+          .exp-card.open .exp-chevron { transform: rotate(180deg); }
+          .exp-details { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+          .exp-card.open .exp-details { grid-template-rows: 1fr; }
+          .exp-details-inner { overflow: hidden; min-height: 0; }
+          .exp-details ul { margin: 0; padding: 20px 0 0; list-style: none; font-size: 15px; line-height: 1.7; color: rgba(255,255,255,0.8); }
+          .exp-details li { position: relative; padding-left: 20px; margin-bottom: 10px; }
+          .exp-details li::before { content: '✨'; position: absolute; left: 0; font-size: 12px; }
+          @media (max-width: 768px) {
+            .exp-card { flex-basis: 85%; }
+            .exp-controls { display: none; }
+            .exp-track { padding-top: 32px; }
           }
 
           /* Certifications */
